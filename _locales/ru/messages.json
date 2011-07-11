@@ -1,0 +1,106 @@
+{
+    "extName": {
+        "message": "Stats Checker for Google Analytics™ - Посещения за сегодня",
+        "description": "Extension Name"
+    },
+    "extDesc": {
+        "message": "Удобно отображает количество посетителей сайта за сегодня.",
+        "description": "Extension Description"
+    },
+	"loginToTheSystem": {
+        "message": "Залогиньтесь в систему",
+        "description": ""
+    },
+	"loading": {
+        "message": "Загрузка...",
+        "description": ""
+    },
+	"options": {
+        "message": "Настройка",
+        "description": ""
+    },
+	"selectAccountId": {
+        "message": "Аккаунт:",
+        "description": ""
+    },
+	"selectAccountIdDesc": {
+        "message": "Выберите аккаунт, чтобы просмотреть доступные профили",
+        "description": ""
+    },
+	"selectProfileId": {
+        "message": "Профиль сайта:",
+        "description": ""
+    },
+	"selectProfileIdDesc": {
+        "message": "Выберите сайт для показа отчётов",
+        "description": ""
+    },
+	"save": {
+        "message": "Сохранить",
+        "description": ""
+    },
+	"saved": {
+        "message": "Сохранено",
+        "description": ""
+    },
+	"donationCaption": {
+        "message": "Пожертвовать денег:",
+        "description": ""
+    },
+	"donationDescr": {
+        "message": "Расширение Stats Checker for Google Analytics™ показалось Вам полезным? Если да, пожалуйста, поддержите!",
+        "description": ""
+    },
+
+	"googleAccEmail": {
+        "message": "Ваш Google Аккаунт:",
+        "description": ""
+    },
+
+"selectShowFooter": {"message": "Показывать футер:"},
+	"selectShowFooterDesc": {"message": "Показывать футер таблицы с суммарными данными"},
+"selectShowAd": {"message": "Реклама:"},
+	"selectShowAdDesc": {"message": "Показывать рекламу :)"},
+	"selectUpdateInterval": {"message": "Выберите интервал обновления:"},
+	"selectUpdateIntervalDesc": {"message": "Меньший интервал ест больше памяти"},
+
+	"selectDisplayInfo": {"message": "Отображать информацию:"},
+	"selectDisplayInfoDesc": {"message": "Какую информацию отображать на иконке и всплывающем окне."},
+	"textDisplayVisitsSummary": {"message": "Посещения"},
+	"textDisplayVisitorsSummary": {"message": "Абсолютно уникальные посетители"},
+	"textDisplayPageviewsSummary": {"message": "Просмотры страниц"},
+	"textDisplayAvgPageviewsSummary": {"message": "Среднее число просмотров страниц"},
+	"textDisplayTimeOnSiteSummary": {"message": "Длительность пребывания на сайте"},
+	"textDisplayBounceRateSummary": {"message": "Показатель отказов"},
+	"textDisplayNewVisitsSummary": {"message": "Новые посещения"},
+
+
+    "googleAccChange": {
+        "message": "Не вы? Можете <a target=\"_blank\" href=\"$logoutUrl$\">зайти под другим аккаунтом</a>",
+        "placeholders": {
+            "logoutUrl": {
+                "content": "$1",
+                "example": "https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'"
+            }
+        }
+    },
+	"visitsToday": {
+        "message": "$visitsName$ на «$profileName$» сегодня: $visitsToday$",
+        "placeholders": {
+            "visitsToday": {
+                "content": "$1",
+                "example": "0"
+            },
+            "profileName": {
+                "content": "$2",
+                "example": "StarWars.lv"
+            },
+            "visitsName": {
+                "content": "$3",
+                "example": "Посещений"
+            }
+        }
+    }
+}
+
+

@@ -1,0 +1,108 @@
+{
+    "extName": {
+        "message": "Stats Checker for Google Analytics™ - Today visit count",
+        "description": "Extension Name"
+    },
+    "extDesc": {
+        "message": "Displays count of your site visits.",
+        "description": "Extension Description"
+    },
+	"loginToTheSystem": {
+        "message": "Login to the system",
+        "description": ""
+    },
+	"loading": {
+        "message": "Loading...",
+        "description": ""
+    },
+	"options": {
+        "message": "Options",
+        "description": ""
+    },
+
+	"selectAccountId": {
+        "message": "Account:",
+        "description": ""
+    },
+	"selectAccountIdDesc": {
+        "message": "Select an account to see the available profiles",
+        "description": ""
+    },
+	"selectProfileId": {
+        "message": "Website profile:",
+        "description": ""
+    },
+	"selectProfileIdDesc": {
+        "message": "Pick a site for showing reports",
+        "description": ""
+    },	
+	"save": {
+        "message": "Save",
+        "description": ""
+    },
+	"saved": {
+        "message": "Saved",
+        "description": ""
+    },
+	"donationCaption": {
+        "message": "Make a donation:",
+        "description": ""
+    },
+	"donationDescr": {
+        "message": "Has Stats Checker for Google Analytics™ been useful to you? If so, please donate!",
+        "description": ""
+    },
+	"googleAccEmail": {
+        "message": "Your Google Account:",
+        "description": ""
+    },
+
+
+"selectShowFooter": {"message": "Show footer:"},
+	"selectShowFooterDesc": {"message": "Show footer with total/average data"},
+"selectShowAd": {"message": "Ads:"},
+	"selectShowAdDesc": {"message": "Show ads :)"},
+	"selectUpdateInterval": {"message": "Select update interval:"},
+	"selectUpdateIntervalDesc": {"message": "Smaller interval eats more memory"},
+
+	"selectDisplayInfo": {"message": "Display information:"},
+	"selectDisplayInfoDesc": {"message": "What information will be displayed in icon and popup text."},
+	"textDisplayVisitsSummary": {"message": "Visits"},
+	"textDisplayVisitorsSummary": {"message": "Absolute Unique Visitors"},
+	"textDisplayPageviewsSummary": {"message": "Pageviews"},
+	"textDisplayAvgPageviewsSummary": {"message": "Average Pageviews"},
+	"textDisplayTimeOnSiteSummary": {"message": "Time on Site"},
+	"textDisplayBounceRateSummary": {"message": "Bounce Rate"},
+	"textDisplayNewVisitsSummary": {"message": "New Visits"},
+   
+    
+    
+    "googleAccChange": {
+        "message": "Not you? You can <a target=\"_blank\" href=\"$logoutUrl$\">login with other account</a>",
+        "placeholders": {
+            "logoutUrl": {
+                "content": "$1",
+                "example": "https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'"
+            }
+        }
+    },
+	"visitsToday": {
+        "message": "$visitsName$ on «$profileName$» today: $visitsToday$",
+        "placeholders": {
+            "visitsToday": {
+                "content": "$1",
+                "example": "0"
+            },
+            "profileName": {
+                "content": "$2",
+                "example": "StarWars.lv"
+            },
+            "visitsName": {
+                "content": "$3",
+                "example": "Visits"
+            }
+        }
+    }
+}
+
+
