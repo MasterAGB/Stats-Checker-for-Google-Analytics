@@ -431,7 +431,7 @@ function checkRatio(onCompleteFunction) {
 
 
                 }
-
+                /*
                 logg("Found accounts:");
                 logg(account_name_array);
                 logg("Found properties:");
@@ -444,6 +444,7 @@ function checkRatio(onCompleteFunction) {
                 logg(property_count_array);
                 logg("Profile count in accounts:");
                 logg(profile_count_array);
+                */
 
                 if (typeof(onCompleteFunction) != "undefined") {
                     onCompleteFunction();
