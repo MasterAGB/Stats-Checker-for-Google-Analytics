@@ -19,6 +19,10 @@
         "message": "Настройка",
         "description": ""
     },
+
+    "fullscreen": {
+           "message": "Открыть в новой вкладке"
+       },
 	"selectAccountId": {
         "message": "Аккаунт:",
         "description": ""
@@ -57,6 +61,25 @@
         "description": ""
     },
 
+
+
+    "dateRangeName": {
+           "message": "Диапазон дат:"
+       },
+   	"dateRangeNameDescr": {
+           "message": "Диапазон дат, который показывается при нажатии на прифиль"
+       },
+
+    "favoritedProfiles": {"message": "Фавориты"},
+    "allProfiles": {"message": "Все профили"},
+
+"leaveAComment": {"message": "В этом расширении чего-то не хватает? Оставьте комментарий!"},
+
+
+"selectPeriod": {"message": "Период:"},
+"textDisplayProfile": {"message": "Профиль"},
+
+
 "selectShowFooter": {"message": "Показывать футер:"},
 	"selectShowFooterDesc": {"message": "Показывать футер таблицы с суммарными данными"},
 "selectShowAd": {"message": "Реклама:"},
@@ -67,12 +90,24 @@
 	"selectDisplayInfo": {"message": "Отображать информацию:"},
 	"selectDisplayInfoDesc": {"message": "Какую информацию отображать на иконке и всплывающем окне."},
 	"textDisplayVisitsSummary": {"message": "Посещения"},
+	"textDisplayVisitsSmSummary": {"message": "Визитов"},
 	"textDisplayVisitorsSummary": {"message": "Абсолютно уникальные посетители"},
+	"textDisplayVisitorsSmSummary": {"message": "Уник. посет."},
 	"textDisplayPageviewsSummary": {"message": "Просмотры страниц"},
 	"textDisplayAvgPageviewsSummary": {"message": "Среднее число просмотров страниц"},
+	"textDisplayAvgPageviewsSmSummary": {"message": "Страниц за визит"},
 	"textDisplayTimeOnSiteSummary": {"message": "Длительность пребывания на сайте"},
+	"textDisplayTimeOnSiteSmSummary": {"message": "Ср. продолж. посещ."},
 	"textDisplayBounceRateSummary": {"message": "Показатель отказов"},
+	"textDisplayBounceRateSmSummary": {"message": "Отказы"},
 	"textDisplayNewVisitsSummary": {"message": "Новые посещения"},
+
+
+
+    "dateRangeToday": {"message": "Сегодня"},
+   	"dateRange7Days": {"message": "7 дней"},
+   	"dateRange30Days": {"message": "30 дней"},
+   	"dateRangeRealtime": {"message": "Режим реального времени"},
 
 
     "googleAccChange": {

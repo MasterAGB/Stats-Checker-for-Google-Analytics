@@ -1,0 +1,179 @@
+{
+   "allProfiles": {
+      "message": "Todos os perfis"
+   },
+   "dateRange30Days": {
+      "message": "30 dias"
+   },
+   "dateRange7Days": {
+      "message": "7 dias"
+   },
+   "dateRangeName": {
+      "message": "Intervalo de datas:"
+   },
+   "dateRangeNameDescr": {
+      "message": "Período para exibição de análise ao pressionar um perfil"
+   },
+   "dateRangeRealtime": {
+      "message": "Tempo Real"
+   },
+   "dateRangeToday": {
+      "message": "Hoje"
+   },
+   "donationCaption": {
+      "description": "",
+      "message": "Faça uma doação:"
+   },
+   "donationDescr": {
+      "description": "",
+      "message": "O Stats Checker for Google Analytics™ foi útil a você? Se sim, por favor doe!"
+   },
+   "extDesc": {
+      "description": "Descrição da Extensão",
+      "message": "Mostra contagem de visitas do seu site."
+   },
+   "extName": {
+      "description": "Nome da Extensão",
+      "message": "Stats Checker for Google Analytics™ - Visitas de hoje"
+   },
+   "favoritedProfiles": {
+      "message": "Favoritos"
+   },
+   "fullscreen": {
+      "message": "Abrir em nova aba"
+   },
+   "googleAccChange": {
+      "message": "Não é ocê? Você pode <a target=\"_blank\" href=\"$logoutUrl$\">entre com outra conta</a>",
+      "placeholders": {
+         "logoutUrl": {
+            "content": "$1",
+            "example": "https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'"
+         }
+      }
+   },
+   "googleAccEmail": {
+      "message": "Sua Conta Google:"
+   },
+   "leaveAComment": {
+      "message": "Faltando alguma coisa nesta extensão? Sugestões? Por favor, deixe um comentário!"
+   },
+   "loading": {
+      "description": "",
+      "message": "Carregando..."
+   },
+   "loginToTheSystem": {
+      "description": "",
+      "message": "Logar no sistema"
+   },
+   "options": {
+      "description": "",
+      "message": "Opções"
+   },
+   "save": {
+      "description": "",
+      "message": "Salvar"
+   },
+   "saved": {
+      "description": "",
+      "message": "Salvo"
+   },
+   "selectAccountId": {
+      "description": "",
+      "message": "Conta:"
+   },
+   "selectAccountIdDesc": {
+      "description": "",
+      "message": "Selecione uma conta para ver os perfis disponiveis"
+   },
+   "selectDisplayInfo": {
+      "message": "Mostrar informação:"
+   },
+   "selectDisplayInfoDesc": {
+      "message": "Que informação será exibida no ícone e texto pop-up."
+   },
+   "selectPeriod": {
+      "message": "Período:"
+   },
+   "selectProfileId": {
+      "description": "",
+      "message": "Site do perfil:"
+   },
+   "selectProfileIdDesc": {
+      "description": "",
+      "message": "Escolha um local para mostrar relatórios"
+   },
+   "selectShowAd": {
+      "message": "Anúncios:"
+   },
+   "selectShowAdDesc": {
+      "message": "Mostrar anúncios :)"
+   },
+   "selectShowFooter": {
+      "message": "Mostrar rodapé:"
+   },
+   "selectShowFooterDesc": {
+      "message": "Mostrar rodapé com total/média de dados"
+   },
+   "selectUpdateInterval": {
+      "message": "Selecionar intervalo de atualização:"
+   },
+   "selectUpdateIntervalDesc": {
+      "message": "Menor intervalo consome mais memória"
+   },
+   "textDisplayAvgPageviewsSmSummary": {
+      "message": "Média de Páginas Vistas"
+   },
+   "textDisplayAvgPageviewsSummary": {
+      "message": "Média de Páginas Vistas"
+   },
+   "textDisplayBounceRateSmSummary": {
+      "message": "Taxa de Rejeição"
+   },
+   "textDisplayBounceRateSummary": {
+      "message": "Taxa de Rejeição"
+   },
+   "textDisplayNewVisitsSummary": {
+      "message": "Novos Visitas"
+   },
+   "textDisplayPageviewsSummary": {
+      "message": "Páginas Vistas"
+   },
+   "textDisplayProfile": {
+      "message": "Perfil"
+   },
+   "textDisplayTimeOnSiteSmSummary": {
+      "message": "Tempo no site"
+   },
+   "textDisplayTimeOnSiteSummary": {
+      "message": "Tempo no site"
+   },
+   "textDisplayVisitorsSmSummary": {
+      "message": "Visitantes Únicos"
+   },
+   "textDisplayVisitorsSummary": {
+      "message": "Absoluto de Visitantes Únicos"
+   },
+   "textDisplayVisitsSmSummary": {
+      "message": "Visitas"
+   },
+   "textDisplayVisitsSummary": {
+      "message": "Visitas"
+   },
+   "visitsToday": {
+      "message": "$visitsName$ em «$profileName$» hoje: $visitsToday$",
+      "placeholders": {
+         "profileName": {
+            "content": "$2",
+            "example": "StarWars.lv"
+         },
+         "visitsName": {
+            "content": "$3",
+            "example": "Visitas"
+         },
+         "visitsToday": {
+            "content": "$1",
+            "example": "0"
+         }
+      }
+   }
+}

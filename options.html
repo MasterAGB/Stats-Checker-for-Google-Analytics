@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Stats Checker for Google Analytics™</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css?1.4.1">
+    <script type="text/javascript" src="js/analytics.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/script.js?1.4.1"></script>
+    <script type="text/javascript" src="js/options.js"></script>
+</head>
+<body>
+
+
+<div class="white_block">
+<h2><img src="img/logo.32.png">
+    <span class="trans" data-transid="extName">Stats Checker for Google Analytics™ - Today visit count</span>
+    »
+    <span class="trans" data-transid="options">Options</span>
+</h2>
+
+
+<div id="loading_profile"><img src="img/spinner.gif">
+    <span class="trans" data-transid="loading">Loading...</span>
+</div>
+
+<div id="edit_profile" style="display:none;">
+    <table cellspacing="0">
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="googleAccEmail">Your Google Account:</span>
+            </th>
+            <td>
+                <div id="googleAcc">andrejs.birzgals@gmail.com</div>
+                <small id="googleAccChange">
+                    Not you? You can <a target="_blank" href="https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/">login with other account</a>
+                </small>
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <span class="trans" data-transid="selectAccountId">Account:</span>
+            </th>
+            <td>
+                <select id="account_id">
+                    <option value="">Loading...</option>
+                </select> <a href="#" id="edit_account_button"><img src="img/pencil_icon.gif"></a>
+                <small>
+                    <span class="trans" data-transid="selectAccountIdDesc">Select an account to see the available profiles</span>
+                </small>
+
+            </td>
+        </tr>
+        <tr>
+            <th>
+                <span class="trans" data-transid="selectProfileId">Website profile:</span>
+            </th>
+            <td>
+                <select id="profile_id">
+                    <option value="">Loading...</option>
+                </select> <a href="#" id="edit_profile_button"><img src="img/pencil_icon.gif"></a> <span
+                    id="loading_profile_id" style="display:none;"><img src="img/spinner.gif"></span>
+                <small>
+                    <span class="trans" data-transid="selectProfileIdDesc">Pick a site for showing reports</span>
+                </small>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="selectUpdateInterval">Select update interval:</span>
+            </th>
+            <td>
+                <select id="update_interval">
+                    <option value="30000">30 sec.</option>
+                    <option value="60000">1 min.</option>
+                    <option value="120000">2 min.</option>
+                    <option value="300000">5 min.</option>
+                    <option value="600000">10 min.</option>
+                    <option value="1200000">30 min.</option>
+                </select>
+                <small>
+                    <span class="trans" data-transid="selectUpdateIntervalDesc">Smaller interval eats more memory</span>
+                </small>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="dateRangeName">Date Range:</span>
+            </th>
+            <td>
+                <select id="date_range">
+                    <option value="today" class="trans" data-transid="dateRangeToday">Today</option>
+                    <option value="7days" class="trans" data-transid="dateRange7Days">7 days</option>
+                    <option value="30days" class="trans" data-transid="dateRange30Days">30 days</option>
+                    <option value="realtime" class="trans" data-transid="dateRangeRealtime">Real-Time</option>
+                </select>
+                <small>
+                    <span class="trans" data-transid="dateRangeNameDescr">Date Range for displaying analytics on pressing a profile</span>
+                </small>
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="selectShowAd">Ads:</span>
+            </th>
+            <td>
+                <label for="show_ads"><input type="checkbox" id="show_ads" value="1">
+                    <span class="trans" data-transid="selectShowAdDesc">Show ads :)</span>
+                </label>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="selectShowFooter">Show footer:</span>
+            </th>
+            <td>
+                <label for="show_footer"><input type="checkbox" id="show_footer" value="1">
+                    <span class="trans" data-transid="selectShowFooterDesc">Show footer with total/average data</span>
+                </label>
+
+            </td>
+        </tr>
+
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="selectDisplayInfo">Display information:</span>
+            </th>
+            <td>
+                <select id="display_id">
+                    <option value="DisplayVisitsSummary" class="trans" data-transid="textDisplayVisitsSummary">Visits</option>
+                    <option value="DisplayVisitorsSummary" class="trans" data-transid="textDisplayVisitorsSummary">Absolute Unique Visitors</option>
+                    <option value="DisplayPageviewsSummary" class="trans" data-transid="textDisplayPageviewsSummary">Pageviews</option>
+                    <option value="DisplayAvgPageviewsSummary" class="trans" data-transid="textDisplayAvgPageviewsSummary">Average Pageviews</option>
+                    <option value="DisplayTimeOnSiteSummary" class="trans" data-transid="textDisplayTimeOnSiteSummary">Time on Site</option>
+                    <option value="DisplayBounceRateSummary" class="trans" data-transid="textDisplayBounceRateSummary">Bounce Rate</option>
+                    <option value="DisplayNewVisitsSummary" class="trans" data-transid="textDisplayNewVisitsSummary">New Visits</option>
+                </select>
+                <small>
+                    <span class="trans" data-transid="selectDisplayInfoDesc">What information will be displayed in icon and popup text.</span>
+                </small>
+            </td>
+        </tr>
+
+        <tr>
+            <th>
+                <span class="trans" data-transid="donationCaption">Make a donation:</span>
+            </th>
+            <td>
+                <form target="_blank" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="5B68J8LX9Z6MC">
+                    <input type="image"
+                           src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit"
+                           alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+                <small>
+                    <span class="trans" data-transid="donationDescr">Has Stats Checker for Google Analytics™ been useful to you? If so, please donate!</span>
+                </small>
+            </td>
+        </tr>
+
+
+        <tr>
+
+            <th>&nbsp;</th>
+            <td>
+                <button id="save_options_button"><img src="img/disk-return-black.png"
+                                                      style="vertical-align:bottom;">
+                    <span class="trans" data-transid="save">Save</span>
+                </button>
+                <div id="status"></div>
+            </td>
+        </tr>
+    </table>
+
+
+    <a href="http://twitter.com/share" class="twitter-share-button"
+       data-url="http://mystatschecker.com" data-count="horizontal"
+       data-via="MasterAGB">Tweet</a>
+    <script type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>
+    <br>
+
+    <div id="fb-root"></div>
+
+
+    <iframe src="https://www.facebook.com/plugins/like.php?href=http://mystatschecker.com&amp;send=false&amp;layout=standard&amp;width=450&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=80&amp;appId=323476654413722"
+            scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:450px; height:80px;"
+            allowTransparency="true"></iframe>
+
+
+</div>
+
+<p class="standout">
+    Google Analytics™ is a trademark of Google Inc. Use of this trademark is subject to Google Permissions.
+</p>
+</div>
+
+<div id="t"></div>
+
+
+</body>
+</html>

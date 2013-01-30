@@ -20,6 +20,10 @@
         "description": ""
     },
 
+	"fullscreen": {
+        "message": "Open in new tab"
+    },
+
 	"selectAccountId": {
         "message": "Account:",
         "description": ""
@@ -35,7 +39,7 @@
 	"selectProfileIdDesc": {
         "message": "Pick a site for showing reports",
         "description": ""
-    },	
+    },
 	"save": {
         "message": "Save",
         "description": ""
@@ -53,10 +57,27 @@
         "description": ""
     },
 	"googleAccEmail": {
-        "message": "Your Google Account:",
-        "description": ""
+        "message": "Your Google Account:"
     },
 
+
+
+	"dateRangeName": {
+        "message": "Date Range:"
+    },
+	"dateRangeNameDescr": {
+        "message": "Date Range for displaying analytics on pressing a profile"
+    },
+
+
+"favoritedProfiles": {"message": "Favorites"},
+"allProfiles": {"message": "All profiles"},
+
+
+"leaveAComment": {"message": "Missing something in this extension? Suggestions? Please, leave a comment!"},
+
+    "selectPeriod": {"message": "Period:"},
+    "textDisplayProfile": {"message": "Profile"},
 
 "selectShowFooter": {"message": "Show footer:"},
 	"selectShowFooterDesc": {"message": "Show footer with total/average data"},
@@ -68,15 +89,26 @@
 	"selectDisplayInfo": {"message": "Display information:"},
 	"selectDisplayInfoDesc": {"message": "What information will be displayed in icon and popup text."},
 	"textDisplayVisitsSummary": {"message": "Visits"},
+	"textDisplayVisitsSmSummary": {"message": "Visits"},
 	"textDisplayVisitorsSummary": {"message": "Absolute Unique Visitors"},
+    "textDisplayVisitorsSmSummary": {"message": "Unique Visitors"},
 	"textDisplayPageviewsSummary": {"message": "Pageviews"},
 	"textDisplayAvgPageviewsSummary": {"message": "Average Pageviews"},
+    "textDisplayAvgPageviewsSmSummary": {"message": "Average Pageviews"},
 	"textDisplayTimeOnSiteSummary": {"message": "Time on Site"},
+    "textDisplayTimeOnSiteSmSummary": {"message": "Time on Site"},
 	"textDisplayBounceRateSummary": {"message": "Bounce Rate"},
+	"textDisplayBounceRateSmSummary": {"message": "Bounce Rate"},
 	"textDisplayNewVisitsSummary": {"message": "New Visits"},
-   
-    
-    
+
+
+    "dateRangeToday": {"message": "Today"},
+   	"dateRange7Days": {"message": "7 days"},
+   	"dateRange30Days": {"message": "30 days"},
+   	"dateRangeRealtime": {"message": "Real-Time"},
+
+
+
     "googleAccChange": {
         "message": "Not you? You can <a target=\"_blank\" href=\"$logoutUrl$\">login with other account</a>",
         "placeholders": {

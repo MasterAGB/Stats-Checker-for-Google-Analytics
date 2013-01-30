@@ -1,0 +1,216 @@
+<!doctype html>
+<html ng-csp ng-app>
+<head>
+    <title>Stats Checker for Google Analytics™</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" href="style.css?1.4.6">
+
+    <script type="text/javascript" src="js/analytics.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+
+    <script src="/js/highcharts/js/highcharts.js"></script>
+    <script src="/js/highcharts/js/modules/exporting.js"></script>
+
+    <script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/popup.js"></script>
+</head>
+<body style="overflow:hidden;">
+<div id="placeholder"></div>
+
+<!--
+
+
+    "app":{
+        "launch":{
+            "local_path":"app.html"
+        }
+    },
+
+-->
+
+
+
+
+
+<span style="float:right;text-align:right;">
+    <a id="new_analytics" target="_blank" href="https://www.google.com/analytics/web/"><span class="icon"></span>Google
+        analytics</a><br/>
+    <a id="open_options" href="#" class="trans" data-transid="options">Options</a>
+    <br/>
+     <a id="open_full" href="#" class="trans" data-transid="fullscreen">Full screen</a>
+</span>
+
+
+    <b>
+        <span class="trans" data-transid="googleAccEmail">Your Google E-mail</span>
+
+    </b> <a href="https://profiles.google.com/" target="_blank"><span id="googleAcc">Your Google Account</span><span
+        class="external"></span></a>
+    <small id="googleAccChange">Change google account</small>
+
+
+    <table cellspacing="0" cellpadding="0" border="0" class="account_table_top_row">
+        <tbody>
+        <tr>
+            <td align="left" style="vertical-align: top; ">
+                <div class="account_table_top_text">
+                    <span class="trans" data-transid="selectAccountId">Account:</span> <select id="account_id">
+                    <option value="">Loading...</option>
+                </select>
+                    <span id="loading_new_account_table" style=""><img src="img/spinner16dark.gif"></span>
+				<span style="position:absolute;margin-top:2px;margin-left:4px;">
+					<g:plusone size="medium"
+                               href="http://mystatschecker.com"></g:plusone>
+				</span>
+                </div>
+            </td>
+            <td align="left" style="vertical-align: top; ">
+
+
+                <div class="graph_date_options" id="graph_date_options_GraphControls">
+                    <dl>
+                        <dt class="trans" data-transid="selectPeriod">Period:</dt>
+                        <dd>
+                            <div id="view_by_nth_day" class="view_by_nth_day alt"><a href="#" id="gdf_nth_day"
+                                                                                     class="gdf_nth selected"
+                                                                                     title="Day">Day</a>
+                            </div>
+                            <div id="view_by_nth_yesterday" class="view_by_nth_yesterday alt"><a href="#"
+                                                                                                 id="gdf_nth_yesterday"
+                                                                                                 class="gdf_nth selected"
+                                                                                                 title="Yesterday">Yesterday</a>
+                            </div>
+                            <div id="view_by_nth_week" class="view_by_nth_week "><a href="#" id="gdf_nth_week"
+                                                                                    class="gdf_nth active"
+                                                                                    title="Week">Week</a>
+                            </div>
+                            <div id="view_by_nth_month" class="view_by_nth_month "><a href="#" id="gdf_nth_month"
+                                                                                      class="gdf_nth active"
+                                                                                      title="Month">Month</a>
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div id="table_scroll_limit">
+        <table cellpadding="0" border="0" cellspacing="0" class="profile_list_table" id="clone_header">
+            <thead>
+            <tr>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td></td>
+            </tr>
+            </tfoot>
+        </table>
+        <div id="table_scroll">
+            <table cellpadding="0" border="0" cellspacing="0" class="profile_list_table" id="real_table">
+                <colgroup>
+                    <col/>
+                    <col width=9%/>
+                    <col width=9%/>
+                    <col width=12%/>
+                    <col width=12%/>
+                    <col width=10%/>
+                    <col width=12%/>
+                    <col width=12%/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th align="left" class="caption trans" data-transid="textDisplayProfile">Profile</th>
+                    <th align="right" class="caption trans" data-transid="textDisplayVisitsSmSummary">Visits</th>
+                    <th align="right" class="caption trans" data-transid="textDisplayVisitorsSmSummary">Unique
+                        Visitors
+                    </th>
+                    <th align="right" class="caption trans" data-transid="textDisplayPageviewsSummary">Pageviews</th>
+                    <th align="right" class="caption trans" data-transid="textDisplayAvgPageviewsSmSummary">Average
+                        Pageviews
+                    </th>
+                    <th align="right" class="caption trans" data-transid="textDisplayTimeOnSiteSmSummary">Time on Site
+                    </th>
+                    <th align="right" class="caption trans" data-transid="textDisplayBounceRateSmSummary">Bounce Rate</th>
+                    <th align="right" class="caption trans" data-transid="textDisplayNewVisitsSummary">New Visits</th>
+                </tr>
+                </thead>
+
+                <tbody id="profiles_table_list">
+                <tr>
+                    <td></td>
+                </tr>
+                </tbody>
+
+                <tfoot>
+                <tr id="loading_table_profiles">
+                    <td colspan="9">
+                        <div class="loading_cell">&nbsp;</div>
+                    </td>
+                </tr>
+
+                <tr id="bottom_footer_row">
+                    <td colspan="9"></td>
+                </tr>
+
+                <tr id="total_row" style="display:none;">
+                    <td class="value" align="right"><b>Total</b>:</td>
+                    <td id="total_visits" class="value" align="left">0</td>
+                    <td id="total_uniqvisitors" class="value" align="left">0</td>
+                    <td id="total_pageviews" class="value" align="left">0</td>
+                    <td id="total_averagepageviews" class="value" align="left">0</td>
+                    <td id="total_timeonsite" class="value" align="left">00:00:00</td>
+                    <td id="total_bounce" class="value" align="left">0.00%</td>
+                    <td id="total_newvisits" class="value" align="left">0.00%</td>
+                </tr>
+                <tr id="avg_row" style="display:none;">
+                    <td class="value" align="right"><b>Average</b>:</td>
+                    <td id="avg_visits" class="value" align="left">0</td>
+                    <td id="avg_uniqvisitors" class="value" align="left">0</td>
+                    <td id="avg_pageviews" class="value" align="left">0</td>
+                    <td id="avg_averagepageviews" class="value" align="left">0</td>
+                    <td id="avg_timeonsite" class="value" align="left">00:00:00</td>
+                    <td id="avg_bounce" class="value" align="left">0.00%</td>
+                    <td id="avg_newvisits" class="value" align="left">0.00%</td>
+                </tr>
+
+
+                </tfoot>
+            </table>
+        </div>
+        <table cellpadding="0" border="0" cellspacing="0" class="profile_list_table" id="clone_footer"></table>
+    </div>
+    <br>
+
+
+    <div style="text-align: center;" class="ads">
+        <a title="1100AD - Online Multiplayer Browser Based Strategy Game" target="_blank"
+           href="http://1100ad.com/lands.php?member_id=221&site_id=1100ad.ga.ban.ext"><img
+                src="img/banners/1100AD_1_468x60.jpg" id="bannerImg" width="468" height="60"
+                alt="1100AD - Online Multiplayer Browser Based Strategy Game"/></a>
+    </div>
+
+    <div id="status"></div>
+    <a target="_blank" class="help_resources trans" data-transid="leaveAComment"
+       href="http://goo.gl/K6eBq">Missing something in this extension? Suggestions? Please, leave a comment!</a>
+
+    <a target="_blank" class="sodgame" href="http://sodgame.com/landing?member_id=221&site_id=sodgame.ga.ext"></a>
+    <a target="_blank" class="ad1100" href="http://1100ad.com/lands.php?member_id=221&site_id=1100ad.ga.ext"></a>
+    <a target="_blank" class="gplus" rel="me" href="https://plus.google.com/108333436522382896352"></a>
+
+    <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+
+
+
+</body>
+</html>
