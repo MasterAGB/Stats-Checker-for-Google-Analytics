@@ -33,6 +33,7 @@ if (typeof show_footer == 'string' && show_footer == 'false') {
     show_footer = true;
 }
 
+var profile_data = new Array();
 var profile_name_array = new Object();
 var property_name_array = new Object();
 var account_name_array = new Object();
@@ -310,7 +311,7 @@ function PleaseLogin(timerlength) {
 }
 
 function logg(text) {
-    //console.log(text);
+    console.log(text);
 }
 
 
@@ -345,7 +346,6 @@ function getGoogleToken(onCompleteFunction) {
 
 
                         googleToken = window_preload.token.value;
-                        console.log(googleToken);
                         onCompleteFunction();
                     }
                 });
@@ -353,6 +353,12 @@ function getGoogleToken(onCompleteFunction) {
             }
         }
     });
+}
+
+
+function getAccountProfiles(onCompleteFunction) {
+
+
 }
 
 function checkRatio(onCompleteFunction) {
@@ -363,11 +369,12 @@ function checkRatio(onCompleteFunction) {
 
         e.setIcon({path:"img/spinner16.gif"});
 
-        console.log(googleToken);
 
         //if(profile_id!=''){
         $.ajax({
-            url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+            //url: "https://www.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
+            //url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+            url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
             data:{token:googleToken},
             type:"POST",
             dataType:"json",
@@ -377,10 +384,6 @@ function checkRatio(onCompleteFunction) {
                 return false;
             },
             success:function (data) {
-                //$('#texta').val(data);
-
-                console.log(data);
-                console.log(data.components[0].row);
 
 
                 profile_name_array = new Object();
@@ -403,6 +406,20 @@ function checkRatio(onCompleteFunction) {
                         profile_name_array[entity.id] = entity.label;
                         profile_count_array[property_parents[entity.parentId]]++;
                         profile_parents[entity.id] = property_parents[entity.parentId];
+
+                        profile_data[entity.id]=new Array();
+                        profile_data[entity.id]["visits"]=0;
+                        profile_data[entity.id]["timeonsite"]=0;
+                        profile_data[entity.id]["bounce"]=0;
+                        profile_data[entity.id]["conversion"]=0;
+                        //if(entity.id=="a3109102w35854782p35249396"){
+                            profile_data[entity.id]["visits"]=removecrap(entity.value[2].jsonData.json.data.formattedValue);
+                            profile_data[entity.id]["timeonsite"]=removecrap(entity.value[3].jsonData.json.data.formattedValue);
+                            profile_data[entity.id]["bounce"]=removecrap(entity.value[4].jsonData.json.data.formattedValue);
+                            profile_data[entity.id]["conversion"]=removecrap(entity.value[5].jsonData.json.data.formattedValue);
+                        //}
+                        //break;
+
                     }
 
                 }
@@ -415,18 +432,18 @@ function checkRatio(onCompleteFunction) {
 
                 }
 
-                console.log("Found accounts:");
-                console.log(account_name_array);
-                console.log("Found properties:");
-                console.log(property_name_array);
-                console.log("Found profiles:");
-                console.log(profile_name_array);
-                console.log("My profile id:");
-                console.log(profile_id);
-                console.log("Property count in accounts:");
-                console.log(property_count_array);
-                console.log("Profile count in accounts:");
-                console.log(profile_count_array);
+                logg("Found accounts:");
+                logg(account_name_array);
+                logg("Found properties:");
+                logg(property_name_array);
+                logg("Found profiles:");
+                logg(profile_name_array);
+                logg("My profile id:");
+                logg(profile_id);
+                logg("Property count in accounts:");
+                logg(property_count_array);
+                logg("Profile count in accounts:");
+                logg(profile_count_array);
 
                 if (typeof(onCompleteFunction) != "undefined") {
                     onCompleteFunction();
@@ -770,11 +787,12 @@ function showGraph(cur_profile_id, jrow, token) {
                 var metricLine = currentMetric.group[0].line[0].point;
 
 
-                console.log(metricName);
-                console.log(metricName2);
-                console.log(metricLine.length);
-                console.log(metricLine);
-
+                /*
+                 logg(metricName);
+                 logg(metricName2);
+                 logg(metricLine.length);
+                 logg(metricLine);
+                 */
 
                 GraphName = currentMetric.group[0].displayName;
                 GraphSubName = currentMetric.group[0].groupId;
@@ -994,11 +1012,44 @@ function fill_info(cur_profile_id, jrow, token) {
 
 
 function init_popup(picked_account_id) {
-    checkRatio(function () {
-        $('#clone_header').html('');
-        $('#clone_footer').html('');
 
-        _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
+    _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
+
+    $('#clone_header').html('');
+    $('#clone_footer').html('');
+
+    $('.headerSortDown').removeClass('headerSortDown');
+    $('.headerSortUp').removeClass('headerSortUp');
+
+    $('#loading_table_profiles').show();
+    $('#loading_new_account_table').show();
+    $("#profiles_table_list").html('');
+
+
+    $('#total_visits').html('0');
+    $('#total_uniqvisitors').html('0');
+    $('#total_pageviews').html('0');
+    $('#total_averagepageviews').html('0');
+    $('#total_timeonsite').html('00:00:00');
+    $('#total_bounce').html('0%');
+    $('#total_newvisits').html('0%');
+
+
+    $('#avg_visits').html('0');
+    $('#avg_uniqvisitors').html('0');
+    $('#avg_pageviews').html('0');
+    $('#avg_averagepageviews').html('0');
+    $('#avg_timeonsite').html('00:00:00');
+    $('#avg_bounce').html('0%');
+    $('#avg_newvisits').html('0%');
+
+
+    // return false;
+    adjustTable('init_popup start');
+
+
+    checkRatio(function () {
+
         //alert(picked_account_id);
         if (picked_account_id == undefined) {
             if (findfavourite(profile_id)) {
@@ -1007,36 +1058,6 @@ function init_popup(picked_account_id) {
                 picked_account_id = account_id;
             }
         }
-
-
-        $('.headerSortDown').removeClass('headerSortDown');
-        $('.headerSortUp').removeClass('headerSortUp');
-
-        $('#loading_table_profiles').show();
-        $('#loading_new_account_table').show();
-        $("#profiles_table_list").html('');
-
-
-        $('#total_visits').html('0');
-        $('#total_uniqvisitors').html('0');
-        $('#total_pageviews').html('0');
-        $('#total_averagepageviews').html('0');
-        $('#total_timeonsite').html('00:00:00');
-        $('#total_bounce').html('0%');
-        $('#total_newvisits').html('0%');
-
-
-        $('#avg_visits').html('0');
-        $('#avg_uniqvisitors').html('0');
-        $('#avg_pageviews').html('0');
-        $('#avg_averagepageviews').html('0');
-        $('#avg_timeonsite').html('00:00:00');
-        $('#avg_bounce').html('0%');
-        $('#avg_newvisits').html('0%');
-
-
-        // return false;
-        adjustTable('init_popup start');
 
 
         $.ajax({
@@ -1145,23 +1166,20 @@ function init_popup(picked_account_id) {
                     $('#googleAcc').html(googleEmail);
                 }
 
-
+                console.log(picked_account_id);
                 if (picked_account_id != 'favorited') {
 
-                    if (picked_account_id != 'all')
+                    //if (picked_account_id != 'all')
                     /*  if (typeof profile_count_array[picked_account_id] == 'undefined') {
                      picked_account_id = window_preload.accounts[0].id;
                      }
                      */
                     //alert(profile_count_array[picked_account_id]);
 
-                        var tr_array = new Array();
-
+                    var tr_array = new Array();
 
                     for (var i_profile_id in profile_name_array) {
                         if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
-
-
                             tr_array.push(i_profile_id);
                         }
                     }
@@ -1207,8 +1225,7 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
             }
             radiobox += '/>';
 
-            if (new_analytics) {
-                //console.log(date_range);
+
                 switch (date_range) {
                     case '7days':
                         var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
@@ -1221,7 +1238,6 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
                         break;
                     case '30days':
                     default:
-
                         var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
                         break;
 
@@ -1229,12 +1245,9 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
                 }
 
 
-                var profileurl = 'https://www.google.com/analytics/web/#management/Property/' + key + '/%3FpropertyComposite-profilesTab-profilesComposite.tabId%3DeditProfile/';
-                //var profileurl = 'https://www.google.com/analytics/web/#management/Property/' + key + '/propertyComposite-profilesTab-profilesComposite-tabControl.tabId=editProfile';
-            } else {
-                var reportingurl = 'https://www.google.com/analytics/reporting/?reset=1&id=' + key + '&pdr=' + monthagotoday + '-' + today + '';
-                var profileurl = 'https://www.google.com/analytics/settings/profile_summary?id=' + key + '';
-            }
+            var profileurl = 'https://www.google.com/analytics/web/#management/Profile/' + key + '/%3FpropertyComposite-profilesTab-profilesComposite.tabId%3DeditProfile%26profile.tabId%3DeditProfile/';
+            var propertyurl = 'https://www.google.com/analytics/web/#management/Property/' + key + '/%3FpropertyComposite.tabId%3DpropertySettingsTab/';
+            var accounturl = 'https://www.google.com/analytics/web/#management/Account/' + key + '/%3FaccountComposite.tabId%3DeditAccountSettings/';
 
 
             var another_tr = '<tr class="' + trclass + '" rel_profile="' + key + '">' +
@@ -1244,14 +1257,16 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
                 '<div class="profile_name_div">' + favico + '' + radiobox + '<a class="info_name" title="' + val + '" target="_blank" href="' + reportingurl + '">' + val + '</a></div>' +
                 '</div></td>' +
 
-                '<td class="value info_visits td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
+                '<td class="value info_visits td-radio" align="left"><div class="loading_cell">'+profile_data[key]["visits"]+'</div></td>' +
                 '<td class="value info_uniqvisitors td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
                 '<td class="value info_pageviews td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
                 '<td class="value info_averagepageviews td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
-                '<td class="value info_timeonsite td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
-                '<td class="value info_bounce td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
+                '<td class="value info_timeonsite td-radio" align="left"><div class="loading_cell">'+profile_data[key]["timeonsite"]+'</div></td>' +
+                '<td class="value info_bounce td-radio" align="left"><div class="loading_cell">'+profile_data[key]["bounce"]+'</div></td>' +
                 '<td class="value info_newvisits td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
+                '<td class="value info_conversion td-radio" align="left"><div class="loading_cell">'+profile_data[key]["conversion"]+'</div></td>' +
                 "</tr>"
+
 
             if (findfavourite(key)) {
                 favorited_tr += another_tr;
@@ -1512,22 +1527,22 @@ function init_options(picked_account_id) {
                     if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
 
 
-                            var selected_option = '';
-                            if (i_profile_id == profile_id) selected_option = 'selected="selected"';
+                        var selected_option = '';
+                        if (i_profile_id == profile_id) selected_option = 'selected="selected"';
 
-                            $("#profile_id").append(
-                                '<option ' +
-                                    selected_option +
-                                    ' value="' +
-                                    i_profile_id +
-                                    '">' +
-                                    profile_name_array[i_profile_id] +
-                                    "</option>"
-                            );
-                            $('#loading_profile').hide();
-                            $('#loading_profile_id').hide();
+                        $("#profile_id").append(
+                            '<option ' +
+                                selected_option +
+                                ' value="' +
+                                i_profile_id +
+                                '">' +
+                                profile_name_array[i_profile_id] +
+                                "</option>"
+                        );
+                        $('#loading_profile').hide();
+                        $('#loading_profile_id').hide();
 
-                            $('#edit_profile').show();
+                        $('#edit_profile').show();
 
 
                     }
