@@ -586,74 +586,72 @@ function getTodayData(key, completeFunction, errorFunction) {
 function checkRatio() {
     e.setIcon({path:"img/spinner16.gif"});
 
-    getAccountProfiles(function(){
+    getAccountProfiles(function () {
 
 
+        if (display_id == "RealTime") {
 
-                if (display_id == "RealTime") {
+            getRealtimeData(profile_id, function (badge_number) {
 
-                    getRealtimeData(profile_id, function (badge_number) {
+                profile_name = profile_name_array[profile_id];
+                localStorage["profile_name"] = profile_name;
 
-                        profile_name = profile_name_array[profile_id];
-                        localStorage["profile_name"] = profile_name;
+                e.setBadgeText({"text":badge_number});
+                e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
+                e.setIcon({path:"img/logo.32.png"});
+                e.setTitle({title:chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
 
-                        e.setBadgeText({"text":badge_number});
-                        e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
-                        e.setIcon({path:"img/logo.32.png"});
-                        e.setTitle({title:chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
+            }, function (data) {
 
-                    }, function (data) {
-
-                        logg('m_realtime=' + data);
-                        goOffline();
-                    });
-
-
-                } else {
-
-                    getTodayData(profile_id, function (badge_number) {
-
-                        profile_name = profile_name_array[profile_id];
-                        localStorage["profile_name"] = profile_name;
+                logg('m_realtime=' + data);
+                goOffline();
+            });
 
 
-                        if (m_today != null) {
-                            m_today = removecrap(m_today);
-                            m_today = m_today.replace(".", '');
-                            //alert('-'+m_today+'-');
-                            //alert('-'+m_today+'-');
+        } else {
 
-                            var badge_number = '0';
-                            if (m_today > 9999) {
-                                var module = m_today / 1000;
-                                badge_number = Math.floor(module) + 'K';
-                            } else {
-                                badge_number = m_today;
-                            }
+            getTodayData(profile_id, function (m_today) {
 
-                            e.setBadgeText({"text":badge_number});
-                            e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
-                            e.setIcon({path:"img/logo.32.png"});
-                            e.setTitle({title:chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
-
-                        }
+                profile_name = profile_name_array[profile_id];
+                localStorage["profile_name"] = profile_name;
 
 
-                    }, function (data) {
+                if (m_today != null) {
+                    m_today = removecrap(m_today);
+                    m_today = m_today.replace(".", '');
+                    //alert('-'+m_today+'-');
+                    //alert('-'+m_today+'-');
 
-                        logg('m_realtime=' + data);
-                        goOffline();
-                    });
+                    var badge_number = '0';
+                    if (m_today > 9999) {
+                        var module = m_today / 1000;
+                        badge_number = Math.floor(module) + 'K';
+                    } else {
+                        badge_number = m_today;
+                    }
 
-
-                    //var url = "https://www.google.com/analytics/web/getPage?_.date00=" + today + "&_.date01=" + today + "&id=visitors-overview&ds=" + profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
-
+                    e.setBadgeText({"text":badge_number});
+                    e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
+                    e.setIcon({path:"img/logo.32.png"});
+                    e.setTitle({title:chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
 
                 }
 
 
+            }, function (data) {
 
-});
+                logg('m_realtime=' + data);
+                goOffline();
+            });
+
+
+            //var url = "https://www.google.com/analytics/web/getPage?_.date00=" + today + "&_.date01=" + today + "&id=visitors-overview&ds=" + profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+
+
+        }
+
+
+    });
 
 }
 
