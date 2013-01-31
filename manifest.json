@@ -22,7 +22,7 @@
     "permissions":[
         "https://www.google.com/analytics/*"
     ],
-    "version":"1.6.0.0",
+    "version":"1.6.0.2",
 
     "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
 

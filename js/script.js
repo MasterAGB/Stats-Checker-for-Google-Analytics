@@ -403,10 +403,10 @@ function getGoogleToken(onCompleteFunction) {
 function onInstall() {
     console.log("Extension Installed");
     if (isExtension()) {
-        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=ext'}, function (tab) {
+        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
         });
     } else {
-        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=app'}, function (tab) {
+        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
         });
     }
 }
@@ -414,10 +414,10 @@ function onInstall() {
 function onUpdate() {
     console.log("Extension Updated");
     if (isExtension()) {
-        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=ext'}, function (tab) {
+        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
         });
     } else {
-        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=app'}, function (tab) {
+        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
         });
     }
 }
@@ -439,9 +439,9 @@ function getAccountProfiles(onCompleteFunction) {
 
 
     if (isExtension()) {
-        $('#open_mystats').attr('href', 'http://mystatschecker.my/?ext');
+        $('#open_mystats').attr('href', 'http://mystatschecker.com/?ext');
     } else {
-        $('#open_mystats').attr('href', 'http://mystatschecker.my/?app');
+        $('#open_mystats').attr('href', 'http://mystatschecker.com/?app');
     }
 
 
