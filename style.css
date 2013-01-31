@@ -79,6 +79,7 @@ address {
 
 a {
 	color: #005C9C;
+    text-decoration: none;
 }
 
 .loading_cell {
@@ -312,6 +313,11 @@ height:6px;
 
 .profile_name div.profile_name_div .info_name {
 	position: absolute;
+}
+.profile_name div.profile_name_div span {
+    color: #888;
+    font-size: 10px;
+    padding-left:10px;
 }
 
 .edit_icon,.graph_icon {

@@ -159,6 +159,7 @@
    "textDisplayVisitsSummary": {
       "message": "Visitas"
    },
+   "textDisplayRealTimeSummary": {"message": "Real-Time"},
    "visitsToday": {
       "message": "$visitsName$ em «$profileName$» hoje: $visitsToday$",
       "placeholders": {

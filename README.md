@@ -10,6 +10,11 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6
+- Works with new Google Analytics version
+- Added Star/Favourite sync between Google Analytics and Extension
+
+
 Version 1.5.3.5
 - Added Portuguese language (Thanks, Fabio!)
 - Changed default language back to english :)

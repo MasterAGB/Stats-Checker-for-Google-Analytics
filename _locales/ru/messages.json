@@ -101,6 +101,7 @@
 	"textDisplayBounceRateSummary": {"message": "Показатель отказов"},
 	"textDisplayBounceRateSmSummary": {"message": "Отказы"},
 	"textDisplayNewVisitsSummary": {"message": "Новые посещения"},
+	"textDisplayRealTimeSummary": {"message": "Real-Time"},
 
 
 

@@ -100,6 +100,7 @@
 	"textDisplayBounceRateSummary": {"message": "Bounce Rate"},
 	"textDisplayBounceRateSmSummary": {"message": "Bounce Rate"},
 	"textDisplayNewVisitsSummary": {"message": "New Visits"},
+    "textDisplayRealTimeSummary": {"message": "Real-Time"},
 
 
     "dateRangeToday": {"message": "Today"},
