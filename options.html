@@ -3,7 +3,7 @@
 <head>
     <title>Stats Checker for Google Analytics™</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="style.css?1.4.1">
+    <link rel="stylesheet" type="text/css" href="style.css?1.6.0">
     <script type="text/javascript" src="js/analytics.js"></script>
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
     <script type="text/javascript" src="js/script.js?1.4.1"></script>
@@ -14,7 +14,7 @@
 
 <div class="white_block">
 <h2><img src="img/logo.32.png">
-    <span class="trans" data-transid="extName">Stats Checker for Google Analytics™ - Today visit count</span>
+    <a id="optionsName" href="app.html"><span class="trans" data-transid="extName">Stats Checker for Google Analytics™ - Today visit count</span></a>
     »
     <span class="trans" data-transid="options">Options</span>
 </h2>
@@ -68,7 +68,7 @@
         </tr>
 
 
-        <tr>
+        <tr id="row_update_interval">
             <th>
                 <span class="trans" data-transid="selectUpdateInterval">Select update interval:</span>
             </th>
@@ -130,7 +130,7 @@
         </tr>
 
 
-        <tr>
+        <tr id="row_display_id">
             <th>
                 <span class="trans" data-transid="selectDisplayInfo">Display information:</span>
             </th>

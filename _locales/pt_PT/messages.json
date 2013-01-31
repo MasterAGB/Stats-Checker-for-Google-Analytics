@@ -1,4 +1,5 @@
 {
+   "installExtension": {"message": "Instalar o Chrome barra de ferramentas para que exibe a contagem Visitantes em tempo real"},
    "allProfiles": {
       "message": "Todos os perfis"
    },

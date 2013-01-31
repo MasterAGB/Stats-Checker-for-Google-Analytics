@@ -7,6 +7,7 @@
         "default_title":"__MSG_extName__",
         "default_popup":"popup.html"
     },
+
     "name":"__MSG_extName__",
     "description":"__MSG_extDesc__",
     "icons":{
@@ -21,7 +22,7 @@
     "permissions":[
         "https://www.google.com/analytics/*"
     ],
-    "version":"1.6.0.1",
+    "version":"1.6.0.0",
 
     "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
 

@@ -337,6 +337,13 @@ tr:hover .edit_icon,tr:hover .graph_icon {
 }
 
 
+.extenstionInfo {
+    font-weight:bold;
+    display:block;
+    margin-bottom: 10px;
+}
+
+
 .standout {
 	background: whiteSmoke;
 	border: 1px solid #AAD388;
@@ -732,7 +739,7 @@ a.help_resources {
 	background: url(img/sprites.png) no-repeat -196px 0;
 }
 
-#new_analytics .icon, #old_analytics .icon {
+#new_analytics .icon, #old_analytics .icon, .icon_mystats {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
@@ -742,6 +749,9 @@ a.help_resources {
 
 #new_analytics .icon {
 	background: url(img/ga_icons.png) no-repeat 0 0;
+}
+.icon_mystats {
+	background: url(img/logo.16.png) no-repeat 0 0;
 }
 
 #old_analytics .icon {

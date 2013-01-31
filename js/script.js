@@ -6,6 +6,9 @@ function _s4Object() {
 
 
 e = chrome.browserAction;
+var current_version = "0";
+
+
 var googleToken = "";
 var googleEmail = "";
 var google_id = localStorage["google_id"];
@@ -72,46 +75,58 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function addfavourite(starbutton, profile_id_to_fav) {
-    favouriteProfiles.push(profile_id_to_fav);
+function addfavourite(starbutton, profile_id_to_fav, sync) {
+    if (typeof(sync) == "undefined") {
+        sync = true;
+    }
+    if (!findfavourite(profile_id_to_fav)) {
+        favouriteProfiles.push(profile_id_to_fav);
+    }
     localStorage['favouriteProfiles'] = JSON.stringify(favouriteProfiles);
-    $(starbutton).addClass('starred_icon');
-    $(starbutton).removeClass('unstarred_icon');
-    $(starbutton).parent().parent().parent().parent().addClass('favorited');
-
-    $.ajax({
-        url:"https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
-        data:{token:googleToken},
-        type:"POST",
-        dataType:"json",
-        error:function (XMLHttpRequest, textStatus, errorThrown) {
-        },
-        success:function (data) {
-        }
-    });
+    if (typeof(starbutton) == "object") {
+        $(starbutton).addClass('starred_icon');
+        $(starbutton).removeClass('unstarred_icon');
+        $(starbutton).parent().parent().parent().parent().addClass('favorited');
+    }
+    if (sync) {
+        $.ajax({
+            url:"https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
+            data:{token:googleToken},
+            type:"POST",
+            dataType:"json",
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            },
+            success:function (data) {
+            }
+        });
+    }
 
 }
-function removefavourite(starbutton, profile_id_to_fav) {
-
+function removefavourite(starbutton, profile_id_to_fav, sync) {
+    if (typeof(sync) == "undefined") {
+        sync = true;
+    }
     favouriteProfiles = jQuery.grep(favouriteProfiles, function (value) {
         return value != profile_id_to_fav;
     });
     localStorage['favouriteProfiles'] = JSON.stringify(favouriteProfiles);
-
-    $(starbutton).addClass('unstarred_icon');
-    $(starbutton).removeClass('starred_icon');
-    $(starbutton).parent().parent().parent().parent().removeClass('favorited');
-
-    $.ajax({
-        url:"https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
-        data:{token:googleToken},
-        type:"POST",
-        dataType:"json",
-        error:function (XMLHttpRequest, textStatus, errorThrown) {
-        },
-        success:function (data) {
-        }
-    });
+    if (typeof(starbutton) == "object") {
+        $(starbutton).addClass('unstarred_icon');
+        $(starbutton).removeClass('starred_icon');
+        $(starbutton).parent().parent().parent().parent().removeClass('favorited');
+    }
+    if (sync) {
+        $.ajax({
+            url:"https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
+            data:{token:googleToken},
+            type:"POST",
+            dataType:"json",
+            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            },
+            success:function (data) {
+            }
+        });
+    }
 }
 
 function togglefavourite(starbutton, profile_id_to_fav) {
@@ -316,10 +331,12 @@ function removecrap(value) {
 
 
 function goOffline() {
-    e.setBadgeBackgroundColor({"color":[128, 128, 128, 128]});
-    e.setIcon({path:"img/logo.offline.png"});
-    e.setBadgeText({"text":"?"});
-    e.setTitle({title:chrome.i18n.getMessage("loginToTheSystem")});
+    if (isExtension()) {
+        e.setBadgeBackgroundColor({"color":[128, 128, 128, 128]});
+        e.setIcon({path:"img/logo.offline.png"});
+        e.setBadgeText({"text":"?"});
+        e.setTitle({title:chrome.i18n.getMessage("loginToTheSystem")});
+    }
 }
 
 function PleaseLogin(timerlength) {
@@ -347,7 +364,10 @@ function getGoogleToken(onCompleteFunction) {
         data:'',
         method:'get',
         error:function (XMLHttpRequest, textStatus, errorThrown) {
-            logg('error');
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
+            logg('Error getting token');
             goOffline();
             return false;
         },
@@ -380,7 +400,63 @@ function getGoogleToken(onCompleteFunction) {
 }
 
 
+function onInstall() {
+    console.log("Extension Installed");
+    if (isExtension()) {
+        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=ext'}, function (tab) {
+        });
+    } else {
+        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=app'}, function (tab) {
+        });
+    }
+}
+
+function onUpdate() {
+    console.log("Extension Updated");
+    if (isExtension()) {
+        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=ext'}, function (tab) {
+        });
+    } else {
+        chrome.tabs.create({'url':'http://mystatschecker.my/?updated=' + current_version + '&type=app'}, function (tab) {
+        });
+    }
+}
+function getVersion() {
+    var details = chrome.app.getDetails();
+    current_version = details.version;
+    return details.version;
+}
+
+function isExtension() {
+    if (typeof(chrome.app.getDetails().background) != "undefined") {
+        return true;
+    }
+    return false;
+}
+
+
 function getAccountProfiles(onCompleteFunction) {
+
+
+    if (isExtension()) {
+        $('#open_mystats').attr('href', 'http://mystatschecker.my/?ext');
+    } else {
+        $('#open_mystats').attr('href', 'http://mystatschecker.my/?app');
+    }
+
+
+    var currVersion = getVersion();
+    var prevVersion = localStorage['version']
+    if (currVersion != prevVersion) {
+        // Check if we just installed this extension.
+        if (typeof prevVersion == 'undefined') {
+            onInstall();
+        } else {
+            onUpdate();
+        }
+        localStorage['version'] = currVersion;
+    }
+
 
     load_storage_variables();
     refreshdates();
@@ -435,7 +511,13 @@ function getAccountProfiles(onCompleteFunction) {
                         profile_data[entity.id]["bounce"] = 0;
                         profile_data[entity.id]["conversion"] = 0;
 
-                        //console.log(entity.value);
+                        if (entity.starred == true) {
+                            addfavourite('', entity.id, false);
+                        } else {
+                            removefavourite('', entity.id, false);
+                        }
+
+
                         if (entity.value.length > 2) {
                             profile_data[entity.id]["visits"] = removecrap(entity.value[2].jsonData.json.data.formattedValue);
                             profile_data[entity.id]["timeonsite"] = removecrap(entity.value[3].jsonData.json.data.formattedValue);
@@ -584,7 +666,11 @@ function getTodayData(key, completeFunction, errorFunction) {
 
 
 function checkRatio() {
-    e.setIcon({path:"img/spinner16.gif"});
+
+
+    if (isExtension()) {
+        e.setIcon({path:"img/spinner16.gif"});
+    }
 
     getAccountProfiles(function () {
 
@@ -596,11 +682,12 @@ function checkRatio() {
                 profile_name = profile_name_array[profile_id];
                 localStorage["profile_name"] = profile_name;
 
-                e.setBadgeText({"text":badge_number});
-                e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
-                e.setIcon({path:"img/logo.32.png"});
-                e.setTitle({title:chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
-
+                if (isExtension()) {
+                    e.setBadgeText({"text":badge_number});
+                    e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
+                    e.setIcon({path:"img/logo.32.png"});
+                    e.setTitle({title:chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
+                }
             }, function (data) {
 
                 logg('m_realtime=' + data);
@@ -630,10 +717,12 @@ function checkRatio() {
                         badge_number = m_today;
                     }
 
-                    e.setBadgeText({"text":badge_number});
-                    e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
-                    e.setIcon({path:"img/logo.32.png"});
-                    e.setTitle({title:chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
+                    if (isExtension()) {
+                        e.setBadgeText({"text":badge_number});
+                        e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
+                        e.setIcon({path:"img/logo.32.png"});
+                        e.setTitle({title:chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
+                    }
 
                 }
 
@@ -1087,9 +1176,25 @@ function fill_info(cur_profile_id, jrow, token) {
 
 }
 
+function eliminateDuplicates(arr) {
+    var i,
+        len = arr.length,
+        out = [],
+        obj = {};
+
+    for (i = 0; i < len; i++) {
+        obj[arr[i]] = 0;
+    }
+    for (i in obj) {
+        out.push(i);
+    }
+    return out;
+}
 
 function init_popup(picked_account_id) {
-
+    if(isExtension()){
+        $('.extenstionInfo').hide();
+    }
     _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
 
     $('#clone_header').html('');
@@ -1213,8 +1318,7 @@ function init_popup(picked_account_id) {
                         });
                     }
                 }
-                favouriteProfiles = favouriteProfiles2;
-                //profile_parents
+                favouriteProfiles = eliminateDuplicates(favouriteProfiles2);
 
 
                 var selected_option = '';
@@ -1476,6 +1580,11 @@ function edit_profile() {
 
 
 function init_options(picked_account_id) {
+    if(!isExtension()){
+        $('#row_update_interval').hide();
+        $('#row_display_id').hide();
+    }
+
     getAccountProfiles(function () {
         _gaq.push(['_trackEvent', 'init_options', 'clicked']);
 
