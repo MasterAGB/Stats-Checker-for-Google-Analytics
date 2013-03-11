@@ -375,23 +375,17 @@ function getGoogleToken(onCompleteFunction) {
             //$('#texta').val(data);
             if ((data.split('window.preload').length - 1) > 0) {
 
+
                 var account_options = $(data);
                 account_options.each(function () {
                     var script_contents = $(this).html();
 
-                    if ((script_contents.split('window.preload').length - 1) > 0) {
-                        script_contents = script_contents.split('window.').join('window_');
-
-                        script_contents = script_contents.split('; window_helpHost')[0];
-                        script_contents = script_contents.split('window_preload=')[1];
-
-
-                        var window_preload = JSON.parse(script_contents);
-
-
-                        googleToken = window_preload.token.value;
+                    if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
+                        googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
+                        //console.log(googleToken);
                         onCompleteFunction();
                     }
+
                 });
 
             }
@@ -444,16 +438,22 @@ function getAccountProfiles(onCompleteFunction) {
         $('#open_mystats').attr('href', 'http://mystatschecker.com/?app');
     }
 
-
     var currVersion = getVersion();
     var prevVersion = localStorage['version']
     if (currVersion != prevVersion) {
+
+
+        //TODO: elsi nomer versii osobo ne otlichajecca
+        //reklama na mystatschecker!!!
         // Check if we just installed this extension.
         if (typeof prevVersion == 'undefined') {
             onInstall();
         } else {
             onUpdate();
         }
+
+
+
         localStorage['version'] = currVersion;
     }
 
@@ -1230,8 +1230,8 @@ function init_popup(picked_account_id) {
     adjustTable('init_popup start');
 
 
-    getAccountProfiles(function () {
 
+    getAccountProfiles(function () {
         //alert(picked_account_id);
         if (picked_account_id == undefined) {
             if (findfavourite(profile_id)) {
@@ -1259,17 +1259,11 @@ function init_popup(picked_account_id) {
                 var account_options = $(data);
                 account_options.each(function () {
                     var script_contents = $(this).html();
-                    if ((script_contents.split('window.preload').length - 1) > 0) {
-                        script_contents = script_contents.split('window.').join('window_');
 
-
-                        script_contents = script_contents.split('; window_helpHost')[0];
-                        script_contents = script_contents.split('window_preload=')[1];
-                        window_preload = JSON.parse(script_contents);
-                        googleToken = window_preload.token.value;
-
-
+                    if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
+                        googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
                     }
+
 
                     if ((script_contents.split('ga.webanalytics.header.setHeaderInfo').length - 1) > 0) {
                         script_contents = script_contents.split('ga.webanalytics.header.main();').join('');
@@ -1282,7 +1276,7 @@ function init_popup(picked_account_id) {
                 });
 
 
-                if (typeof window_preload == 'undefined') {
+                if (typeof googleToken == 'undefined') {
                     PleaseLogin();
                     return false;
                 }
@@ -1614,16 +1608,12 @@ function init_options(picked_account_id) {
                 var account_options = $(data);
                 account_options.each(function () {
                     var script_contents = $(this).html();
-                    if ((script_contents.split('window.preload').length - 1) > 0) {
-                        script_contents = script_contents.split('window.').join('window_');
-                        //alert(script_contents);
 
-                        script_contents = script_contents.split('; window_helpHost')[0];
-                        script_contents = script_contents.split('window_preload=')[1];
-                        window_preload = JSON.parse(script_contents);
-                        googleToken = window_preload.token.value;
+                    if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
+                        googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
 
                     }
+
 
                     if ((script_contents.split('ga.webanalytics.header.setHeaderInfo').length - 1) > 0) {
                         script_contents = script_contents.split('ga.webanalytics.header.main();').join('');
@@ -1636,7 +1626,8 @@ function init_options(picked_account_id) {
                 });
 
 
-                if (typeof window_preload == 'undefined') {
+
+                if (typeof googleToken == 'undefined') {
                     $('#loading_profile').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
                     setTimeout(function () {
                         init_options();

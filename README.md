@@ -10,6 +10,9 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6.0.3
+- Google Analytics updated version support
+
 Version 1.6
 - Works with new Google Analytics version
 - Added Star/Favourite sync between Google Analytics and Extension
