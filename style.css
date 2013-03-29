@@ -320,7 +320,7 @@ height:6px;
     padding-left:10px;
 }
 
-.edit_icon,.graph_icon {
+.edit_icon,.graph_icon,.url_icon {
 	position: absolute;
 	right: 0px;
 	opacity: 0;
@@ -329,10 +329,12 @@ height:6px;
 }
 .graph_icon {
     right:16px;
-
+}
+.url_icon {
+    right:32px;
 }
 
-tr:hover .edit_icon,tr:hover .graph_icon {
+tr:hover .edit_icon,tr:hover .graph_icon,tr:hover .url_icon {
 	opacity: 1;
 }
 
@@ -760,7 +762,7 @@ a.help_resources {
 
 #table_scroll {
 	position: relative;
-	max-height: 415px;
+	max-height: 411px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	amargin-bottom: 10px;

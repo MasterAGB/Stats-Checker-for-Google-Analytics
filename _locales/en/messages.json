@@ -1,6 +1,8 @@
 {
 
-    "installExtension": {"message": "Install Chrome Toolbar Button for displaying visitors count in Real-time"},
+    "installExtension": {
+        "message": "Install Chrome Toolbar Button for displaying visitors count in Real-time"
+    },
     "extName": {
         "message": "Stats Checker for Google Analytics™ - Today visit count",
         "description": "Extension Name"
@@ -9,107 +11,177 @@
         "message": "Displays count of your site visits.",
         "description": "Extension Description"
     },
-	"loginToTheSystem": {
+    "loginToTheSystem": {
         "message": "Login to the system",
         "description": ""
     },
-	"loading": {
+    "loading": {
         "message": "Loading...",
         "description": ""
     },
-	"options": {
+    "options": {
         "message": "Options",
         "description": ""
     },
 
-	"fullscreen": {
+    "fullscreen": {
         "message": "Open in new tab"
     },
 
-	"selectAccountId": {
+    "selectAccountId": {
         "message": "Account:",
         "description": ""
     },
-	"selectAccountIdDesc": {
+    "selectAccountIdDesc": {
         "message": "Select an account to see the available profiles",
         "description": ""
     },
-	"selectProfileId": {
+    "selectProfileId": {
         "message": "Website profile:",
         "description": ""
     },
-	"selectProfileIdDesc": {
+    "selectProfileIdDesc": {
         "message": "Pick a site for showing reports",
         "description": ""
     },
-	"save": {
+    "save": {
         "message": "Save",
         "description": ""
     },
-	"saved": {
+    "saved": {
         "message": "Saved",
         "description": ""
     },
-	"donationCaption": {
+    "donationCaption": {
         "message": "Make a donation:",
         "description": ""
     },
-	"donationDescr": {
+    "donationDescr": {
         "message": "Has Stats Checker for Google Analytics™ been useful to you? If so, please donate!",
         "description": ""
     },
-	"googleAccEmail": {
+    "googleAccEmail": {
         "message": "Your Google Account:"
     },
 
 
-
-	"dateRangeName": {
+    "dateRangeName": {
         "message": "Date Range:"
     },
-	"dateRangeNameDescr": {
+    "dateRangeNameDescr": {
         "message": "Date Range for displaying analytics on pressing a profile"
     },
 
 
-"favoritedProfiles": {"message": "Favorites"},
-"allProfiles": {"message": "All profiles"},
+    "favoritedProfiles": {
+        "message": "Favorites"
+    },
+    "allProfiles": {
+        "message": "All profiles"
+    },
 
 
-"leaveAComment": {"message": "Missing something in this extension? Suggestions? Please, leave a comment!"},
+    "leaveAComment": {
+        "message": "Missing something in this extension? Suggestions? Please, leave a comment!"
+    },
 
-    "selectPeriod": {"message": "Period:"},
-    "textDisplayProfile": {"message": "Profile"},
+    "selectPeriod": {
+        "message": "Period:"
+    },
+    "textDisplayProfile": {
+        "message": "Profile"
+    },
 
-"selectShowFooter": {"message": "Show footer:"},
-	"selectShowFooterDesc": {"message": "Show footer with total/average data"},
-"selectShowAd": {"message": "Ads:"},
-	"selectShowAdDesc": {"message": "Show ads :)"},
-	"selectUpdateInterval": {"message": "Select update interval:"},
-	"selectUpdateIntervalDesc": {"message": "Smaller interval eats more memory"},
+    "selectShowFooter": {
+        "message": "Show footer:"
+    },
+    "selectShowFooterDesc": {
+        "message": "Show footer with total/average data"
+    },
+    "selectShowAd": {
+        "message": "Ads:"
+    },
+    "selectShowAdDesc": {
+        "message": "Show ads :)"
+    },
 
-	"selectDisplayInfo": {"message": "Display information:"},
-	"selectDisplayInfoDesc": {"message": "What information will be displayed in icon and popup text."},
-	"textDisplayVisitsSummary": {"message": "Visits"},
-	"textDisplayVisitsSmSummary": {"message": "Visits"},
-	"textDisplayVisitorsSummary": {"message": "Absolute Unique Visitors"},
-    "textDisplayVisitorsSmSummary": {"message": "Unique Visitors"},
-	"textDisplayPageviewsSummary": {"message": "Pageviews"},
-	"textDisplayAvgPageviewsSummary": {"message": "Average Pageviews"},
-    "textDisplayAvgPageviewsSmSummary": {"message": "Average Pageviews"},
-	"textDisplayTimeOnSiteSummary": {"message": "Time on Site"},
-    "textDisplayTimeOnSiteSmSummary": {"message": "Time on Site"},
-	"textDisplayBounceRateSummary": {"message": "Bounce Rate"},
-	"textDisplayBounceRateSmSummary": {"message": "Bounce Rate"},
-	"textDisplayNewVisitsSummary": {"message": "New Visits"},
-    "textDisplayRealTimeSummary": {"message": "Real-Time"},
+    "selectShowProperyNames": {
+        "message": "Propery names:"
+    },
+    "selectShowProperyNamesLabel": {
+        "message": "Show propery names"
+    },
+    "selectShowProperyNamesDesc": {
+        "message": "Show propery names with profile names, if differs. (Useful, when profile names are \"All Web Site Data\")"
+    },
 
 
-    "dateRangeToday": {"message": "Today"},
-   	"dateRange7Days": {"message": "7 days"},
-   	"dateRange30Days": {"message": "30 days"},
-   	"dateRangeRealtime": {"message": "Real-Time"},
+    "selectUpdateInterval": {
+        "message": "Select update interval:"
+    },
+    "selectUpdateIntervalDesc": {
+        "message": "Smaller interval eats more memory"
+    },
 
+    "selectDisplayInfo": {
+        "message": "Display information:"
+    },
+    "selectDisplayInfoDesc": {
+        "message": "What information will be displayed in icon and popup text."
+    },
+    "textDisplayVisitsSummary": {
+        "message": "Visits"
+    },
+    "textDisplayVisitsSmSummary": {
+        "message": "Visits"
+    },
+    "textDisplayVisitorsSummary": {
+        "message": "Absolute Unique Visitors"
+    },
+    "textDisplayVisitorsSmSummary": {
+        "message": "Unique Visitors"
+    },
+    "textDisplayPageviewsSummary": {
+        "message": "Pageviews"
+    },
+    "textDisplayAvgPageviewsSummary": {
+        "message": "Average Pageviews"
+    },
+    "textDisplayAvgPageviewsSmSummary": {
+        "message": "Average Pageviews"
+    },
+    "textDisplayTimeOnSiteSummary": {
+        "message": "Time on Site"
+    },
+    "textDisplayTimeOnSiteSmSummary": {
+        "message": "Time on Site"
+    },
+    "textDisplayBounceRateSummary": {
+        "message": "Bounce Rate"
+    },
+    "textDisplayBounceRateSmSummary": {
+        "message": "Bounce Rate"
+    },
+    "textDisplayNewVisitsSummary": {
+        "message": "New Visits"
+    },
+    "textDisplayRealTimeSummary": {
+        "message": "Real-Time"
+    },
+
+
+    "dateRangeToday": {
+        "message": "Today"
+    },
+    "dateRange7Days": {
+        "message": "7 days"
+    },
+    "dateRange30Days": {
+        "message": "30 days"
+    },
+    "dateRangeRealtime": {
+        "message": "Real-Time"
+    },
 
 
     "googleAccChange": {
@@ -121,7 +193,7 @@
             }
         }
     },
-	"visitsToday": {
+    "visitsToday": {
         "message": "$visitsName$ on «$profileName$» today: $visitsToday$",
         "placeholders": {
             "visitsToday": {

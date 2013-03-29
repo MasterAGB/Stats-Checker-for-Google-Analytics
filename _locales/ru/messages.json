@@ -86,6 +86,19 @@
 	"selectShowFooterDesc": {"message": "Показывать футер таблицы с суммарными данными"},
 "selectShowAd": {"message": "Реклама:"},
 	"selectShowAdDesc": {"message": "Показывать рекламу :)"},
+
+
+    "selectShowProperyNames": {
+        "message": "Название ресурса:"
+    },
+    "selectShowProperyNamesLabel": {
+        "message": "Показывать название ресурса"
+    },
+    "selectShowProperyNamesDesc": {
+        "message": "Показывать название ресурса вместе с названием профиля, если они разные. (Полезно, если названия профилей - \"Все данные по веб-сайту\")"
+    },
+
+
 	"selectUpdateInterval": {"message": "Выберите интервал обновления:"},
 	"selectUpdateIntervalDesc": {"message": "Меньший интервал ест больше памяти"},
 

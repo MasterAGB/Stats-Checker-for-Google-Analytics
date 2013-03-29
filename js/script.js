@@ -22,11 +22,17 @@ var new_analytics = localStorage["new_analytics"];
 var update_interval = localStorage["update_interval"];
 var date_range = localStorage["date_range"];
 var show_ads = localStorage["show_ads"];
+var show_properynames = localStorage["show_properynames"];
 //Cannot set booleans to localstorage :(
 if (typeof show_ads == 'string' && show_ads == 'false') {
     show_ads = false;
 } else {
     show_ads = true;
+}
+if (typeof show_properynames == 'string' && show_properynames == 'false') {
+    show_properynames = false;
+} else {
+    show_properynames = true;
 }
 var show_footer = localStorage["show_footer"];
 //Cannot set booleans to localstorage :(
@@ -39,6 +45,8 @@ if (typeof show_footer == 'string' && show_footer == 'false') {
 var profile_data = new Array();
 var profile_name_array = new Object();
 var property_name_array = new Object();
+var property_url_array = new Object();
+var profile_url_array = new Object();
 var account_name_array = new Object();
 
 var property_tracking_code = new Object();
@@ -62,8 +70,8 @@ ga.webanalytics.header.main = function (n) {
     //alert(n)
 }
 
-$.ajaxSetup({ cache:false });
-$.ajaxSetup({ async:true });
+$.ajaxSetup({ cache: false });
+$.ajaxSetup({ async: true });
 
 
 if (localStorage['favouriteProfiles'] != undefined) {
@@ -90,13 +98,13 @@ function addfavourite(starbutton, profile_id_to_fav, sync) {
     }
     if (sync) {
         $.ajax({
-            url:"https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
-            data:{token:googleToken},
-            type:"POST",
-            dataType:"json",
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            url: "https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
+            data: {token: googleToken},
+            type: "POST",
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
             },
-            success:function (data) {
+            success: function (data) {
             }
         });
     }
@@ -117,13 +125,13 @@ function removefavourite(starbutton, profile_id_to_fav, sync) {
     }
     if (sync) {
         $.ajax({
-            url:"https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
-            data:{token:googleToken},
-            type:"POST",
-            dataType:"json",
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            url: "https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
+            data: {token: googleToken},
+            type: "POST",
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
             },
-            success:function (data) {
+            success: function (data) {
             }
         });
     }
@@ -195,6 +203,15 @@ function load_storage_variables() {
         show_ads = false;
     } else {
         show_ads = true;
+    }
+    show_properynames = localStorage["show_properynames"];
+    if (!show_properynames) {
+        show_properynames = true;
+    }
+    if (typeof show_properynames == 'string' && show_properynames == 'false') {
+        show_properynames = false;
+    } else {
+        show_properynames = true;
     }
     show_footer = localStorage["show_footer"];
     if (!show_footer) {
@@ -332,15 +349,15 @@ function removecrap(value) {
 
 function goOffline() {
     if (isExtension()) {
-        e.setBadgeBackgroundColor({"color":[128, 128, 128, 128]});
-        e.setIcon({path:"img/logo.offline.png"});
-        e.setBadgeText({"text":"?"});
-        e.setTitle({title:chrome.i18n.getMessage("loginToTheSystem")});
+        e.setBadgeBackgroundColor({"color": [128, 128, 128, 128]});
+        e.setIcon({path: "img/logo.offline.png"});
+        e.setBadgeText({"text": "?"});
+        e.setTitle({title: chrome.i18n.getMessage("loginToTheSystem")});
     }
 }
 
 function PleaseLogin(timerlength) {
-    chrome.tabs.create({url:'https://www.google.com/analytics/web/'});
+    chrome.tabs.create({url: 'https://www.google.com/analytics/web/'});
     goOffline();
     $("#loading_new_account_table").hide();
     $('#googleAcc').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
@@ -360,10 +377,10 @@ function getGoogleToken(onCompleteFunction) {
 
 
     $.ajax({
-        url:"https://www.google.com/analytics/web/",
-        data:'',
-        method:'get',
-        error:function (XMLHttpRequest, textStatus, errorThrown) {
+        url: "https://www.google.com/analytics/web/",
+        data: '',
+        method: 'get',
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest);
             console.log(textStatus);
             console.log(errorThrown);
@@ -371,7 +388,7 @@ function getGoogleToken(onCompleteFunction) {
             goOffline();
             return false;
         },
-        success:function (data) {
+        success: function (data) {
             //$('#texta').val(data);
             if ((data.split('window.preload').length - 1) > 0) {
 
@@ -397,10 +414,10 @@ function getGoogleToken(onCompleteFunction) {
 function onInstall() {
     console.log("Extension Installed");
     if (isExtension()) {
-        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
         });
     } else {
-        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
         });
     }
 }
@@ -408,10 +425,10 @@ function onInstall() {
 function onUpdate() {
     console.log("Extension Updated");
     if (isExtension()) {
-        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
         });
     } else {
-        chrome.tabs.create({'url':'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
         });
     }
 }
@@ -453,7 +470,6 @@ function getAccountProfiles(onCompleteFunction) {
         }
 
 
-
         localStorage['version'] = currVersion;
     }
 
@@ -470,23 +486,26 @@ function getAccountProfiles(onCompleteFunction) {
         $.ajax({
             //url: "https://www.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
             //url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            url:"https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            data:{token:googleToken},
-            type:"POST",
-            dataType:"json",
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+            data: {token: googleToken},
+            type: "POST",
+            dataType: "json",
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 logg('error');
                 goOffline();
                 return false;
             },
-            success:function (data) {
+            success: function (data) {
 
 
                 profile_name_array = new Object();
                 account_name_array = new Object();
                 property_name_array = new Object();
+                property_url_array = new Object();
+                profile_url_array = new Object();
                 for (var entityId in data.components[0].row) {
                     var entity = data.components[0].row[entityId]
+
 
                     if (entity.entityName == "account") {
                         account_name_array[entity.id] = entity.label;
@@ -494,16 +513,27 @@ function getAccountProfiles(onCompleteFunction) {
                         property_count_array[entity.id] = 0;
                     }
                     if (entity.entityName == "property") {
+                        property_url_array[entity.id] = entity.value[1].toolTip;
+                        entity.label = entity.label.replace('http://', '');
                         property_name_array[entity.id] = entity.label;
                         property_count_array[entity.parentId]++;
                         property_parents[entity.id] = entity.parentId;
                         property_tracking_code[entity.id] = entity.value[1].jsonData.json.subTitle.text;
                     }
                     if (entity.entityName == "profile") {
-                        profile_name_array[entity.id] = entity.label;
+
+
+
+                        //if(entity.label=="All Web Site Data"){
+                        if (show_properynames && entity.label != property_name_array[entity.parentId]) {
+                            profile_name_array[entity.id] = entity.label + " (" + property_name_array[entity.parentId] + ")";
+                        } else {
+                            profile_name_array[entity.id] = entity.label;
+                        }
                         profile_count_array[property_parents[entity.parentId]]++;
                         profile_parents[entity.id] = property_parents[entity.parentId];
                         profile_tracking_code[entity.id] = property_tracking_code[entity.parentId];
+                        profile_url_array[entity.id] = property_url_array[entity.parentId];
 
                         profile_data[entity.id] = new Array();
                         profile_data[entity.id]["visits"] = 0;
@@ -563,13 +593,13 @@ function getAccountProfiles(onCompleteFunction) {
 
 function getRealtimeData(key, completeFunction, errorFunction) {
     $.ajax({
-        url:"https://www.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=t:0|:1|:0:&hl=en_US",
-        type:"GET",
-        dataType:"json",
-        error:function (XMLHttpRequest, textStatus, errorThrown) {
+        url: "https://www.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=t:0|:1|:0:&hl=en_US",
+        type: "GET",
+        dataType: "json",
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
             errorFunction(textStatus);
         },
-        success:function (data) {
+        success: function (data) {
             //console.log(data["t:0|:1|:0:"].metricTotals[0]);
             completeFunction(data["t:0|:1|:0:"].metricTotals[0] + "");
         }});
@@ -581,15 +611,15 @@ function getTodayData(key, completeFunction, errorFunction) {
 
     var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
     $.ajax({
-        url:url,
-        type:"POST",
-        data:"token=" + googleToken,
-        cache:false,
-        dataType:"json",
-        error:function (XMLHttpRequest, textStatus, errorThrown) {
+        url: url,
+        type: "POST",
+        data: "token=" + googleToken,
+        cache: false,
+        dataType: "json",
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
             errorFunction(textStatus);
         },
-        success:function (data) {
+        success: function (data) {
             var jsonArray = data;
             var comp_nr = 1;
             if (jsonArray.components[0].id == 'overview')comp_nr = 0;
@@ -669,7 +699,7 @@ function checkRatio() {
 
 
     if (isExtension()) {
-        e.setIcon({path:"img/spinner16.gif"});
+        e.setIcon({path: "img/spinner16.gif"});
     }
 
     getAccountProfiles(function () {
@@ -683,10 +713,10 @@ function checkRatio() {
                 localStorage["profile_name"] = profile_name;
 
                 if (isExtension()) {
-                    e.setBadgeText({"text":badge_number});
-                    e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
-                    e.setIcon({path:"img/logo.32.png"});
-                    e.setTitle({title:chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
+                    e.setBadgeText({"text": badge_number});
+                    e.setBadgeBackgroundColor({"color": [255, 127, 0, 255]});
+                    e.setIcon({path: "img/logo.32.png"});
+                    e.setTitle({title: chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
                 }
             }, function (data) {
 
@@ -718,10 +748,10 @@ function checkRatio() {
                     }
 
                     if (isExtension()) {
-                        e.setBadgeText({"text":badge_number});
-                        e.setBadgeBackgroundColor({"color":[255, 127, 0, 255]});
-                        e.setIcon({path:"img/logo.32.png"});
-                        e.setTitle({title:chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
+                        e.setBadgeText({"text": badge_number});
+                        e.setBadgeBackgroundColor({"color": [255, 127, 0, 255]});
+                        e.setIcon({path: "img/logo.32.png"});
+                        e.setTitle({title: chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
                     }
 
                 }
@@ -867,7 +897,7 @@ function adjustTable(txt) {
 
 
 jQuery.fn.fadeToggle = function (speed, easing, callback) {
-    return this.animate({opacity:'toggle'}, speed, easing, callback);
+    return this.animate({opacity: 'toggle'}, speed, easing, callback);
 };
 
 
@@ -923,14 +953,14 @@ function showGraph(cur_profile_id, jrow, token) {
     var url = "https://www.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
 
     $.ajax({
-        url:url,
-        type:"POST",
-        data:"token=" + googleToken,
-        cache:false,
-        beforeSend:function (xhr) {
+        url: url,
+        type: "POST",
+        data: "token=" + googleToken,
+        cache: false,
+        beforeSend: function (xhr) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         },
-        success:function (data, textStatus, jqXHR) {
+        success: function (data, textStatus, jqXHR) {
             var jsonArray = JSON.parse(data);
 
 
@@ -964,8 +994,8 @@ function showGraph(cur_profile_id, jrow, token) {
                 GraphSubName = currentMetric.group[0].groupId;
 
                 GraphSeries.push({
-                    name:GraphName,
-                    data:metricLine
+                    name: GraphName,
+                    data: metricLine
                 })
 
 
@@ -981,31 +1011,31 @@ function showGraph(cur_profile_id, jrow, token) {
              */
 
             Highcharts.theme = {
-                colors:[
+                colors: [
                     '#058dc7'],
-                yAxis:{
-                    gridLineColor:'#efefef',
-                    gridLineWidth:1
+                yAxis: {
+                    gridLineColor: '#efefef',
+                    gridLineWidth: 1
 
                 },
-                plotOptions:{
-                    area:{
-                        fillOpacity:0.1,
-                        lineWidth:4,
-                        marker:{
-                            enabled:true,
-                            radius:6,
-                            states:{
-                                hover:{
-                                    enabled:true,
-                                    radius:7
+                plotOptions: {
+                    area: {
+                        fillOpacity: 0.1,
+                        lineWidth: 4,
+                        marker: {
+                            enabled: true,
+                            radius: 6,
+                            states: {
+                                hover: {
+                                    enabled: true,
+                                    radius: 7
                                 }
                             }
                         },
-                        shadow:false,
-                        states:{
-                            hover:{
-                                lineWidth:4
+                        shadow: false,
+                        states: {
+                            hover: {
+                                lineWidth: 4
                             }
                         }
                     }
@@ -1018,69 +1048,69 @@ function showGraph(cur_profile_id, jrow, token) {
 
 
             chart = new Highcharts.Chart({
-                chart:{
-                    renderTo:'chart_div_' + cur_profile_id + '',
-                    type:'area',
-                    marginTop:45,
-                    marginLeft:0,
-                    marginRight:0,
-                    marginBottom:30
+                chart: {
+                    renderTo: 'chart_div_' + cur_profile_id + '',
+                    type: 'area',
+                    marginTop: 45,
+                    marginLeft: 0,
+                    marginRight: 0,
+                    marginBottom: 30
                 },
-                title:{
-                    text:GraphName,
-                    x:-20 //center
+                title: {
+                    text: GraphName,
+                    x: -20 //center
                 },
-                subtitle:{
-                    text:GraphSubName,
-                    x:-20
+                subtitle: {
+                    text: GraphSubName,
+                    x: -20
                 },
-                xAxis:{
-                    categories:dateArray
+                xAxis: {
+                    categories: dateArray
                 },
-                yAxis:{
-                    title:{
-                        text:GraphName
+                yAxis: {
+                    title: {
+                        text: GraphName
                     },
-                    plotLines:[
+                    plotLines: [
                         {
-                            value:0,
-                            width:1,
-                            color:'#808080'
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
                         }
                     ]
                 },
-                tooltip:{
-                    formatter:function () {
+                tooltip: {
+                    formatter: function () {
                         return '<b>' + this.x + '</b><br/>' +
                             this.series.name + ': <b>' + this.y + '</b>';
                     }
                 },
-                plotOptions:{
-                    area:{
-                        marker:{
-                            enabled:true,
-                            symbol:'circle',
-                            radius:4,
-                            states:{
-                                hover:{
-                                    enabled:true
+                plotOptions: {
+                    area: {
+                        marker: {
+                            enabled: true,
+                            symbol: 'circle',
+                            radius: 4,
+                            states: {
+                                hover: {
+                                    enabled: true
                                 }
                             }
                         }
                     }
                 },
 
-                legend:{
-                    layout:'horizontal',
-                    align:'left',
-                    verticalAlign:'top',
-                    y:-10,
-                    x:10,
-                    borderWidth:0
+                legend: {
+                    layout: 'horizontal',
+                    align: 'left',
+                    verticalAlign: 'top',
+                    y: -10,
+                    x: 10,
+                    borderWidth: 0
                 },
 
 
-                series:GraphSeries
+                series: GraphSeries
             });
 
             adjustTable('graph_open');
@@ -1098,14 +1128,14 @@ function fill_info(cur_profile_id, jrow, token) {
     var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
 
     $.ajax({
-        url:url,
-        type:"POST",
-        data:"token=" + googleToken,
-        cache:false,
-        beforeSend:function (xhr) {
+        url: url,
+        type: "POST",
+        data: "token=" + googleToken,
+        cache: false,
+        beforeSend: function (xhr) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         },
-        success:function (data, textStatus, jqXHR) {
+        success: function (data, textStatus, jqXHR) {
             var jsonArray = JSON.parse(data);
             var comp_nr = 1;
             if (jsonArray.components[0].id == 'overview')comp_nr = 0;
@@ -1192,7 +1222,7 @@ function eliminateDuplicates(arr) {
 }
 
 function init_popup(picked_account_id) {
-    if(isExtension()){
+    if (isExtension()) {
         $('.extenstionInfo').hide();
     }
     _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
@@ -1230,7 +1260,6 @@ function init_popup(picked_account_id) {
     adjustTable('init_popup start');
 
 
-
     getAccountProfiles(function () {
         //alert(picked_account_id);
         if (picked_account_id == undefined) {
@@ -1243,14 +1272,14 @@ function init_popup(picked_account_id) {
 
 
         $.ajax({
-            url:"https://www.google.com/analytics/web/",
-            data:'',
-            method:'get',
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            url: "https://www.google.com/analytics/web/",
+            data: '',
+            method: 'get',
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 PleaseLogin();
                 return false;
             },
-            success:function (data) {
+            success: function (data) {
 
 
                 var window_preload = undefined;
@@ -1427,6 +1456,7 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
             var another_tr = '<tr class="' + trclass + '" rel_profile="' + key + '">' +
                 '<td class="value profile_name" align="left"><div>' +
                 '<a title="Edit" class="edit_icon" target="_blank" href="' + profileurl + '"><img src="../img/pencil_icon.gif"></a>' +
+                ((profile_url_array[key] == '-') ? '' : '<a target="_blank" title="Go to: ' + profile_url_array[key] + '" class="url_icon" target="_blank" href="' + profile_url_array[key] + '"><img src="../img/web_profile.png"></a>') +
                 '<a title="Show graph" class="graph_icon" target="_blank" hhref="' + reportingurl + '" data-profileid="' + key + '" data-token="' + googleToken + '"><img src="../img/line_graph.png"></a>' +
                 '<div class="profile_name_div">' + favico + '' + radiobox + '<a class="info_name" title="' + val + '" target="_blank" href="' + reportingurl + '">' + profile_name_array[key] + " <span>" + profile_tracking_code[key] + "</span>" + '</a></div>' +
                 '</div></td>' +
@@ -1518,6 +1548,13 @@ function save_options() {
         _gaq.push(['_trackEvent', 'show_ads', 'false']);
         localStorage["show_ads"] = false;
     }
+    if ($('#show_properynames').attr('checked') == 'checked') {
+        _gaq.push(['_trackEvent', 'show_properynames', 'true']);
+        localStorage["show_properynames"] = true;
+    } else {
+        _gaq.push(['_trackEvent', 'show_properynames', 'false']);
+        localStorage["show_properynames"] = false;
+    }
     if ($('#show_footer').attr('checked') == 'checked') {
         _gaq.push(['_trackEvent', 'show_footer', 'true']);
         localStorage["show_footer"] = true;
@@ -1537,6 +1574,12 @@ function save_options() {
         show_ads = false;
     } else {
         show_ads = true;
+    }
+    show_properynames = localStorage["show_properynames"];
+    if (typeof show_properynames == 'string' && show_properynames == 'false') {
+        show_properynames = false;
+    } else {
+        show_properynames = true;
     }
     show_footer = localStorage["show_footer"];
     if (typeof show_footer == 'string' && show_footer == 'false') {
@@ -1574,7 +1617,7 @@ function edit_profile() {
 
 
 function init_options(picked_account_id) {
-    if(!isExtension()){
+    if (!isExtension()) {
         $('#row_update_interval').hide();
         $('#row_display_id').hide();
     }
@@ -1590,17 +1633,17 @@ function init_options(picked_account_id) {
 
         $('#loading_profile_id').show();
         $.ajax({
-            url:"https://www.google.com/analytics/web/",
-            data:'',
-            method:'get',
-            error:function (XMLHttpRequest, textStatus, errorThrown) {
+            url: "https://www.google.com/analytics/web/",
+            data: '',
+            method: 'get',
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
                 $('#loading_profile').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
                 setTimeout(function () {
                     init_options();
                 }, 5000);
                 return false;
             },
-            success:function (data) {
+            success: function (data) {
 
                 var window_preload = undefined;
                 var window_header = undefined;
@@ -1624,7 +1667,6 @@ function init_options(picked_account_id) {
                     }
 
                 });
-
 
 
                 if (typeof googleToken == 'undefined') {
@@ -1696,6 +1738,7 @@ function init_options(picked_account_id) {
                 $("#update_interval").val(update_interval);
                 $("#date_range").val(date_range);
                 $("#show_ads").attr('checked', show_ads);
+                $("#show_properynames").attr('checked', show_properynames);
                 $("#show_footer").attr('checked', show_footer);
 
 
@@ -1734,12 +1777,12 @@ function init_options(picked_account_id) {
 
 
 function openOptions() {
-    chrome.tabs.create({'url':chrome.extension.getURL('options.html')}, function (tab) {
+    chrome.tabs.create({'url': chrome.extension.getURL('options.html')}, function (tab) {
         // Tab opened.
     });
 }
 function openFull() {
-    chrome.tabs.create({'url':chrome.extension.getURL('app.html')}, function (tab) {
+    chrome.tabs.create({'url': chrome.extension.getURL('app.html')}, function (tab) {
         // Tab opened.
     });
 }

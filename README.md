@@ -10,6 +10,11 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6.1
+- Added "Go To Propery Default URL" button
+- Showing propery names with profile names, if differs. (Useful, when profile names are "All Web Site Data")
+- Options page fix
+
 Version 1.6.0.3
 - Google Analytics updated version support
 
