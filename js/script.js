@@ -340,8 +340,8 @@ function removecrap(value) {
     value = value.replace(" ", '');
     value = value.replace(" ", '');
     value = value.replace("	", '');
-    value = value.replace(",", '');
     value = value.replace(String.fromCharCode(160), '');
+    value = value.split(',').join('');
     value = value.split(String.fromCharCode(160)).join('');
     return value;
 }
@@ -356,11 +356,27 @@ function goOffline() {
     }
 }
 
+
+function openErrorPopup(){
+    $('.error_popup_fade').show();
+    $('.error_popup').show();
+    $('#error_popup_button_close').hide();
+    $('#error_popup_button_close').bind('click',closeErrorPopup);
+}
+function closeErrorPopup(){
+    $('.error_popup_fade').hide();
+    $('.error_popup').hide();
+}
+
+
 function PleaseLogin(timerlength) {
-    chrome.tabs.create({url: 'https://www.google.com/analytics/web/'});
+    //chrome.tabs.create({url: 'https://www.google.com/analytics/web/'});
+
+    openErrorPopup();
     goOffline();
     $("#loading_new_account_table").hide();
     $('#googleAcc').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
+    $('#loading_profile').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
     $('#loading_table_profiles td').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
     setTimeout(function () {
         //checkRatio();
@@ -385,7 +401,8 @@ function getGoogleToken(onCompleteFunction) {
             console.log(textStatus);
             console.log(errorThrown);
             logg('Error getting token');
-            goOffline();
+            //goOffline();
+            PleaseLogin();
             return false;
         },
         success: function (data) {
@@ -422,6 +439,11 @@ function onInstall() {
     }
 }
 
+function onSmallUpdate() {
+    console.log("Extension Updated small");
+    localStorage["show_ads"] = true;
+}
+
 function onUpdate() {
     console.log("Extension Updated");
     if (isExtension()) {
@@ -456,7 +478,9 @@ function getAccountProfiles(onCompleteFunction) {
     }
 
     var currVersion = getVersion();
-    var prevVersion = localStorage['version']
+    var prevVersion = localStorage['version'];
+
+
     if (currVersion != prevVersion) {
 
 
@@ -466,10 +490,24 @@ function getAccountProfiles(onCompleteFunction) {
         if (typeof prevVersion == 'undefined') {
             onInstall();
         } else {
-            onUpdate();
+            var parts_cur = currVersion.split('.');
+            var parts_prev = prevVersion.split('.');
+            for (var i = 0; i < 4; i++) {
+                if (typeof(parts_cur[i]) == "undefined")parts_cur[i] = 0;
+                if (typeof(parts_prev[i]) == "undefined")parts_prev[i] = 0;
+            }
+            if (
+                parts_cur[0] == parts_prev[0] &&
+                    parts_cur[1] == parts_prev[1] &&
+                    parts_cur[2] == parts_prev[2] &&
+                    parts_cur[3] != parts_prev[3]
+                ) {
+                onSmallUpdate();
+            } else {
+                onUpdate();
+            }
+
         }
-
-
         localStorage['version'] = currVersion;
     }
 
@@ -491,8 +529,9 @@ function getAccountProfiles(onCompleteFunction) {
             type: "POST",
             dataType: "json",
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                logg('error');
-                goOffline();
+                logg('Error getting page!');
+                //goOffline();
+                PleaseLogin();
                 return false;
             },
             success: function (data) {
@@ -515,18 +554,27 @@ function getAccountProfiles(onCompleteFunction) {
                     if (entity.entityName == "property") {
                         property_url_array[entity.id] = entity.value[1].toolTip;
                         entity.label = entity.label.replace('http://', '');
+                        entity.label = entity.label.replace('https://', '');
                         property_name_array[entity.id] = entity.label;
                         property_count_array[entity.parentId]++;
                         property_parents[entity.id] = entity.parentId;
                         property_tracking_code[entity.id] = entity.value[1].jsonData.json.subTitle.text;
                     }
                     if (entity.entityName == "profile") {
+                        entity.label = entity.label.replace('http://', '');
+                        entity.label = entity.label.replace('https://', '');
 
 
 
-                        //if(entity.label=="All Web Site Data"){
                         if (show_properynames && entity.label != property_name_array[entity.parentId]) {
-                            profile_name_array[entity.id] = entity.label + " (" + property_name_array[entity.parentId] + ")";
+                            if(
+                                entity.label=="All Web Site Data" ||
+                                entity.label=="Все данные по веб-сайту"
+                                ){
+                                profile_name_array[entity.id] = property_name_array[entity.parentId];
+                            } else {
+                                profile_name_array[entity.id] = entity.label + " (" + property_name_array[entity.parentId] + ")";
+                            }
                         } else {
                             profile_name_array[entity.id] = entity.label;
                         }
@@ -826,8 +874,14 @@ function adjustTable(txt) {
 
     if (show_ads) {
         $('.ads').show();
+        $('.not_ads').hide();
+        $('.angryfarmer_small').show();
+        $('.angryfarmer').show();
     } else {
         $('.ads').hide();
+        $('.not_ads').show();
+        $('.angryfarmer_small').hide();
+        $('.angryfarmer').hide();
     }
 
     if (!show_footer) {
@@ -1222,10 +1276,14 @@ function eliminateDuplicates(arr) {
 }
 
 function init_popup(picked_account_id) {
+
     if (isExtension()) {
         $('.extenstionInfo').hide();
     }
     _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
+
+
+
 
     $('#clone_header').html('');
     $('#clone_footer').html('');
@@ -1391,6 +1449,8 @@ function init_popup(picked_account_id) {
                 } else {
                     insert_rows_to_popup(favouriteProfiles, picked_account_id);
                 }
+
+                closeErrorPopup();
 
 
             }

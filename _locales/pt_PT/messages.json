@@ -62,10 +62,11 @@
       "description": "",
       "message": "Carregando..."
    },
-   "loginToTheSystem": {
-      "description": "",
-      "message": "Logar no sistema"
-   },
+   "loginToTheSystem": {"message": "Logar no sistema"},
+    "loginToTheSystemTitle": {"message": "Falha ao acessar o Google Analytics"},
+    "loginToTheSystemDescr": {"message": "Incapaz de processar o seu pedido Por favor relogin para o Google Analytics"},
+    "loginToTheSystemButton1": {"message": "Relogin"},
+    "loginToTheSystemButton2": {"message": "Fechar"},
    "options": {
       "description": "",
       "message": "Opções"

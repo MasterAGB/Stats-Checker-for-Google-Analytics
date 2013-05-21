@@ -8,13 +8,14 @@
         "description": "Extension Name"
     },
     "extDesc": {
-        "message": "Displays count of your site visits.",
+        "message": "A bird's-eye view of all accounts in a single click.",
         "description": "Extension Description"
     },
-    "loginToTheSystem": {
-        "message": "Login to the system",
-        "description": ""
-    },
+    "loginToTheSystem": {"message": "Login to the system"},
+    "loginToTheSystemTitle": {"message": "Failed to access Google Analytics"},
+    "loginToTheSystemDescr": {"message": "Unable to process your request. Please relogin to Google Analytics."},
+    "loginToTheSystemButton1": {"message": "Relogin"},
+    "loginToTheSystemButton2": {"message": "Close"},
     "loading": {
         "message": "Loading...",
         "description": ""

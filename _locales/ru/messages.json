@@ -9,10 +9,11 @@
         "message": "Удобно отображает количество посетителей сайта за сегодня.",
         "description": "Extension Description"
     },
-	"loginToTheSystem": {
-        "message": "Залогиньтесь в систему",
-        "description": ""
-    },
+	"loginToTheSystem": {"message": "Залогиньтесь в систему"},
+	"loginToTheSystemTitle": {"message": "Ошибка доступа к системе Google Analytics"},
+	"loginToTheSystemDescr": {"message": "Невозможно выполнить ваш запрос. Пожалуйста, перезайдите в Google Analytics."},
+	"loginToTheSystemButton1": {"message": "Перезайти"},
+	"loginToTheSystemButton2": {"message": "Закрыть"},
 	"loading": {
         "message": "Загрузка...",
         "description": ""

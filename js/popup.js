@@ -1,4 +1,9 @@
-var bannnerImages = ['img/banners/1100AD_1_468x60.jpg', 'img/banners/1100AD_2_468x60.jpg', 'img/banners/1100AD_3_468x60.jpg'];
+/*var bannnerImages = [
+    'img/banners/1100AD_1_468x60.jpg',
+    'img/banners/1100AD_2_468x60.jpg',
+    'img/banners/1100AD_3_468x60.jpg'];*/
+var bannnerImages = [
+    'img/AngryFarmer.MadSword.com/angryfarmer468x60.png'];
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -8,6 +13,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $('#bannerImg').attr('src', bannnerImages[getRandomInt(0, 2)]);
 
+
+    $('#bannerImg').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'bannerImg']);});
+    $('.angryfarmer').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer']);});
+    $('.angryfarmer_small').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);});
+    $('.angryfarmer_icon').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);});
 
 
     $("#real_table").tablesorter({

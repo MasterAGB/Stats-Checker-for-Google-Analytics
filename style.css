@@ -1,798 +1,951 @@
 img {
-	vertical-align: middle;
+    vertical-align: middle;
 }
 
 #googleAcc {
-	color: green;
-	font-weight: bold;
+    color: green;
+    font-weight: bold;
 }
 
 body {
-	color: #111;
-	font: normal 12px arial, serif;
-	background: #EDF0F4 url(img/header_background.png) repeat-x;
-	font-family: arial, verdana, sans-serif;
-	min-height: 100px;
-	min-width: 620px;
+    color: #111;
+    font: normal 12px arial, serif;
+    background: #EDF0F4 url(img/header_background.png) repeat-x;
+    font-family: arial, verdana, sans-serif;
+    min-height: 100px;
+    min-width: 620px;
     margin-bottom: 4px;
+
 }
 
 td {
-	padding: 0px;
+    padding: 0px;
 }
 
 h2 {
-	margin-top: 0px;
+    margin-top: 0px;
 }
 
 .white_block {
-	padding: 10px;
-	margin: 10px;
-	background: #FFF;
-	border: 1px solid #C4C4C4;
-	-webkit-border-radius: 5px;
-	margin-top: 15px;
-    position:relative;
+    padding: 10px;
+    margin: 10px;
+    background: #FFF;
+    border: 1px solid #C4C4C4;
+    -webkit-border-radius: 5px;
+    margin-top: 15px;
+    position: relative;
 }
 
 table {
-	margin: 10px 0;
+    margin: 10px 0;
 }
 
 td, th {
-	padding: 5px 10px;
-	vertical-align: top;
+    padding: 5px 10px;
+    vertical-align: top;
 }
 
 #edit_profile th {
-	text-align:right;
+    text-align: right;
 
 }
 
 textarea {
-	height: 10em;
-	width: 18em;
-	display: block;
-	margin-top: 5px;
+    height: 10em;
+    width: 18em;
+    display: block;
+    margin-top: 5px;
 }
 
 small {
-	font-size: 11px;
-	display: block;
-	margin-top: 5px;
-	color: #999;
+    font-size: 11px;
+    display: block;
+    margin-top: 5px;
+    color: #999;
 }
 
 address {
-	margin-top: 20px;
+    margin-top: 20px;
 }
 
 .selected {
-	background: yellow;
-	font-weight: bold;
+    background: yellow;
+    font-weight: bold;
 }
 
 #status {
-	color: green;
-	display: none;
+    color: green;
+    display: none;
 }
 
 a {
-	color: #005C9C;
+    color: #005C9C;
     text-decoration: none;
 }
 
 .loading_cell {
-	background: url(img/spinner16light.gif) no-repeat 50% 50%;
+    background: url(img/spinner16light.gif) no-repeat 50% 50%;
 }
 
 .profile_list_table {
-	width: 100%;
-	font-family: Arial, Helvetica, sans-serif;
-	aborder-collapse: collapse !important;
-	margin: 0px;
-	padding: 0px;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    aborder-collapse: collapse !important;
+    margin: 0px;
+    padding: 0px;
 }
 
-#bottom_footer_row td{
-	-moz-border-radius-bottomleft: 4px;
--webkit-border-bottom-left-radius: 4px;
-border-bottom-left-radius: 4px;
--moz-border-radius-bottomright: 4px;
--webkit-border-bottom-right-radius: 4px;
-border-bottom-right-radius: 4px;
+#bottom_footer_row td {
+    -moz-border-radius-bottomleft: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    border-bottom-right-radius: 4px;
 
-height:6px;
-	font-size:1px;
-	line-height:1px;
-	background-color: #EFEFEF;
-	border-color: #CCCCCC;
-	border-style: solid;
-	border-width: 1px;
-	border-right: 0px none;
-	border-bottom: 0px none;
-	padding: 0px;
+    height: 6px;
+    font-size: 1px;
+    line-height: 1px;
+    background-color: #EFEFEF;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    border-right: 0px none;
+    border-bottom: 0px none;
+    padding: 0px;
 
-	border-bottom: 1px solid #CCCCCC !important;
+    border-bottom: 1px solid #CCCCCC !important;
 }
-
 
 #total_row td, #avg_row td {
-	background-color: #EFEFEF;
-	border-color: #CCCCCC;
-	border-style: solid;
-	border-width: 1px;
-	border-right: 0px none;
-	border-bottom: 0px none;
-	padding: 3px;
+    background-color: #EFEFEF;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    border-right: 0px none;
+    border-bottom: 0px none;
+    padding: 3px;
 }
 
 .profile_list_table .caption {
-	background-color: #EFEFEF;
-	border-color: #CCCCCC;
-	border-style: solid;
-	border-width: 1px;
-	border-right: 0px none;
-	border-bottom: 0px none;
-	padding: 5px;
+    background-color: #EFEFEF;
+    border-color: #CCCCCC;
+    border-style: solid;
+    border-width: 1px;
+    border-right: 0px none;
+    border-bottom: 0px none;
+    padding: 5px;
 }
 
 .profile_list_table th.caption {
-	font-weight: normal;
+    font-weight: normal;
 
 }
 
 .profile_list_table .caption a {
-	cursor: pointer;
-	color: #000;
+    cursor: pointer;
+    color: #000;
 }
 
 .profile_list_table .property_row {
-	background-color: #f7f7f7;
-	padding-left: 12px;
-	padding-top: 12px;
-	padding-bottom: 12px;
-	border-color: #dedede;
-	border-style: solid;
-	border-width: 1px;
+    background-color: #f7f7f7;
+    padding-left: 12px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-color: #dedede;
+    border-style: solid;
+    border-width: 1px;
 }
 
 .profile_list_table tbody tr {
-	background: #FFF;
+    background: #FFF;
 }
 
 .profile_list_table tbody  tr:nth-child(2n) {
-	background: #F8F8F8; /* Цвет фона */
+    background: #F8F8F8; /* Цвет фона */
 }
 
 .profile_list_table tbody tr:hover {
-	background: #ffffcc;
+    background: #ffffcc;
 }
 
 .profile_list_table tbody tr.empty_tr {
-	/*background: #F8F8F8;*/
+    /*background: #F8F8F8;*/
 }
 
 .profile_list_table tbody tr.selected_tr {
-	background: #E6F2FA;
+    background: #E6F2FA;
 }
 
 .profile_list_table tbody tr.selected_tr .profile_name_div {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .profile_list_table tbody td {
-	border-color: #EEEEEE;
-	border-style: solid;
-	border-width: 1px;
-	padding: 3px;
-	border-right: 0px none;
-	border-bottom: 0px none;
+    border-color: #EEEEEE;
+    border-style: solid;
+    border-width: 1px;
+    padding: 3px;
+    border-right: 0px none;
+    border-bottom: 0px none;
 }
 
 .profile_list_table .caption {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .profile_list_table .caption:hover {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 .profile_list_table .sort_icon {
-	display: none;
-	width: 13px;
-	height: 11px;
-	float: right;
+    display: none;
+    width: 13px;
+    height: 11px;
+    float: right;
 }
 
 .profile_list_table .headerSortUp {
-	padding-right: 16px;
-	background: #EDF0F4 url("img/sort_desc.gif") no-repeat right center
+    padding-right: 16px;
+    background: #EDF0F4 url("img/sort_desc.gif") no-repeat right center
 }
 
 .profile_list_table .headerSortDown {
-	padding-right: 16px;
-	background: #EDF0F4 url("img/sort_asc.gif") no-repeat right center
+    padding-right: 16px;
+    background: #EDF0F4 url("img/sort_asc.gif") no-repeat right center
 }
 
 .profile_list_table tbody tr:first-child td {
-	border-top: 0px none;
+    border-top: 0px none;
 }
 
 .profile_list_table tfoot td {
-	background: #FFF;
-	border-color: #dedede;
-	border-style: solid;
-	border-width: 1px;
-	padding: 3px;
+    background: #FFF;
+    border-color: #dedede;
+    border-style: solid;
+    border-width: 1px;
+    padding: 3px;
 }
 
-
 .profile_list_table tfoot tr:last-child td {
-	border-bottom: 1px solid #CCCCCC !important;
+    border-bottom: 1px solid #CCCCCC !important;
 }
 
 .profile_list_table thead tr:last-child th {
-	border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #CCCCCC;
 }
 
 .profile_list_table tbody tr td:last-child {
-	border-right: 1px solid #dedede;
+    border-right: 1px solid #dedede;
 }
 
 .profile_list_table thead tr th:last-child, .profile_list_table tfoot tr td:last-child {
-	border-right: 1px solid #CCCCCC !important;
+    border-right: 1px solid #CCCCCC !important;
 }
 
 #loading_table_profiles td {
-	height:19px;
-	border: 0px none;
-	border-right: 1px solid #dedede !important;
-	border-left: 1px solid #EEEEEE !important;
+    height: 19px;
+    border: 0px none;
+    border-right: 1px solid #dedede !important;
+    border-left: 1px solid #EEEEEE !important;
 }
 
 .account_table_top_row {
-	margin: 0px;
-	margin-top: 10px;
-	background-color: #7C7C7C;
+    margin: 0px;
+    margin-top: 10px;
+    background-color: #7C7C7C;
 
+    -moz-border-radius-topleft: 4px; /* FF1+ */
+    -webkit-border-top-left-radius: 4px; /* Saf3+, Chrome */
+    border-top-left-radius: 4px; /* Opera 10.5, IE 9 */
 
-
-		   -moz-border-radius-topleft: 4px; /* FF1+ */
-	  -webkit-border-top-left-radius: 4px; /* Saf3+, Chrome */
-			  border-top-left-radius: 4px; /* Opera 10.5, IE 9 */
-
-			-moz-border-radius-topright: 4px; /* FF1+ */
-	  -webkit-border-top-right-radius: 4px; /* Saf3+, Chrome */
-			  border-top-right-radius: 4px; /* Opera 10.5, IE 9 */
-	color: #FFF !important;
-	font-family: Arial, Helvetica, sans-serif !important;
-	font-weight: 700;
-	width: 100%;
-	border-collapse: collapse !important;
+    -moz-border-radius-topright: 4px; /* FF1+ */
+    -webkit-border-top-right-radius: 4px; /* Saf3+, Chrome */
+    border-top-right-radius: 4px; /* Opera 10.5, IE 9 */
+    color: #FFF !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: 700;
+    width: 100%;
+    border-collapse: collapse !important;
 }
 
 .account_table_top_row td {
-	padding: 0px;
-	white-space: nowrap;
+    padding: 0px;
+    white-space: nowrap;
 }
 
 .account_table_top_text {
-	padding: 5px 0 5px 10px;
-	text-align: left;
+    padding: 5px 0 5px 10px;
+    text-align: left;
 }
 
 .account_add_account_link {
-	padding: 5px 10px 5px 0px;
-	text-align: right;
+    padding: 5px 10px 5px 0px;
+    text-align: right;
 }
 
 .account_add_account_link a:link, .account_add_account_link a:visited {
-	color: #FFF;
+    color: #FFF;
 
 }
 
 .profile_name {
-	padding-right: 0px !important;
-	padding-left: 0px !important;
-    min-width:130px;
-    width:40%;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    min-width: 130px;
+    width: 40%;
 }
 
 .profile_name div {
-	position: relative !important;
+    position: relative !important;
 }
 
 .profile_name div.profile_name_div {
-	-webkit-mask-image: -webkit-gradient(linear, left top, right top, color-stop(0.6, rgba(0, 0, 0, 1)), color-stop(1, rgba(0, 0, 0, 0)));
-	overflow: hidden;
-	width: 100%;
-	white-space: nowrap;
-	position: relative;
+    -webkit-mask-image: -webkit-gradient(linear, left top, right top, color-stop(0.6, rgba(0, 0, 0, 1)), color-stop(1, rgba(0, 0, 0, 0)));
+    overflow: hidden;
+    width: 100%;
+    white-space: nowrap;
+    position: relative;
 }
 
 .profile_name div.profile_name_div .info_name {
-	position: absolute;
+    position: absolute;
 }
+
 .profile_name div.profile_name_div span {
     color: #888;
     font-size: 10px;
-    padding-left:10px;
+    padding-left: 10px;
 }
 
-.edit_icon,.graph_icon,.url_icon {
-	position: absolute;
-	right: 0px;
-	opacity: 0;
-	z-index: 1000;
+.edit_icon, .graph_icon, .url_icon {
+    position: absolute;
+    right: 0px;
+    opacity: 0;
+    z-index: 1000;
     cursor: pointer;
 }
+
 .graph_icon {
-    right:16px;
+    right: 16px;
 }
+
 .url_icon {
-    right:32px;
+    right: 32px;
 }
 
-tr:hover .edit_icon,tr:hover .graph_icon,tr:hover .url_icon {
-	opacity: 1;
+tr:hover .edit_icon, tr:hover .graph_icon, tr:hover .url_icon {
+    opacity: 1;
 }
-
 
 .extenstionInfo {
-    font-weight:bold;
-    display:block;
+    font-weight: bold;
+    display: block;
     margin-bottom: 10px;
 }
 
-
 .standout {
-	background: whiteSmoke;
-	border: 1px solid #AAD388;
-	color: #555;
-	font-size: 9px;
-	padding: 0.7em;
-	text-align: center;
+    background: whiteSmoke;
+    border: 1px solid #AAD388;
+    color: #555;
+    font-size: 9px;
+    padding: 0.7em;
+    text-align: center;
+    margin-bottom: 0px;
 }
 
 .starred_icon, .unstarred_icon {
-	margin-left: 3px;
-	margin-top: 3px;
-	height: 14px;
-	width: 14px;
-	float: left;
+    margin-left: 3px;
+    margin-top: 3px;
+    height: 14px;
+    width: 14px;
+    float: left;
 }
 
 .starred_icon {
-	background: no-repeat url(img/sprites.png) -267px -134px;
-	height: 14px;
-	width: 14px;
+    background: no-repeat url(img/sprites.png) -267px -134px;
+    height: 14px;
+    width: 14px;
 }
 
 .unstarred_icon {
-	background: no-repeat url(img/sprites.png) -108px -134px;
-	height: 14px;
-	width: 14px;
+    background: no-repeat url(img/sprites.png) -108px -134px;
+    height: 14px;
+    width: 14px;
 }
 
 .favorited td {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .option_fav {
-	background: #FFFFCC;
-	color: #005C9C;
+    background: #FFFFCC;
+    color: #005C9C;
 }
 
 .graph_date_options {
-	float: right;
-	position: relative;
-	margin-right: 1px;
+    float: right;
+    position: relative;
+    margin-right: 1px;
 }
 
 .graph_date_options dl {
-	margin: 6px;
-	float: left;
-	white-space: nowrap
+    margin: 6px;
+    float: left;
+    white-space: nowrap
 }
 
 .graph_date_options dt {
-	color: #FFF;
-	float: left;
-	line-height: 21px;
-	text-align: right;
-	font-weight: bold;
-	padding: 0 5px 0 0
+    color: #FFF;
+    float: left;
+    line-height: 21px;
+    text-align: right;
+    font-weight: bold;
+    padding: 0 5px 0 0
 }
 
 .graph_date_options dd {
-	float: left;
-	margin: 0;
-	position: relative
+    float: left;
+    margin: 0;
+    position: relative
 }
 
 .graph_date_options dd a {
-	float: left;
-	margin-right: -1px;
-	width: 25px;
-	height: 21px;
-	position: relative;
-	z-index: 10
+    float: left;
+    margin-right: -1px;
+    width: 25px;
+    height: 21px;
+    position: relative;
+    z-index: 10
 }
 
 .graph_date_options div {
-	float: left;
-	position: relative
+    float: left;
+    position: relative
 }
 
 .graph_date_options dd a.selected, .graph_date_options dd a:hover {
-	z-index: 100
+    z-index: 100
 }
 
 .graph_date_options dd a:hover {
-	margin-left: 0;
-	left: 0
+    margin-left: 0;
+    left: 0
 }
 
 .graph_date_options .view_by_hour a {
-	background: no-repeat url(img/sprites.gif) -350px -256px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -350px -256px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_hour a:hover {
-	background: no-repeat url(img/sprites.gif) 0 0;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) 0 0;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_hour a.selected {
-	background: no-repeat url(img/sprites.gif) -223px -360px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -223px -360px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_hour a.disabled, .graph_date_options .view_by_hour a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -350px -256px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -350px -256px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_hour a {
-	background: no-repeat url(img/sprites.gif) -325px -256px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -325px -256px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_hour a:hover {
-	background: no-repeat url(img/sprites.gif) -297px -642px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -297px -642px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_hour a.selected {
-	background: no-repeat url(img/sprites.gif) -375px -407px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -375px -407px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_hour a.disabled, .graph_date_options .view_by_nth_hour a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -167px -621px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -167px -621px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day a {
-	background: no-repeat url(img/sprites.gif) -177px -360px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -177px -360px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day a:hover {
-	background: no-repeat url(img/sprites.gif) -192px -621px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -192px -621px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day a.selected {
-	background: no-repeat url(img/sprites.gif) -135px -390px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -135px -390px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day a.disabled, .graph_date_options .view_by_nth_day a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -177px -360px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -177px -360px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day.alt a {
-	background: no-repeat url(img/sprites.gif) -275px -269px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -275px -269px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day.alt a:hover {
-	background: no-repeat url(img/sprites.gif) -300px -269px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -300px -269px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day.alt a.selected {
-	background: no-repeat url(img/sprites.gif) -133px -575px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -133px -575px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_day_alt a.disabled, .graph_date_options .view_by_nth_day_alt a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -275px -269px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -275px -269px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_day_of_week a {
-	background: no-repeat url(img/sprites.gif) -160px -390px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -160px -390px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_day_of_week a:hover {
-	background: no-repeat url(img/sprites.gif) -42px -214px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -42px -214px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_day_of_week a.selected {
-	background: no-repeat url(img/sprites.gif) -275px -390px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -275px -390px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_day_of_week a.disabled, .graph_date_options .view_by_day_of_week a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -160px -390px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -160px -390px;
+    height: 21px;
+    width: 25px
 }
 
-
 .graph_date_options .view_by_nth_yesterday a {
-	background: no-repeat url(img/sprites.gif) -88px -253px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -88px -253px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_yesterday a:hover {
-	background: no-repeat url(img/sprites.gif) -88px -274px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -88px -274px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_yesterday a.selected {
-	background: no-repeat url(img/sprites.gif) -88px -295px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -88px -295px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_yesterday a.disabled, .graph_date_options .view_by_nth_yesterday a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -88px -582px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -88px -582px;
+    height: 21px;
+    width: 25px
 }
 
-
 .graph_date_options .view_by_nth_week a {
-	background: no-repeat url(img/sprites.gif) -230px -582px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -230px -582px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_week a:hover {
-	background: no-repeat url(img/sprites.gif) -375px -272px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -375px -272px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_week a.selected {
-	background: no-repeat url(img/sprites.gif) -133px -621px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -133px -621px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_week a.disabled, .graph_date_options .view_by_nth_week a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -230px -582px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -230px -582px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_month a {
-	background: no-repeat url(img/sprites.gif) -133px -235px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -133px -235px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_month a:hover {
-	background: no-repeat url(img/sprites.gif) -300px -390px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -300px -390px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_month a.selected {
-	background: no-repeat url(img/sprites.gif) -88px -214px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -88px -214px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options .view_by_nth_month a.disabled, .graph_date_options .view_by_nth_month a.disabled :hover {
-	background: no-repeat url(img/sprites.gif) -133px -235px;
-	height: 21px;
-	width: 25px
+    background: no-repeat url(img/sprites.gif) -133px -235px;
+    height: 21px;
+    width: 25px
 }
 
 .graph_date_options span {
-	font-weight: bold;
-	color: #0c4ea6;
-	vertical-align: top
+    font-weight: bold;
+    color: #0c4ea6;
+    vertical-align: top
 }
 
 .graph_date_options .active {
-	text-decoration: none;
-	color: #0c4ea6;
-	cursor: pointer;
-	cursor: hand;
+    text-decoration: none;
+    color: #0c4ea6;
+    cursor: pointer;
+    cursor: hand;
 }
 
 .graph_date_options .selected {
-	color: #666
+    color: #666
 }
 
 .graph_date_options span.separator {
-	color: #666;
-	padding-left: 4px;
-	padding-right: 4px
+    color: #666;
+    padding-left: 4px;
+    padding-right: 4px
 }
 
 .grap_date_options span.last {
-	padding-left: 10px
+    padding-left: 10px
 }
 
 .graph_date_options span.graph_beta {
-	color: red;
-	font-weight: bold;
-	font-size: 92%;
-	vertical-align: top;
-	padding: 0
+    color: red;
+    font-weight: bold;
+    font-size: 92%;
+    vertical-align: top;
+    padding: 0
 }
 
 .graph_date_options table {
-	float: right;
-	white-space: nowrap
+    float: right;
+    white-space: nowrap
 }
 
 .graph_date_options td {
-	margin: 0;
-	float: left;
-	padding: 0;
-	background-position: 100%
+    margin: 0;
+    float: left;
+    padding: 0;
+    background-position: 100%
 }
 
 .graph_date_options td a {
-	background-repeat: no-repeat;
-	display: block;
-	float: left;
-	overflow: hidden;
-	text-indent: -500px;
-	width: 15px
+    background-repeat: no-repeat;
+    display: block;
+    float: left;
+    overflow: hidden;
+    text-indent: -500px;
+    width: 15px
 }
 
 .graph_date_options div a {
-	text-indent: -5000px;
-	text-decoration: none
+    text-indent: -5000px;
+    text-decoration: none
 }
 
 .graph_date_options .hover_desc_container {
-	top: -19px;
-	right: 4px
+    top: -19px;
+    right: 4px
 }
 
 a.help_resources {
-	display: inline-block;
-	padding: 1px 0 1px 19px;
-	background: url(img/help_dark.gif) center left no-repeat;
-	color: #000;
-	font-size: 11px;
+    display: inline-block;
+    padding: 1px 0 1px 19px;
+    background: url(img/help_dark.gif) center left no-repeat;
+    color: #000;
+    font-size: 11px;
 }
 
 .gplus {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	vertical-align:middle;
-	position:absolute;
-	right:10px;
-	background: url(img/gprofile_button-16.png) no-repeat 0 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    position: absolute;
+    right: 10px;
+    background: url(img/gprofile_button-16.png) no-repeat 0 0;
 }
+
 .ad1100 {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	vertical-align:middle;
-	position:absolute;
-	right:30px;
-	background: url(img/1100ad_button-16.gif) no-repeat 0 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    position: absolute;
+    right: 30px;
+    background: url(img/1100ad_button-16.gif) no-repeat 0 0;
 }
+
 .sodgame {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	vertical-align:middle;
-	position:absolute;
-	right:50px;
-	background: url(img/sodgame_button-16.png) no-repeat 0 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    position: absolute;
+    right: 50px;
+    background: url(img/sodgame_button-16.png) no-repeat 0 0;
 }
 
-
+.angryfarmer_icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    position: absolute;
+    right: 32px;
+    background: url(img/angryfarmer_button-16.png) no-repeat 0 0;
+}
 
 .external {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	vertical-align:middle;
-	margin-right:3px;
-	background: url(img/sprites.png) no-repeat -196px 0;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 3px;
+    background: url(img/sprites.png) no-repeat -196px 0;
 }
 
 #new_analytics .icon, #old_analytics .icon, .icon_mystats {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	vertical-align:middle;
-	margin-right:3px;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 3px;
 }
 
 #new_analytics .icon {
-	background: url(img/ga_icons.png) no-repeat 0 0;
+    background: url(img/ga_icons.png) no-repeat 0 0;
 }
+
 .icon_mystats {
-	background: url(img/logo.16.png) no-repeat 0 0;
+    background: url(img/logo.16.png) no-repeat 0 0;
 }
 
 #old_analytics .icon {
-	background: url(img/ga_icons.png) no-repeat -16px 0;
+    background: url(img/ga_icons.png) no-repeat -16px 0;
 }
 
 #table_scroll {
-	position: relative;
-	max-height: 411px;
-	overflow-y: auto;
-	overflow-x: hidden;
-	amargin-bottom: 10px;
+    position: relative;
+    max-height: 386px; /* 411? */
+    overflow-y: auto;
+    overflow-x: hidden;
+    amargin-bottom: 10px;
 }
 
 .value.profile_name>div {
-	overflow: hidden;
-	width: 100%;
+    overflow: hidden;
+    width: 100%;
 }
 
 #table_scroll_limit {
-	position: relative;
-	min-width: 590px;
-	overflow: hidden;
+    position: relative;
+    min-width: 590px;
+    overflow: hidden;
+    z-index:3;
 }
 
 #clone_header {
-	a-webkit-box-shadow: 0px 3px 20px rgba(255, 0, 0, 0.2);
-	position: absolute;
-	z-index: 1001;
-	margin-top: 0px;
+    a-webkit-box-shadow: 0px 3px 20px rgba(255, 0, 0, 0.2);
+    position: absolute;
+    z-index: 1001;
+    margin-top: 0px;
 }
 
 #clone_footer {
-	a-webkit-box-shadow: 0px -3px 20px rgba(255, 0, 0, 0.2);
-	position: absolute;
-	z-index: 1000;
+    a-webkit-box-shadow: 0px -3px 20px rgba(255, 0, 0, 0.2);
+    position: absolute;
+    z-index: 1000;
 }
 
 .chart_div {
-    height:180px;
-    margin:7px;
+    height: 180px;
+    margin: 7px;
 }
+
+.angryfarmer {
+    background: url(img/AngryFarmer.MadSword.com/angryfarmer03.png) no-repeat 50% 100%;
+    height: 119px;
+    width: 636px;
+    position: relative;
+    z-index: 0;
+    display: block;
+    margin:-8px;
+    margin-top:-25px;
+    margin-bottom:-20px;
+}
+.ads {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+.footer_icons {
+    position: relative;
+    z-index:2;
+}
+.right_buttons {
+    float:right;
+    text-align:right;
+    white-space: nowrap;
+    width: 190px;
+}
+
+.angryfarmer_small {
+    background: url(img/AngryFarmer.MadSword.com/angry-goroh.png) no-repeat;
+    height: 56px;
+    width: 50px;
+    display: block;
+    float:right;
+    margin-top:-5px;
+    margin-left:5px;
+}
+
+/* popup */
+
+.error_popup_fade {
+    display: none;
+    background: #666;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1050;
+    opacity: 0.5;
+}
+
+.error_popup {
+    display: none;
+    background: #fff;
+    border: 4px solid #666;
+    -webkit-box-shadow: 2px 2px 8px rgba(0, 0, 0, .5), inset 0 0 -1px #bbbbbb;
+    -moz-box-shadow: 0 0 20px #333, inset 0 0 -1px #bbbbbb;
+    box-shadow: 0 0 20px #333, inset 0 0 -1px #bbbbbb;
+    font: normal 13px Arial;
+    padding: 4px;
+    position: absolute;
+    text-align: left;
+    width: 600px;
+    z-index: 10001;
+    left: 50%;
+    margin-left: -308px;
+    top: 50%;
+    margin-top: -100px;
+}
+
+.error_popup_icon {
+    background: #fff url('img/warning-y48.png') no-repeat scroll top left;
+    margin-top: 15px;
+    margin-left: 15px;
+}
+
+.error_popup_header_block {
+    background: transparent;
+    border: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    height: auto;
+    margin-left: 60px;
+    margin-top: -5px;
+}
+
+.error_popup_header_block h1 {
+    color: #ff8c40;
+    cursor: default;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0 0 0 15px;
+    padding-bottom: 10px;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.error_popup_text_block {
+    border: 0;
+    cursor: default;
+    margin-left: 60px;
+}
+
+.error_popup_text_paddings {
+    padding: 0 15px 15px 15px;
+}
+
+.error_popup_button_block {
+    background: #fff;
+    border: 0;
+    border-top: 0;
+    margin: 0;
+    padding: 0 0 15px;
+    text-align: center;
+}
+
+.error_popup_button {
+    background-color: #e8e8e8;
+    background-image: -moz-linear-gradient(center top, #fafafa, #dadada);
+    border: 1px solid #c7c7c7;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    color: #222;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: bold;
+    height: 22px;
+    line-height: 23px;
+    min-width: 50px;
+    padding: 0 8px;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #f2f2f2;
+    vertical-align: middle;
+    width: 80px;
+}
+
+
