@@ -9,6 +9,7 @@ e = chrome.browserAction;
 var current_version = "0";
 
 
+
 var googleToken = "";
 var googleEmail = "";
 var google_id = localStorage["google_id"];
@@ -360,8 +361,7 @@ function goOffline() {
 function openErrorPopup(){
     $('.error_popup_fade').show();
     $('.error_popup').show();
-    $('#error_popup_button_close').hide();
-    $('#error_popup_button_close').bind('click',closeErrorPopup);
+    $('#error_popup_button_close').hide().bind('click',closeErrorPopup);
 }
 function closeErrorPopup(){
     $('.error_popup_fade').hide();
@@ -431,40 +431,46 @@ function getGoogleToken(onCompleteFunction) {
 function onInstall() {
     console.log("Extension Installed");
     if (isExtension()) {
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
+        _gaq.push(['_trackEvent', 'Ext install', current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?installed=' + current_version + '&type=ext'}, function (tab) {
         });
     } else {
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
+        _gaq.push(['_trackEvent', 'App install', current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?installed=' + current_version + '&type=app'}, function (tab) {
         });
     }
 }
 
 function onSmallUpdate() {
-    console.log("Extension Updated small");
+    console.log("Extension Updated (Small version)");
     localStorage["show_ads"] = true;
+    if (isExtension()) {
+        _gaq.push(['_trackEvent', 'Ext small version change', localStorage['version']+' - '+current_version]);
+    } else {
+        _gaq.push(['_trackEvent', 'App small version change', localStorage['version']+' - '+current_version]);
+    }
 }
 
 function onUpdate() {
     console.log("Extension Updated");
     if (isExtension()) {
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=ext'}, function (tab) {
+        _gaq.push(['_trackEvent', 'Ext version change', localStorage['version']+' - '+current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from='+localStorage['version']+'&type=ext'}, function (tab) {
         });
     } else {
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&type=app'}, function (tab) {
+        _gaq.push(['_trackEvent', 'App version change', localStorage['version']+' - '+current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from='+localStorage['version']+'&type=app'}, function (tab) {
         });
     }
 }
-function getVersion() {
+function getManifestVersion() {
     var details = chrome.app.getDetails();
     current_version = details.version;
     return details.version;
 }
 
 function isExtension() {
-    if (typeof(chrome.app.getDetails().background) != "undefined") {
-        return true;
-    }
-    return false;
+    return typeof(chrome.app.getDetails().background) != "undefined";
 }
 
 
@@ -477,7 +483,7 @@ function getAccountProfiles(onCompleteFunction) {
         $('#open_mystats').attr('href', 'http://mystatschecker.com/?app');
     }
 
-    var currVersion = getVersion();
+    var currVersion = getManifestVersion();
     var prevVersion = localStorage['version'];
 
 

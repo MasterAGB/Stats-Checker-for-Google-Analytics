@@ -50,19 +50,16 @@
 
 -->
 
-
 <div class="error_popup_fade"></div>
 <div class="error_popup" tabindex="0">
     <div class="error_popup_icon">
-        <div class="error_popup_header_block"><h1>Внутренняя ошибка. Повторите попытку позже.</h1></div>
+        <div class="error_popup_header_block"><h1 data-transid="loginToTheSystemTitle">Failed to access Google Analytics</h1></div>
         <div class="error_popup_text_block">
-            <div class="error_popup_text_paddings">Невозможно выполнить ваш запрос: в системе Google Analytics произошла
-                непредвиденная ошибка.
-            </div>
+            <div class="error_popup_text_paddings" data-transid="loginToTheSystemDescr">Unable to process your request. Please relogin to Google Analytics.</div>
         </div>
         <div class="error_popup_button_block">
-            <div class="error_popup_button">Перезайти</div>
-            <div class="error_popup_button">Закрыть</div>
+            <a target="_blank" href="https://www.google.com/analytics/web/" class="error_popup_button" data-transid="loginToTheSystemButton1">Relogin</a>
+            <div id="error_popup_button_close" class="error_popup_button" data-transid="loginToTheSystemButton2">Close</div>
         </div>
     </div>
 </div>
