@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
             trans='<s>Missing translation: '+trans_id+'</s>';
         }
         $(this).html(trans);
-    })
+    });
 
 
 

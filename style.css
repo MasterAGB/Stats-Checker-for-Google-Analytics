@@ -949,3 +949,16 @@ a.help_resources {
 }
 
 
+.search_input {
+    display:none;
+}
+.search_icon {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    vertical-align: middle;
+    margin-right: 3px;
+    margin-left:-2px;
+    vertical-align: top;
+    background: url(img/sprites.png) no-repeat -266px -36px;
+}

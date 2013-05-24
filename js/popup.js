@@ -20,10 +20,23 @@ document.addEventListener('DOMContentLoaded', function () {
     $('.angryfarmer_icon').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);});
 
 
+
+    $("#real_table th .search_input input").change(function (e) {
+        console.log("Real:"+this.value);
+        searchValue=this.value;
+
+        $('#account_id').val("all").change();
+    });
+
+
     $("#real_table").tablesorter({
         // define a custom text extraction function
         textExtraction:"complex"
     });
+
+
+
+
     init_popup();
 
 
@@ -35,6 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
             adjustTable('sort');
         });
     adjustTable('start');
+
+
 
 
     $('#googleAcc').html(google_id);

@@ -9,7 +9,6 @@ e = chrome.browserAction;
 var current_version = "0";
 
 
-
 var googleToken = "";
 var googleEmail = "";
 var google_id = localStorage["google_id"];
@@ -44,6 +43,7 @@ if (typeof show_footer == 'string' && show_footer == 'false') {
 }
 
 var profile_data = new Array();
+var profile_search_array = new Object();
 var profile_name_array = new Object();
 var property_name_array = new Object();
 var property_url_array = new Object();
@@ -56,6 +56,7 @@ var property_parents = new Object();
 var profile_parents = new Object();
 var profile_count_array = new Object();
 var property_count_array = new Object();
+var searchValue = "";
 
 
 var ga = new Object()
@@ -358,12 +359,12 @@ function goOffline() {
 }
 
 
-function openErrorPopup(){
+function openErrorPopup() {
     $('.error_popup_fade').show();
     $('.error_popup').show();
-    $('#error_popup_button_close').hide().bind('click',closeErrorPopup);
+    $('#error_popup_button_close').hide().bind('click', closeErrorPopup);
 }
-function closeErrorPopup(){
+function closeErrorPopup() {
     $('.error_popup_fade').hide();
     $('.error_popup').hide();
 }
@@ -445,21 +446,21 @@ function onSmallUpdate() {
     console.log("Extension Updated (Small version)");
     localStorage["show_ads"] = true;
     if (isExtension()) {
-        _gaq.push(['_trackEvent', 'Ext small version change', localStorage['version']+' - '+current_version]);
+        _gaq.push(['_trackEvent', 'Ext small version change', localStorage['version'] + ' - ' + current_version]);
     } else {
-        _gaq.push(['_trackEvent', 'App small version change', localStorage['version']+' - '+current_version]);
+        _gaq.push(['_trackEvent', 'App small version change', localStorage['version'] + ' - ' + current_version]);
     }
 }
 
 function onUpdate() {
     console.log("Extension Updated");
     if (isExtension()) {
-        _gaq.push(['_trackEvent', 'Ext version change', localStorage['version']+' - '+current_version]);
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from='+localStorage['version']+'&type=ext'}, function (tab) {
+        _gaq.push(['_trackEvent', 'Ext version change', localStorage['version'] + ' - ' + current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from=' + localStorage['version'] + '&type=ext'}, function (tab) {
         });
     } else {
-        _gaq.push(['_trackEvent', 'App version change', localStorage['version']+' - '+current_version]);
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from='+localStorage['version']+'&type=app'}, function (tab) {
+        _gaq.push(['_trackEvent', 'App version change', localStorage['version'] + ' - ' + current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from=' + localStorage['version'] + '&type=app'}, function (tab) {
         });
     }
 }
@@ -544,6 +545,7 @@ function getAccountProfiles(onCompleteFunction) {
 
 
                 profile_name_array = new Object();
+                profile_search_array = new Object();
                 account_name_array = new Object();
                 property_name_array = new Object();
                 property_url_array = new Object();
@@ -567,16 +569,18 @@ function getAccountProfiles(onCompleteFunction) {
                         property_tracking_code[entity.id] = entity.value[1].jsonData.json.subTitle.text;
                     }
                     if (entity.entityName == "profile") {
+
+                        profile_search_array[entity.id] = entity.label + " " + property_name_array[entity.parentId] + " " + property_url_array[entity.parentId] + " " + entity.value[1].jsonData.json.subTitle.text;
+
                         entity.label = entity.label.replace('http://', '');
                         entity.label = entity.label.replace('https://', '');
 
 
-
                         if (show_properynames && entity.label != property_name_array[entity.parentId]) {
-                            if(
-                                entity.label=="All Web Site Data" ||
-                                entity.label=="Все данные по веб-сайту"
-                                ){
+                            if (
+                                entity.label == "All Web Site Data" ||
+                                    entity.label == "Все данные по веб-сайту"
+                                ) {
                                 profile_name_array[entity.id] = property_name_array[entity.parentId];
                             } else {
                                 profile_name_array[entity.id] = entity.label + " (" + property_name_array[entity.parentId] + ")";
@@ -584,6 +588,8 @@ function getAccountProfiles(onCompleteFunction) {
                         } else {
                             profile_name_array[entity.id] = entity.label;
                         }
+
+
                         profile_count_array[property_parents[entity.parentId]]++;
                         profile_parents[entity.id] = property_parents[entity.parentId];
                         profile_tracking_code[entity.id] = property_tracking_code[entity.parentId];
@@ -906,7 +912,16 @@ function adjustTable(txt) {
     $('#clone_header').hide().html('');
     if (show_footer)
         $('#clone_footer').hide().html('');
+
     $('#real_table thead').clone().appendTo('#clone_header');
+
+
+    $('#clone_header').mousedown(function () {
+        this.onselectstart = function () {
+            return false
+        };
+    });
+
     if (show_footer)
         $('#real_table tfoot').clone().appendTo('#clone_footer');
 
@@ -940,10 +955,27 @@ function adjustTable(txt) {
     }
 
 
-    $('#clone_header th').bind("click", function () {
+    $('#clone_header th').bind("click", function (e) {
         var nr = $(this).index() + 1;
         $('#real_table thead th:nth-child(' + nr + ')').click();
+    });
 
+    $("#clone_header th .search_icon").bind('click', function (e) {
+        $(".search_input").toggle();
+        $(".profile_header").toggle();
+        $("#clone_header th .search_input input").val("").focus();
+        $("#real_table th .search_input input").val("");
+        e.preventDefault();
+        return false;
+    });
+    $("#clone_header th .search_input").bind('click', function (e) {
+        e.preventDefault();
+        return false;
+    });
+    $("#clone_header th .search_input input").change(function (e) {
+        $("#real_table th .search_input input").val(this.value).change();
+        e.preventDefault();
+        return false;
     });
 
 
@@ -1281,14 +1313,14 @@ function eliminateDuplicates(arr) {
     return out;
 }
 
+
 function init_popup(picked_account_id) {
+
 
     if (isExtension()) {
         $('.extenstionInfo').hide();
     }
     _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
-
-
 
 
     $('#clone_header').html('');
@@ -1435,27 +1467,64 @@ function init_popup(picked_account_id) {
                 }
 
 
-                if (picked_account_id != 'favorited') {
+                if (searchValue == "") {
 
-                    //if (picked_account_id != 'all')
-                    /*  if (typeof profile_count_array[picked_account_id] == 'undefined') {
-                     picked_account_id = window_preload.accounts[0].id;
-                     }
-                     */
-                    //alert(profile_count_array[picked_account_id]);
 
-                    var tr_array = new Array();
+                    if (picked_account_id != 'favorited') {
 
-                    for (var i_profile_id in profile_name_array) {
-                        if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
-                            tr_array.push(i_profile_id);
+                        //if (picked_account_id != 'all')
+                        /*  if (typeof profile_count_array[picked_account_id] == 'undefined') {
+                         picked_account_id = window_preload.accounts[0].id;
+                         }
+                         */
+                        //alert(profile_count_array[picked_account_id]);
+
+                        var tr_array = new Array();
+
+                        for (var i_profile_id in profile_name_array) {
+                            if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
+                                tr_array.push(i_profile_id);
+                            }
                         }
+                        insert_rows_to_popup(tr_array, picked_account_id);
+                    } else {
+                        insert_rows_to_popup(favouriteProfiles, picked_account_id);
                     }
-                    insert_rows_to_popup(tr_array, picked_account_id);
-                } else {
-                    insert_rows_to_popup(favouriteProfiles, picked_account_id);
-                }
 
+                } else {
+
+
+                    if (picked_account_id != 'favorited') {
+                        var tr_array = new Array();
+
+                        for (var i_profile_id in profile_name_array) {
+                            if (substrFound(profile_search_array[i_profile_id], searchValue)) {
+                                tr_array.push(i_profile_id);
+                            }
+                        }
+                        insert_rows_to_popup(tr_array, picked_account_id);
+                    } else {
+
+                        var tr_array = new Array();
+
+
+                        for (var favKey in favouriteProfiles) {
+                            i_profile_id=favouriteProfiles[favKey];
+
+                            if(profile_name_array[i_profile_id]!=undefined){
+
+                                console.log(profile_search_array[i_profile_id]);
+                                if (substrFound(profile_search_array[i_profile_id], searchValue)) {
+                                    tr_array.push(i_profile_id);
+                                }
+                            }
+                        }
+
+                        insert_rows_to_popup(tr_array, picked_account_id);
+                    }
+
+
+                }
                 closeErrorPopup();
 
 
@@ -1464,7 +1533,10 @@ function init_popup(picked_account_id) {
 
     });
 }
-
+function substrFound(string, word) {
+    var n=string.toLowerCase().indexOf(word.toLowerCase());
+    return (n>=0);
+}
 
 function insert_rows_to_popup(tr_array, picked_account_id) {
     var favorited_tr = '';
