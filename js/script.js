@@ -5,6 +5,36 @@ function _s4Object() {
 }
 
 
+function toggleSearchBox(e) {
+    if ($("#clone_header th .search_icon").length > 0) {
+
+        $(".search_input").toggle();
+        $(".profile_header").toggle();
+        adjustTable("toggleSearchBox");
+        $("#real_table th .search_input input").val("");
+        var $cloneinput = $("#clone_header th .search_input input");
+        $cloneinput.val("").focus();
+        setTimeout(function () {
+            var $cloneinput = $("#clone_header th .search_input input");
+            $cloneinput.focus();
+        }, 100);
+        e.preventDefault();
+        return false;
+    } else {
+        return true;
+    }
+
+}
+
+window.addEventListener("keydown", function (e) {
+    if (e.keyCode == 114 || (e.ctrlKey && e.keyCode == 70)) {
+        //alert("a");
+        //e.preventDefault();
+        toggleSearchBox(e);
+    }
+})
+
+
 e = chrome.browserAction;
 var current_version = "0";
 
@@ -261,6 +291,9 @@ refreshdates();
 function refreshdates() {
     var checkperiodStart = 0;
     switch (selected_period) {
+        case 'realtime':
+            var checkperiod = 0;
+            break;
         case 'day':
             var checkperiod = 1000 * 60 * 60 * 24 * (1 - 1);
             break;
@@ -661,13 +694,40 @@ function getRealtimeData(key, completeFunction, errorFunction) {
         },
         success: function (data) {
             //console.log(data["t:0|:1|:0:"].metricTotals[0]);
-            completeFunction(data["t:0|:1|:0:"].metricTotals[0] + "");
+            completeFunction(data["t:0|:1|:0:"].metricTotals[0] + "", data);
+        }});
+}
+
+function getRealtimeAdditionalData(key, completeFunction, errorFunction) {
+
+    //q="t:0|:1|:0:,t:11|:1|:5:,ot:0:0:4:,ot:0:0:3:,t:7|:1|:5:6==REFERRAL;,t:7|:1|:5:6==SOCIAL;,t:10|:1|:10:,t:18|:1|:10:,t:4|5|2|:1|:10:2!=zz;,";
+    q = "t:0|:1|:0:,t:11|:1|:5:,ot:0:0:4:,ot:0:0:3:";
+
+    //t:0|:1|:0: - sdkoka sha online
+    //ot:0:0:3: - posekundnij otchot
+    //ot:0:0:4: - pominutnij otchot
+
+    $.ajax({
+        url: "https://www.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=" + q + "&hl=en_US",
+        type: "GET",
+        dataType: "json",
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            errorFunction(textStatus);
+        },
+        success: function (data) {
+
+
+            //skoka sej4as:
+            var info_visits = data["t:0|:1|:0:"].metricTotals[0];
+            //za etu minutu
+            var info_pageviews = data["ot:0:0:4:"].overTimeData[0]['values'][0];
+            //console.log(data["t:0|:1|:0:"].metricTotals[0]);
+            completeFunction(info_visits, info_pageviews, data);
         }});
 }
 
 
 function getTodayData(key, completeFunction, errorFunction) {
-
 
     var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
     $.ajax({
@@ -875,13 +935,18 @@ function secondsToHms(d) {
 
 }
 
-function hmsToSeconds(string) {
-    R = /(.*):(.*):(.*)/
-    var arr = string.match(R);
+function hmsToSeconds(secstring) {
+    if(typeof(secstring)=="number"){
+        return secstring;
+    }
+    var R = /(.*):(.*):(.*)/
+    var arr = secstring.match(R);
     return (arr[1] * 60 * 60 - (-arr[2] * 60) - (-arr[3]))
 }
 
 function adjustTable(txt) {
+
+    //console.log(txt);
 
 
     if (show_ads) {
@@ -960,14 +1025,7 @@ function adjustTable(txt) {
         $('#real_table thead th:nth-child(' + nr + ')').click();
     });
 
-    $("#clone_header th .search_icon").bind('click', function (e) {
-        $(".search_input").toggle();
-        $(".profile_header").toggle();
-        $("#clone_header th .search_input input").val("").focus();
-        $("#real_table th .search_input input").val("");
-        e.preventDefault();
-        return false;
-    });
+    $("#clone_header th .search_icon").bind('click', toggleSearchBox);
     $("#clone_header th .search_input").bind('click', function (e) {
         e.preventDefault();
         return false;
@@ -1214,87 +1272,115 @@ function showGraph(cur_profile_id, jrow, token) {
 }
 
 
+function fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, info_pageviews, info_averagepageviews, info_timeonsite, info_bounce, info_newvisits) {
+
+    $('.info_name', jrow).html(profile_name_array[cur_profile_id] + " <span>" + profile_tracking_code[cur_profile_id] + "</span>");
+    $('.info_visits', jrow).html(info_visits);
+    $('.info_uniqvisitors', jrow).html(info_uniqvisitors);
+    $('.info_pageviews', jrow).html(info_pageviews);
+    $('.info_averagepageviews', jrow).html(info_averagepageviews);
+    $('.info_timeonsite', jrow).html(info_timeonsite);
+    $('.info_bounce', jrow).html(info_bounce);
+    $('.info_newvisits', jrow).html(info_newvisits);
+
+    $('#total_visits').html(($('#total_visits').html() - (-info_visits)).toFixed(2) * 1);
+    $('#total_uniqvisitors').html(($('#total_uniqvisitors').html() - (-info_uniqvisitors)).toFixed(2) * 1);
+    $('#total_pageviews').html(($('#total_pageviews').html() - (-info_pageviews)).toFixed(2) * 1);
+    $('#total_averagepageviews').html(($('#total_averagepageviews').html() - (-info_averagepageviews)).toFixed(2) * 1);
+    $('#total_timeonsite').html(secondsToHms((hmsToSeconds($('#total_timeonsite').html()) - (-hmsToSeconds(info_timeonsite))).toFixed(2) * 1));
+    $('#total_bounce').html((parseFloat($('#total_bounce').html()) - (-parseFloat(info_bounce))).toFixed(2) * 1 + '%');
+    $('#total_newvisits').html((parseFloat($('#total_newvisits').html()) - (-parseFloat(info_newvisits))).toFixed(2) * 1 + '%');
+
+    var profiles_count = profile_count_array[profile_parents[cur_profile_id]];
+    $('#avg_visits').html(($('#total_visits').html() / profiles_count).toFixed(2) * 1);
+    $('#avg_uniqvisitors').html(($('#total_uniqvisitors').html() / profiles_count).toFixed(2) * 1);
+    $('#avg_pageviews').html(($('#total_pageviews').html() / profiles_count).toFixed(2) * 1);
+    $('#avg_averagepageviews').html(($('#total_averagepageviews').html() / profiles_count).toFixed(2) * 1);
+    $('#avg_timeonsite').html(secondsToHms((hmsToSeconds($('#total_timeonsite').html()) / profiles_count).toFixed(2) * 1));
+    $('#avg_bounce').html((parseFloat($('#total_bounce').html()) / profiles_count).toFixed(2) * 1 + '%');
+    $('#avg_newvisits').html((parseFloat($('#total_newvisits').html()) / profiles_count).toFixed(2) * 1 + '%');
+
+    if ($("#profiles_table_list").find('.loading_cell').length == 0) {
+        $("#loading_new_account_table").hide();
+        $("#real_table").trigger("update");
+    }
+    if (info_visits == 0) {
+        $(jrow).addClass('empty_tr');
+    }
+    adjustTable('fill_row');
+}
+
+
 function fill_info(cur_profile_id, jrow, token) {
 
 
-    var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+    if (selected_period == "realtime") {
 
-    $.ajax({
-        url: url,
-        type: "POST",
-        data: "token=" + googleToken,
-        cache: false,
-        beforeSend: function (xhr) {
-            xhr.overrideMimeType('text/plain; charset=x-user-defined');
-        },
-        success: function (data, textStatus, jqXHR) {
-            var jsonArray = JSON.parse(data);
-            var comp_nr = 1;
-            if (jsonArray.components[0].id == 'overview')comp_nr = 0;
-            for (var metric_key in jsonArray.components[comp_nr].sparkline.metricGroup) {
-                var metric_val = jsonArray.components[comp_nr].sparkline.metricGroup[metric_key];
-                var metric_value = removecrap(metric_val.group[0].line[0].value);
-                switch (metric_val.metric.conceptName) {
-                    case 'analytics.visits':
-                        var info_visits = metric_value;
-                        break;
-                    case 'analytics.totalVisitors':
-                        var info_uniqvisitors = metric_value;
-                        break;
-                    case 'analytics.pageviews':
-                        var info_pageviews = metric_value;
-                        break;
-                    case 'analytics.avgPageviews':
-                        var info_averagepageviews = metric_value;
-                        break;
-                    case 'analytics.avgSessionTime':
-                        var info_timeonsite = metric_value;
-                        break;
-                    case 'analytics.bounceRate':
-                        var info_bounce = metric_value;
-                        break;
-                    case 'analytics.percentNewVisits':
-                        var info_newvisits = metric_value;
-                        break;
+
+        getRealtimeAdditionalData(cur_profile_id, function (info_visits, info_uniqvisitors, data) {
+
+
+            fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, 0, 0, 0, 0, 0);
+
+
+        }, function (data) {
+
+            logg('m_realtime=' + data);
+            goOffline();
+        });
+
+
+    } else {
+
+
+        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+
+        $.ajax({
+            url: url,
+            type: "POST",
+            data: "token=" + googleToken,
+            cache: false,
+            beforeSend: function (xhr) {
+                xhr.overrideMimeType('text/plain; charset=x-user-defined');
+            },
+            success: function (data, textStatus, jqXHR) {
+                var jsonArray = JSON.parse(data);
+                var comp_nr = 1;
+                if (jsonArray.components[0].id == 'overview')comp_nr = 0;
+                for (var metric_key in jsonArray.components[comp_nr].sparkline.metricGroup) {
+                    var metric_val = jsonArray.components[comp_nr].sparkline.metricGroup[metric_key];
+                    var metric_value = removecrap(metric_val.group[0].line[0].value);
+                    switch (metric_val.metric.conceptName) {
+                        case 'analytics.visits':
+                            var info_visits = metric_value;
+                            break;
+                        case 'analytics.totalVisitors':
+                            var info_uniqvisitors = metric_value;
+                            break;
+                        case 'analytics.pageviews':
+                            var info_pageviews = metric_value;
+                            break;
+                        case 'analytics.avgPageviews':
+                            var info_averagepageviews = metric_value;
+                            break;
+                        case 'analytics.avgSessionTime':
+                            var info_timeonsite = metric_value;
+                            break;
+                        case 'analytics.bounceRate':
+                            var info_bounce = metric_value;
+                            break;
+                        case 'analytics.percentNewVisits':
+                            var info_newvisits = metric_value;
+                            break;
+                    }
                 }
+
+                fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, info_pageviews, info_averagepageviews, info_timeonsite, info_bounce, info_newvisits);
+
+
             }
-            $('.info_name', jrow).html(profile_name_array[cur_profile_id] + " <span>" + profile_tracking_code[cur_profile_id] + "</span>");
-            $('.info_visits', jrow).html(info_visits);
-            $('.info_uniqvisitors', jrow).html(info_uniqvisitors);
-            $('.info_pageviews', jrow).html(info_pageviews);
-            $('.info_averagepageviews', jrow).html(info_averagepageviews);
-            $('.info_timeonsite', jrow).html(info_timeonsite);
-            $('.info_bounce', jrow).html(info_bounce);
-            $('.info_newvisits', jrow).html(info_newvisits);
-
-            $('#total_visits').html(($('#total_visits').html() - (-info_visits)).toFixed(2) * 1);
-            $('#total_uniqvisitors').html(($('#total_uniqvisitors').html() - (-info_uniqvisitors)).toFixed(2) * 1);
-            $('#total_pageviews').html(($('#total_pageviews').html() - (-info_pageviews)).toFixed(2) * 1);
-            $('#total_averagepageviews').html(($('#total_averagepageviews').html() - (-info_averagepageviews)).toFixed(2) * 1);
-            $('#total_timeonsite').html(secondsToHms((hmsToSeconds($('#total_timeonsite').html()) - (-hmsToSeconds(info_timeonsite))).toFixed(2) * 1));
-            $('#total_bounce').html((parseFloat($('#total_bounce').html()) - (-parseFloat(info_bounce))).toFixed(2) * 1 + '%');
-            $('#total_newvisits').html((parseFloat($('#total_newvisits').html()) - (-parseFloat(info_newvisits))).toFixed(2) * 1 + '%');
-
-            var profiles_count = profile_count_array[profile_parents[cur_profile_id]];
-            $('#avg_visits').html(($('#total_visits').html() / profiles_count).toFixed(2) * 1);
-            $('#avg_uniqvisitors').html(($('#total_uniqvisitors').html() / profiles_count).toFixed(2) * 1);
-            $('#avg_pageviews').html(($('#total_pageviews').html() / profiles_count).toFixed(2) * 1);
-            $('#avg_averagepageviews').html(($('#total_averagepageviews').html() / profiles_count).toFixed(2) * 1);
-            $('#avg_timeonsite').html(secondsToHms((hmsToSeconds($('#total_timeonsite').html()) / profiles_count).toFixed(2) * 1));
-            $('#avg_bounce').html((parseFloat($('#total_bounce').html()) / profiles_count).toFixed(2) * 1 + '%');
-            $('#avg_newvisits').html((parseFloat($('#total_newvisits').html()) / profiles_count).toFixed(2) * 1 + '%');
-
-            if ($("#profiles_table_list").find('.loading_cell').length == 0) {
-                $("#loading_new_account_table").hide();
-                $("#real_table").trigger("update");
-            }
-            if (info_visits == 0) {
-                $(jrow).addClass('empty_tr');
-            }
-            adjustTable('fillinfo');
-        }
-    });
-
+        });
+    }
 
 }
 
@@ -1509,9 +1595,9 @@ function init_popup(picked_account_id) {
 
 
                         for (var favKey in favouriteProfiles) {
-                            i_profile_id=favouriteProfiles[favKey];
+                            i_profile_id = favouriteProfiles[favKey];
 
-                            if(profile_name_array[i_profile_id]!=undefined){
+                            if (profile_name_array[i_profile_id] != undefined) {
 
                                 console.log(profile_search_array[i_profile_id]);
                                 if (substrFound(profile_search_array[i_profile_id], searchValue)) {
@@ -1534,8 +1620,8 @@ function init_popup(picked_account_id) {
     });
 }
 function substrFound(string, word) {
-    var n=string.toLowerCase().indexOf(word.toLowerCase());
-    return (n>=0);
+    var n = string.toLowerCase().indexOf(word.toLowerCase());
+    return (n >= 0);
 }
 
 function insert_rows_to_popup(tr_array, picked_account_id) {

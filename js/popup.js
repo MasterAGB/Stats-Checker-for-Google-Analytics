@@ -66,6 +66,10 @@ document.addEventListener('DOMContentLoaded', function () {
         init_popup(this.value);
     });
 
+    $('#gdf_nth_realtime').bind('click', function () {
+        changeDateFormat('realtime');
+        return false;
+    });
     $('#gdf_nth_day').bind('click', function () {
         changeDateFormat('day');
         return false;
@@ -121,7 +125,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $(window).resize(function() {
-        adjustTable();
+        adjustTable("resize");
     });
 
 
