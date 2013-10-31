@@ -135,9 +135,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    $('.favToggle li').live('click', function () {
+
+
+    $('#favToggleAll').live('click', function () {
         $('.favToggle li').removeClass("favToggleActive");
         $(this).addClass("favToggleActive");
+        onlyFav=SaveStorage('onlyFav',false,true);
+        $('#account_id').change();
+    })
+    $('#favToggleFav').live('click', function () {
+        $('.favToggle li').removeClass("favToggleActive");
+        $(this).addClass("favToggleActive");
+        onlyFav=SaveStorage('onlyFav',true,true);
+        $('#account_id').change();
     })
 
 

@@ -39,36 +39,22 @@ var current_version = "0";
 
 var googleToken = "";
 var googleEmail = "";
-var google_id = localStorage["google_id"];
-var account_id = localStorage["account_id"];
-var account_name = localStorage["account_name"];
-var profile_id = localStorage["profile_id"];
-var profile_name = localStorage["profile_name"];
-var display_id = localStorage["display_id"];
-var selected_period = localStorage["selected_period"];
-var new_analytics = localStorage["new_analytics"];
-var update_interval = localStorage["update_interval"];
-var date_range = localStorage["date_range"];
-var show_ads = localStorage["show_ads"];
-var show_properynames = localStorage["show_properynames"];
-//Cannot set booleans to localstorage :(
-if (typeof show_ads == 'string' && show_ads == 'false') {
-    show_ads = false;
-} else {
-    show_ads = true;
-}
-if (typeof show_properynames == 'string' && show_properynames == 'false') {
-    show_properynames = false;
-} else {
-    show_properynames = true;
-}
-var show_footer = localStorage["show_footer"];
-//Cannot set booleans to localstorage :(
-if (typeof show_footer == 'string' && show_footer == 'false') {
-    show_footer = false;
-} else {
-    show_footer = true;
-}
+//localStorage:
+var google_id = "";
+var account_id = "";
+var account_name = "";
+var profile_id = "";
+var profile_name = "";
+var display_id = "";
+var selected_period = "";
+var update_interval = "";
+var date_range = "";
+var showAds = true;
+var show_properynames = true;
+var favouriteProfiles = new Array();
+var show_footer = true;
+var onlyFav = false;
+
 
 var profile_data = new Array();
 var profile_search_array = new Object();
@@ -104,11 +90,6 @@ $.ajaxSetup({ cache: false });
 $.ajaxSetup({ async: true });
 
 
-if (localStorage['favouriteProfiles'] != undefined) {
-    var favouriteProfiles = JSON.parse(localStorage['favouriteProfiles']);
-} else {
-    var favouriteProfiles = new Array();
-}
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -118,9 +99,11 @@ function addfavourite(starbutton, profile_id_to_fav, sync) {
         sync = true;
     }
     if (!findfavourite(profile_id_to_fav)) {
+        console.log(typeof(favouriteProfiles));
         favouriteProfiles.push(profile_id_to_fav);
     }
-    localStorage['favouriteProfiles'] = JSON.stringify(favouriteProfiles);
+    favouriteProfiles = SaveStorage("favouriteProfiles", favouriteProfiles, false);
+
     if (typeof(starbutton) == "object") {
         $(starbutton).addClass('starred_icon');
         $(starbutton).removeClass('unstarred_icon');
@@ -147,7 +130,8 @@ function removefavourite(starbutton, profile_id_to_fav, sync) {
     favouriteProfiles = jQuery.grep(favouriteProfiles, function (value) {
         return value != profile_id_to_fav;
     });
-    localStorage['favouriteProfiles'] = JSON.stringify(favouriteProfiles);
+    favouriteProfiles = SaveStorage("favouriteProfiles", favouriteProfiles, false);
+
     if (typeof(starbutton) == "object") {
         $(starbutton).addClass('unstarred_icon');
         $(starbutton).removeClass('starred_icon');
@@ -184,75 +168,24 @@ function findfavourite(profile_id_to_fav) {
 
 
 function load_storage_variables() {
-    google_id = localStorage["google_id"];
-    if (!google_id) {
-        google_id = '';
-    }
-    account_id = localStorage["account_id"];
-    if (!account_id) {
-        account_id = '';
-    }
-    account_name = localStorage["account_name"];
-    if (!account_name) {
-        account_name = 'Your Account';
-    }
-    profile_id = localStorage["profile_id"];
-    if (!profile_id) {
-        profile_id = '';
-    }
-    profile_name = localStorage["profile_name"];
-    if (!profile_name) {
-        profile_name = 'Your Website';
-    }
-    display_id = localStorage["display_id"];
-    if (!display_id) {
-        display_id = 'DisplayVisitsSummary';
-    }
-
-    selected_period = localStorage["selected_period"];
-    if (!selected_period) {
-        selected_period = 'day';
-    }
-    new_analytics = localStorage["new_analytics"];
-    if (!new_analytics) {
-        new_analytics = true;
-    }
-    update_interval = localStorage["update_interval"];
-    if (!update_interval) {
-        update_interval = 300000;
-    }
-    date_range = localStorage["date_range"];
-    if (!date_range) {
-        date_range = '30days';
-    }
-    show_ads = localStorage["show_ads"];
-    if (!show_ads) {
-        show_ads = true;
-    }
-    if (typeof show_ads == 'string' && show_ads == 'false') {
-        show_ads = false;
-    } else {
-        show_ads = true;
-    }
-    show_properynames = localStorage["show_properynames"];
-    if (!show_properynames) {
-        show_properynames = true;
-    }
-    if (typeof show_properynames == 'string' && show_properynames == 'false') {
-        show_properynames = false;
-    } else {
-        show_properynames = true;
-    }
-    show_footer = localStorage["show_footer"];
-    if (!show_footer) {
-        show_footer = true;
-    }
-    if (typeof show_footer == 'string' && show_footer == 'false') {
-        show_footer = false;
-    } else {
-        show_footer = true;
-    }
+    console.log("load_storage_variables");
+    google_id = LoadStorage("google_id");
+    account_id = LoadStorage("account_id");
+    account_name = LoadStorage("account_name");
+    profile_id = LoadStorage("profile_id");
+    profile_name = LoadStorage("profile_name");
+    display_id = LoadStorage("display_id");
+    selected_period = LoadStorage("selected_period");
+    update_interval = LoadStorage("update_interval", "string", 300000);
+    date_range = LoadStorage("date_range", "string", "30days");
+    showAds = LoadStorage("showAds", 'bool',true);
+    show_properynames = LoadStorage("show_properynames", 'bool');
+    favouriteProfiles = LoadStorage('favouriteProfiles', 'json');
+    show_footer = LoadStorage("show_footer", 'bool');
+    onlyFav = LoadStorage("onlyFav", 'bool',false);
 }
+
+
 load_storage_variables();
 
 
@@ -359,8 +292,8 @@ function changeDateFormat(newformat) {
 
     pickDateFormatButton(newformat);
 
-    localStorage["selected_period"] = newformat;
-    selected_period = localStorage["selected_period"];
+
+    selected_period = SaveStorage("selected_period", newformat);
     refreshdates();
     $('#account_id').change();
 }
@@ -479,23 +412,24 @@ function onInstall() {
 
 function onSmallUpdate() {
     console.log("Extension Updated (Small version)");
-    localStorage["show_ads"] = true;
+    showAds = SaveStorage("showAds", true);
+
     if (isExtension()) {
-        _gaq.push(['_trackEvent', 'Ext small version change', localStorage['version'] + ' - ' + current_version]);
+        _gaq.push(['_trackEvent', 'Ext small version change', LoadStorage('version') + ' - ' + current_version]);
     } else {
-        _gaq.push(['_trackEvent', 'App small version change', localStorage['version'] + ' - ' + current_version]);
+        _gaq.push(['_trackEvent', 'App small version change', LoadStorage('version') + ' - ' + current_version]);
     }
 }
 
 function onUpdate() {
     console.log("Extension Updated");
     if (isExtension()) {
-        _gaq.push(['_trackEvent', 'Ext version change', localStorage['version'] + ' - ' + current_version]);
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from=' + localStorage['version'] + '&type=ext'}, function (tab) {
+        _gaq.push(['_trackEvent', 'Ext version change', LoadStorage('version') + ' - ' + current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from=' + LoadStorage('version') + '&type=ext'}, function (tab) {
         });
     } else {
-        _gaq.push(['_trackEvent', 'App version change', localStorage['version'] + ' - ' + current_version]);
-        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from=' + localStorage['version'] + '&type=app'}, function (tab) {
+        _gaq.push(['_trackEvent', 'App version change', LoadStorage('version') + ' - ' + current_version]);
+        chrome.tabs.create({'url': 'http://mystatschecker.com/?updated=' + current_version + '&from=' + LoadStorage('version') + '&type=app'}, function (tab) {
         });
     }
 }
@@ -520,7 +454,7 @@ function getAccountProfiles(onCompleteFunction) {
     }
 
     var currVersion = getManifestVersion();
-    var prevVersion = localStorage['version'];
+    var prevVersion = LoadStorage('version');
 
 
     if (currVersion != prevVersion) {
@@ -550,7 +484,8 @@ function getAccountProfiles(onCompleteFunction) {
             }
 
         }
-        localStorage['version'] = currVersion;
+
+        SaveStorage("version", currVersion);
     }
 
 
@@ -903,8 +838,8 @@ function checkRatio() {
 
             getRealtimeData(profile_id, function (badge_number) {
 
-                profile_name = profile_name_array[profile_id];
-                localStorage["profile_name"] = profile_name;
+
+                profile_name = SaveStorage("profile_name", profile_name_array[profile_id]);
 
                 if (isExtension()) {
                     e.setBadgeText({"text": badge_number});
@@ -923,8 +858,8 @@ function checkRatio() {
 
             getTodayData(profile_id, function (m_today) {
 
-                profile_name = profile_name_array[profile_id];
-                localStorage["profile_name"] = profile_name;
+
+                profile_name = SaveStorage("profile_name", profile_name_array[profile_id]);
 
 
                 if (m_today != null) {
@@ -1366,7 +1301,128 @@ function eliminateDuplicates(arr) {
 }
 
 
+function SaveStorage(key, storageVal, log) {
+    //_gaq.push(['_trackEvent', key, picked_account_id]);
+    if (typeof(log) != "undefined" && log == true) {
+        _gaq.push(['_trackEvent', key, storageVal]);
+    }
+    if (typeof(storageVal) != "undefined") {
+
+        var type=typeof(storageVal);
+
+        if(type!="string" && type!="object"){
+
+        console.log("Saving to storage: " + key + " type " + typeof(storageVal) + " = ");
+        }
+
+        switch (typeof(storageVal)) {
+            case "object":
+                var storageValString = JSON.stringify(storageVal);
+                //console.log(storageValString);
+
+                localStorage[key] = storageValString;
+                return storageVal;
+
+                break;
+            case "boolean":
+                var storageValString = storageVal;
+                console.log(storageValString);
+                localStorage[key] = storageValString;
+                return storageVal;
+
+                break;
+            default:
+                localStorage[key] = storageVal;
+                console.log(storageVal);
+                return localStorage[key];
+
+                break;
+
+        }
+
+
+    } else {
+        //console.log("NOT Saving to storage: " + key + " = " + showAds);
+        return storageVal;
+    }
+}
+
+function LoadStorage(key, type, def) {
+
+    if (typeof(type) == "undefined") {
+        type = "string";
+    }
+
+
+
+    var storageVal = localStorage[key];
+    switch (type) {
+        case "bool":
+
+            if (typeof(def) == "undefined") {
+                def = true;
+            }
+
+            if (!storageVal) {
+                storageVal = def;
+            }
+            if (typeof storageVal == 'string' && storageVal == 'false') {
+                storageVal = false;
+            } else {
+                storageVal = true;
+            }
+
+            console.log("Getting :" + key + " = " + storageVal);
+            break;
+        case "string":
+
+            if (typeof(def) == "undefined") {
+                def = "";
+            }
+
+            if (!profile_id) {
+                profile_id = def;
+            }
+            break;
+        case "json":
+            if (storageVal != undefined) {
+                //console.log("Json parse" + storageVal);
+                storageVal = JSON.parse(storageVal);
+            } else {
+                storageVal = new Array();
+            }
+            break;
+
+    }
+
+    return storageVal;
+
+
+}
+
+
 function init_popup(picked_account_id) {
+
+
+    //account_id = SaveStorage("account_id", picked_account_id);
+
+
+    //alert(picked_account_id);
+    if (picked_account_id == undefined) {
+        //TODO: teperj vsegda pokazivajem vsjo?
+        picked_account_id=account_id;
+    }
+    picked_account_id = SaveStorage("picked_account_id", picked_account_id);
+    account_id = SaveStorage("account_id", picked_account_id);
+
+
+    if (onlyFav) {
+        $('#favToggleFav').addClass("favToggleActive");
+        $('#favToggleAll').removeClass("favToggleActive");
+    } else {
+        $('#favToggleAll').addClass("favToggleActive");
+        $('#favToggleFav').removeClass("favToggleActive");
+    }
 
 
     if (isExtension()) {
@@ -1404,7 +1460,7 @@ function init_popup(picked_account_id) {
     $('#avg_newvisits').html('0%');
 
 
-    if (show_ads) {
+    if (showAds) {
         $('.ads').show();
         $('.not_ads').hide();
         $('.angryfarmer_small').show();
@@ -1433,14 +1489,6 @@ function init_popup(picked_account_id) {
 
 
     getAccountProfiles(function () {
-        //alert(picked_account_id);
-        if (picked_account_id == undefined) {
-            if (findfavourite(profile_id)) {
-                picked_account_id = 'favorited';
-            } else {
-                picked_account_id = account_id;
-            }
-        }
 
 
         $.ajax({
@@ -1516,16 +1564,11 @@ function init_popup(picked_account_id) {
                 favouriteProfiles = eliminateDuplicates(favouriteProfiles2);
 
 
-                var selected_option = '';
-                if ('favorited' == picked_account_id) {
-                    selected_option = 'selected="selected"';
-                }
-
-                $("#account_id").append(
-                    '<option class="option_fav" ' +
-                        selected_option +
-                        ' value="favorited">&lowast; ' + get_trans('favoritedProfiles', false) + '</option>'
-                );
+                /* $("#account_id").append(
+                 '<option class="option_fav" ' +
+                 selected_option +
+                 ' value="favorited">&lowast; ' + get_trans('favoritedProfiles', false) + '</option>'
+                 );*/
                 var selected_option = '';
                 if ('all' == picked_account_id) {
                     selected_option = 'selected="selected"';
@@ -1546,31 +1589,33 @@ function init_popup(picked_account_id) {
                 if (searchValue == "") {
 
 
-                    if (picked_account_id != 'favorited') {
-
-                        //if (picked_account_id != 'all')
-                        /*  if (typeof profile_count_array[picked_account_id] == 'undefined') {
-                         picked_account_id = window_preload.accounts[0].id;
-                         }
-                         */
-                        //alert(profile_count_array[picked_account_id]);
-
+                    if (!onlyFav) {
                         var tr_array = new Array();
-
                         for (var i_profile_id in profile_name_array) {
                             if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
                                 tr_array.push(i_profile_id);
                             }
                         }
+                        console.log(picked_account_id);
+                        console.log(profile_name_array);
                         insert_rows_to_popup(tr_array, picked_account_id);
                     } else {
-                        insert_rows_to_popup(favouriteProfiles, picked_account_id);
-                    }
+                        var tr_array = new Array();
+                        for (var i_profile_id2 in favouriteProfiles) {
+                            var i_profile_id = favouriteProfiles[i_profile_id2];
+                            if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
+                                tr_array.push(i_profile_id);
+                            }
+                        }
 
+                        console.log(picked_account_id);
+                        console.log(tr_array);
+                        insert_rows_to_popup(tr_array, picked_account_id);
+                    }
                 } else {
 
 
-                    if (picked_account_id != 'favorited') {
+                    if (!onlyFav) {
                         var tr_array = new Array();
 
                         for (var i_profile_id in profile_name_array) {
@@ -1618,6 +1663,8 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
     var favorited_tr = '';
     var nonfavorited_tr = '';
 
+
+    console.log("Sdelatj proverku na to, 4tobi pokazivalisj toka nuzhnije favoriti!");
 //tr_array=sortObj(tr_array);
 
     //alert(tr_array.length);
@@ -1675,12 +1722,12 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
                 '<div class="profile_name_div">' + favico + '' + radiobox + '<a class="info_name" title="' + val + '" target="_blank" href="' + reportingurl + '">' + profile_name_array[key] + " <span>" + profile_tracking_code[key] + "</span>" + '</a></div>' +
                 '</div></td>' +
 
-                '<td class="value info_visits td-radio" align="left"><div class="loading_cell">' + profile_data[key]["visits"] + '</div></td>' +
+                '<td class="value info_visits td-radio" align="left"><div class="loading_cell">' + getProfileData(key, "visits") + '</div></td>' +
                 '<td class="value info_uniqvisitors td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
                 '<td class="value info_pageviews td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
                 '<td class="value info_averagepageviews td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
-                '<td class="value info_timeonsite td-radio" align="left"><div class="loading_cell">' + profile_data[key]["timeonsite"] + '</div></td>' +
-                '<td class="value info_bounce td-radio" align="left"><div class="loading_cell">' + profile_data[key]["bounce"] + '</div></td>' +
+                '<td class="value info_timeonsite td-radio" align="left"><div class="loading_cell">' + getProfileData(key, "timeonsite") + '</div></td>' +
+                '<td class="value info_bounce td-radio" align="left"><div class="loading_cell">' + getProfileData(key, "bounce") + '</div></td>' +
                 '<td class="value info_newvisits td-radio" align="left"><div class="loading_cell">&nbsp;</div></td>' +
                 //'<td class="value info_conversion td-radio" align="left"><div class="loading_cell">'+profile_data[key]["conversion"]+'</div></td>' +
                 "</tr>"
@@ -1721,6 +1768,15 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
 }
 
 
+function getProfileData(profileKey, metric) {
+    if (typeof(profile_data[profileKey]) != "undefined") {
+        return profile_data[profileKey][metric];
+    } else {
+        console.log("Undefined metric" + metric + " for profile: " + profileKey)
+        return "0";
+    }
+}
+
 var totalTr = 0;
 function SetFullyFilled(total) {
     totalTr = total;
@@ -1738,15 +1794,11 @@ function checkFullyFilled() {
 function save_options_radio(prof_id, acc_id) {
     _gaq.push(['_trackEvent', 'save_options_radio', 'clicked']);
 
-    localStorage["google_id"] = $('#googleAcc').html();
-    if (acc_id != 'favorited')
-        localStorage["account_id"] = acc_id;
-    localStorage["profile_id"] = prof_id;
-    localStorage["profile_name"] = profile_name_array[prof_id];
-    google_id = localStorage["google_id"];
-    account_id = localStorage["account_id"];
-    profile_id = localStorage["profile_id"];
-    profile_name = localStorage["profile_name"];
+
+    google_id = SaveStorage("google_id", $('#googleAcc').html());
+    account_id = SaveStorage("account_id", acc_id);
+    profile_id = SaveStorage("profile_id", prof_id);
+    profile_name = SaveStorage("profile_name", profile_name_array[prof_id]);
 
 
     $('tr.selected_tr').removeClass('selected_tr');
@@ -1762,60 +1814,17 @@ function save_options_radio(prof_id, acc_id) {
 function save_options() {
     _gaq.push(['_trackEvent', 'save_options', 'clicked']);
 
-    localStorage["google_id"] = $('#googleAcc').html();
-    localStorage["account_id"] = $('#account_id').val();
-    localStorage["account_name"] = $('#account_id').find('option:selected').html();
-    localStorage["profile_id"] = $('#profile_id').val();
-    localStorage["profile_name"] = $('#profile_id').find('option:selected').html();
-    localStorage["display_id"] = $('#display_id').val();
-    localStorage["update_interval"] = $('#update_interval').val();
-    localStorage["date_range"] = $('#date_range').val();
-    if ($('#show_ads').attr('checked') == 'checked') {
-        _gaq.push(['_trackEvent', 'show_ads', 'true']);
-        localStorage["show_ads"] = true;
-    } else {
-        _gaq.push(['_trackEvent', 'show_ads', 'false']);
-        localStorage["show_ads"] = false;
-    }
-    if ($('#show_properynames').attr('checked') == 'checked') {
-        _gaq.push(['_trackEvent', 'show_properynames', 'true']);
-        localStorage["show_properynames"] = true;
-    } else {
-        _gaq.push(['_trackEvent', 'show_properynames', 'false']);
-        localStorage["show_properynames"] = false;
-    }
-    if ($('#show_footer').attr('checked') == 'checked') {
-        _gaq.push(['_trackEvent', 'show_footer', 'true']);
-        localStorage["show_footer"] = true;
-    } else {
-        _gaq.push(['_trackEvent', 'show_footer', 'false']);
-        localStorage["show_footer"] = false;
-    }
-    //alert($('#show_ads').attr('checked')+localStorage["show_ads"]);
-    google_id = localStorage["google_id"];
-    account_id = localStorage["account_id"];
-    account_name = localStorage["account_name"];
-    profile_id = localStorage["profile_id"];
-    profile_name = localStorage["profile_name"];
-    display_id = localStorage["display_id"];
-    show_ads = localStorage["show_ads"];
-    if (typeof show_ads == 'string' && show_ads == 'false') {
-        show_ads = false;
-    } else {
-        show_ads = true;
-    }
-    show_properynames = localStorage["show_properynames"];
-    if (typeof show_properynames == 'string' && show_properynames == 'false') {
-        show_properynames = false;
-    } else {
-        show_properynames = true;
-    }
-    show_footer = localStorage["show_footer"];
-    if (typeof show_footer == 'string' && show_footer == 'false') {
-        show_footer = false;
-    } else {
-        show_footer = true;
-    }
+
+    google_id = SaveStorage("google_id", $('#googleAcc').html());
+    display_id = SaveStorage("display_id", $('#display_id').val());
+    update_interval = SaveStorage("update_interval", $('#update_interval').val());
+    date_range = SaveStorage("date_range", $('#date_range').val());
+    showAds = SaveStorage("showAds", $('#show_ads').attr('checked') == 'checked', true);
+    show_properynames = SaveStorage("show_properynames", $('#show_properynames').attr('checked') == 'checked', true);
+    show_footer = SaveStorage("show_footer", $('#show_footer').attr('checked') == 'checked', true);
+
+
+
     $('#status').show();
     $('#status').html(chrome.i18n.getMessage("saved"));
     setTimeout(function () {
@@ -1861,41 +1870,9 @@ function init_options(picked_account_id) {
 
 
         $('#loading_profile_id').show();
-        $.ajax({
-            url: "https://www.google.com/analytics/web/",
-            data: '',
-            method: 'get',
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                $('#loading_profile').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
-                setTimeout(function () {
-                    init_options();
-                }, 5000);
-                return false;
-            },
-            success: function (data) {
-
-                var window_preload = undefined;
-                var window_header = undefined;
-                //$('#texta').val(data);
-                var account_options = $(data);
-                account_options.each(function () {
-                    var script_contents = $(this).html();
-
-                    if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
-                        googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
-
-                    }
 
 
-                    if ((script_contents.split('ga.webanalytics.header.setHeaderInfo').length - 1) > 0) {
-                        script_contents = script_contents.split('ga.webanalytics.header.main();').join('');
-                        script_contents = script_contents.split('ga.webanalytics.header.setHeaderInfo').join('window_header = ');
-                        script_contents = script_contents.split(');')[0];
-                        script_contents = script_contents.split('window_header = (')[1];
-                        window_header = JSON.parse(script_contents);
-                    }
-
-                });
+        googleEmail="aa@aa.aa";
 
 
                 if (typeof googleToken == 'undefined') {
@@ -1906,69 +1883,25 @@ function init_options(picked_account_id) {
                     return false;
                 }
 
-                $("#account_id").html('');
-                $("#profile_id").html('');
 
-                for (var i_account_id in account_name_array) {
-                    var i_account_name = account_name_array[i_account_id];
-
-
-                    var i_selected_option = '';
-                    if (i_account_id == picked_account_id) {
-                        i_selected_option = 'selected="selected"';
-                    }
-
-                    $("#account_id").append(
-                        '<option ' + i_selected_option +
-                            ' value="' + i_account_id +
-                            '">' +
-                            i_account_name +
-                            "</option>"
-                    );
-                    if (picked_account_id == '')picked_account_id = i_account_id;
-                }
-
-                //alert(favouriteProfiles);
-                var favouriteProfiles2 = favouriteProfiles;
-                for (var fprofile_key in favouriteProfiles) {
-                    var fprofile_val = favouriteProfiles[fprofile_key];
-                    if (typeof profile_parents[fprofile_val] == 'undefined') {
-                        favouriteProfiles2 = jQuery.grep(favouriteProfiles2, function (value) {
-                            return value != fprofile_val;
-                        });
-                    }
-                    //profile_name_array[profile_val.profiles[0].id] = profile_val.profiles[0].name;
-                    //profile_parents[profile_val.profiles[0].id] = account_val.id;
-                }
-                //alert(favouriteProfiles2);
-                favouriteProfiles = favouriteProfiles2;
-                //profile_parents
-
-
-                if (typeof profile_name_array[profile_id] == 'undefined') {
-                    //profile_id=window_preload.accounts[0].wprops[0].profiles[0].id;
-                    //alert(window_preload.accounts[0].id);
-                    //account_id=window_preload.accounts[0].id;
-                    //picked_account_id=window_preload.accounts[0].id;
-                }
-
-                googleEmail = window_header.email;
                 if (googleEmail != '') {
                     $('#googleAcc').html(googleEmail);
                 }
 
 
                 if (typeof profile_count_array[picked_account_id] == 'undefined') {
-                    picked_account_id = window_preload.accounts[0].id;
+                    //TODO
+                    //picked_account_id = window_preload.accounts[0].id;
                 }
 
 
                 $("#display_id").val(display_id);
                 $("#update_interval").val(update_interval);
                 $("#date_range").val(date_range);
-                $("#show_ads").attr('checked', show_ads);
+                $("#show_ads").attr('checked', showAds);
                 $("#show_properynames").attr('checked', show_properynames);
                 $("#show_footer").attr('checked', show_footer);
+                $("#onlyFav").attr('checked', onlyFav);
 
 
                 for (var i_profile_id in profile_name_array) {
@@ -1997,8 +1930,6 @@ function init_options(picked_account_id) {
 
 
                 }
-            }
-        });
 
     });
 
