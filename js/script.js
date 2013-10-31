@@ -6,23 +6,21 @@ function _s4Object() {
 
 
 function toggleSearchBox(e) {
-    if ($("#clone_header th .search_icon").length > 0) {
 
-        $(".search_input").toggle();
-        $(".profile_header").toggle();
-        adjustTable("toggleSearchBox");
-        $("#real_table th .search_input input").val("");
-        var $cloneinput = $("#clone_header th .search_input input");
-        $cloneinput.val("").focus();
-        setTimeout(function () {
-            var $cloneinput = $("#clone_header th .search_input input");
-            $cloneinput.focus();
-        }, 100);
-        e.preventDefault();
-        return false;
-    } else {
-        return true;
-    }
+
+    $(".search_input").toggle();
+    $(".profile_header").toggle();
+    adjustTable("toggleSearchBox");
+    $(".search_input input").val("").focus();
+    searchValue = "";
+
+    setTimeout(function () {
+        var $cloneinput = $(".search_input input");
+        $cloneinput.focus();
+    }, 100);
+    e.preventDefault();
+    return false;
+
 
 }
 
@@ -936,7 +934,7 @@ function secondsToHms(d) {
 }
 
 function hmsToSeconds(secstring) {
-    if(typeof(secstring)=="number"){
+    if (typeof(secstring) == "number") {
         return secstring;
     }
     var R = /(.*):(.*):(.*)/
@@ -944,119 +942,17 @@ function hmsToSeconds(secstring) {
     return (arr[1] * 60 * 60 - (-arr[2] * 60) - (-arr[3]))
 }
 
-function adjustTable(txt) {
-
-    //console.log(txt);
 
 
-    if (show_ads) {
-        $('.ads').show();
-        $('.not_ads').hide();
-        $('.angryfarmer_small').show();
-        $('.angryfarmer').show();
-    } else {
-        $('.ads').hide();
-        $('.not_ads').show();
-        $('.angryfarmer_small').hide();
-        $('.angryfarmer').hide();
-    }
-
-    if (!show_footer) {
-        $('#total_row').hide();
-        $('#avg_row').hide();
-        $('#clone_footer').hide();
-        $('#bottom_footer_row').show();
-    } else {
-        $('#bottom_footer_row').hide();
-
-        $('#total_row').show();
-        $('#avg_row').show();
-
-    }
-    //return true;
-    $('#clone_header').hide().html('');
-    if (show_footer)
-        $('#clone_footer').hide().html('');
-
-    $('#real_table thead').clone().appendTo('#clone_header');
 
 
-    $('#clone_header').mousedown(function () {
-        this.onselectstart = function () {
-            return false
-        };
-    });
-
-    if (show_footer)
-        $('#real_table tfoot').clone().appendTo('#clone_footer');
 
 
-    var numb = 1;
-    $('#real_table thead th').each(function () {
-        if (numb > 0) {
-            if (numb == 1) {
-                var forwidth = ($(this).width() + 1) + 'px';
-            } else {
-                var forwidth = ($(this).width()) + 'px';
-            }
-            $('#clone_header thead th:nth-child(' + numb + ')').css('width', forwidth);
-        }
-        numb++;
-    })
-
-    if (show_footer) {
-        var numb = 1;
-        $('#real_table tfoot tr:last-child td').each(function () {
-            if (numb > 0) {
-                if (numb == 1) {
-                    var forwidth = ($(this).width() + 1) + 'px';
-                } else {
-                    var forwidth = ($(this).width()) + 'px';
-                }
-                $('#clone_footer tfoot tr:last-child td:nth-child(' + numb + ')').css('width', forwidth);
-            }
-            numb++;
-        })
-    }
-
-
-    $('#clone_header th').bind("click", function (e) {
-        var nr = $(this).index() + 1;
-        $('#real_table thead th:nth-child(' + nr + ')').click();
-    });
-
-    $("#clone_header th .search_icon").bind('click', toggleSearchBox);
-    $("#clone_header th .search_input").bind('click', function (e) {
-        e.preventDefault();
-        return false;
-    });
-    $("#clone_header th .search_input input").change(function (e) {
-        $("#real_table th .search_input input").val(this.value).change();
-        e.preventDefault();
-        return false;
-    });
-
-
-    $('#clone_header').css('width', $('#real_table').width() + 'px').show();
-    if (show_footer)
-        $('#clone_footer').css('width', $('#real_table').width() + 'px').css('margin-top', '-' + $('#clone_footer').height() + 'px').show();
-    //alert('a '+txt);
-
-
-}
 
 
 jQuery.fn.fadeToggle = function (speed, easing, callback) {
     return this.animate({opacity: 'toggle'}, speed, easing, callback);
 };
-
-
-function toggleclones() {
-    $('#clone_header').fadeToggle();
-    $('#clone_footer').fadeToggle();
-
-
-}
 
 
 function addDays(currentDate, days) {
@@ -1321,12 +1217,13 @@ function fill_info(cur_profile_id, jrow, token) {
 
 
             fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, 0, 0, 0, 0, 0);
-
+            checkFullyFilled();
 
         }, function (data) {
 
             logg('m_realtime=' + data);
             goOffline();
+            checkFullyFilled();
         });
 
 
@@ -1376,7 +1273,7 @@ function fill_info(cur_profile_id, jrow, token) {
                 }
 
                 fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, info_pageviews, info_averagepageviews, info_timeonsite, info_bounce, info_newvisits);
-
+                checkFullyFilled();
 
             }
         });
@@ -1438,8 +1335,40 @@ function init_popup(picked_account_id) {
     $('#avg_newvisits').html('0%');
 
 
+    if (show_ads) {
+        $('.ads').show();
+        $('.not_ads').hide();
+        $('.angryfarmer_small').show();
+        $('.angryfarmer').show();
+    } else {
+        $('.ads').hide();
+        $('.not_ads').show();
+        $('.angryfarmer_small').hide();
+        $('.angryfarmer').hide();
+    }
+
+    if (!show_footer) {
+        $('#total_row').hide();
+        $('#avg_row').hide();
+        $('#bottom_footer_row').show();
+    } else {
+        $('#bottom_footer_row').hide();
+        $('#total_row').show();
+        $('#avg_row').show();
+    }
+
+
+
+
+
+
+
+
+
+
+    adjustTableVars();
     // return false;
-    adjustTable('init_popup start');
+    adjustTable('init_popup_start');
 
 
     getAccountProfiles(function () {
@@ -1710,6 +1639,7 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
         adjustTable('insert_rows_to_popup');
 
 
+        SetFullyFilled($("#profiles_table_list").find('tr').length);
         $("#profiles_table_list").find('tr').each(function () {
             //alert($(this).attr('rel_profile'));
             fill_info($(this).attr('rel_profile'), this);
@@ -1726,6 +1656,20 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
         $("#loading_table_profiles").hide();
         $("#loading_new_account_table").hide();
         adjustTable('insert_rows_to_popup');
+    }
+}
+
+
+var totalTr = 0;
+function SetFullyFilled(total) {
+    totalTr = total;
+}
+
+function checkFullyFilled() {
+    totalTr--;
+    if (totalTr == 0) {
+        updateAdjustRows();
+        adjustTable("checkFullyFilled")
     }
 }
 

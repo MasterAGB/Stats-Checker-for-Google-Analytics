@@ -1,7 +1,7 @@
 /*var bannnerImages = [
-    'img/banners/1100AD_1_468x60.jpg',
-    'img/banners/1100AD_2_468x60.jpg',
-    'img/banners/1100AD_3_468x60.jpg'];*/
+ 'img/banners/1100AD_1_468x60.jpg',
+ 'img/banners/1100AD_2_468x60.jpg',
+ 'img/banners/1100AD_3_468x60.jpg'];*/
 var bannnerImages = [
     'img/AngryFarmer.MadSword.com/angryfarmer468x60.png'];
 
@@ -9,21 +9,35 @@ var bannnerImages = [
 document.addEventListener('DOMContentLoaded', function () {
 
 
-
-
     $('#bannerImg').attr('src', bannnerImages[getRandomInt(0, 2)]);
 
 
-    $('#bannerImg').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'bannerImg']);});
-    $('.angryfarmer').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer']);});
-    $('.angryfarmer_small').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);});
-    $('.angryfarmer_icon').bind("click",function(){_gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);});
+    $('#bannerImg').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'bannerImg']);
+    });
+    $('.angryfarmer').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'angryfarmer']);
+    });
+    $('.angryfarmer_small').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);
+    });
+    $('.angryfarmer_icon').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);
+    });
 
 
+    $("#real_table th .search_icon").bind('click', toggleSearchBox);
+    $("#real_table th .search_input").bind('click', function (e) {
+        //e.preventDefault();
+        if ($(this).find("input:focus").length == 0) {
+            $(this).find("input").focus();
+        }
+        return false;
+    });
 
     $("#real_table th .search_input input").change(function (e) {
-        console.log("Real:"+this.value);
-        searchValue=this.value;
+        console.log("Real:" + this.value);
+        searchValue = this.value;
 
         $('#account_id').val("all").change();
     });
@@ -31,10 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     $("#real_table").tablesorter({
         // define a custom text extraction function
-        textExtraction:"complex"
+        textExtraction: "complex"
     });
-
-
 
 
     init_popup();
@@ -50,14 +62,12 @@ document.addEventListener('DOMContentLoaded', function () {
     adjustTable('start');
 
 
-
-
     $('#googleAcc').html(google_id);
 
     $('#googleAccChange').html(chrome.i18n.getMessage("googleAccChange", 'https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'));
 
 
-    $('.trans').each(function(){
+    $('.trans').each(function () {
         $(this).html(get_trans($(this).data('transid'), false));
     })
 
@@ -104,9 +114,8 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
 
-
     $('.graph_icon').live('click', function () {
-        showGraph($(this).data('profileid'),this,$(this).data('token'));
+        showGraph($(this).data('profileid'), this, $(this).data('token'));
         return false;
     })
 
@@ -124,9 +133,32 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
 
-    $(window).resize(function() {
-        adjustTable("resize");
+
+
+    $('.favToggle li').live('click', function () {
+        $('.favToggle li').removeClass("favToggleActive");
+        $(this).addClass("favToggleActive");
+    })
+
+
+
+
+
+    $(document).ready(function () {
+        adjustTable("ready");
+        if (keepAspectTimer !== false) {
+            clearTimeout(keepAspectTimer);
+        }
+        keepAspectTimer = setTimeout(function(){keepAspectTimer=false;adjustTable("readyTimeout");}, 200); //200 is time in milliseconds
     });
+    $(window).resize(function () {
+        adjustTable("resize");
+        if (keepAspectTimer !== false) {
+            clearTimeout(keepAspectTimer);
+        }
+        keepAspectTimer = setTimeout(function(){keepAspectTimer=false;adjustTable("resizeTimeout");}, 200); //200 is time in milliseconds
+    });
+
 
 
 

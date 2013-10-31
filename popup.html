@@ -12,6 +12,7 @@
     <script src="/js/highcharts/js/modules/exporting.js"></script>
 
     <script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
+    <script type="text/javascript" src="js/adjust.js?1.6.1"></script>
     <script type="text/javascript" src="js/script.js?1.6.1"></script>
     <script type="text/javascript" src="js/popup.js?1.6.1"></script>
 </head>
@@ -70,12 +71,22 @@
     <tr>
         <td align="left" style="vertical-align: top; ">
             <div class="account_table_top_text">
-                <span class="trans" data-transid="selectAccountId">Account:</span> <select id="account_id">
-                <option value="">Loading...</option>
-            </select>
+
+                <ul class="favToggle">
+                    <li class="favToggleActive">Все</li>
+                    <li>
+                        <div class="star"></div>
+                    </li>
+                </ul>
+
+                <select id="account_id">
+                    <option value="">Loading...</option>
+                </select>
+
                 <span id="loading_new_account_table" style=""><img src="img/spinner16dark.gif"></span>
-				<span style="position:absolute;margin-top:2px;margin-left:4px;">
-					<div class="g-plusone" data-size="medium" data-annotation="bubble" data-href="http://mystatschecker.com"></div>
+				<span style="position:absolute;margin-top:5px;margin-left:8px;">
+                    <div class="g-plusone" data-annotation="bubble"
+                         data-href="http://mystatschecker.com"></div>
 				</span>
             </div>
         </td>
@@ -117,39 +128,25 @@
 </table>
 
 <div id="table_scroll_limit">
-    <table cellpadding="0" border="0" cellspacing="0" class="profile_list_table" id="clone_header">
-        <thead>
-        <tr>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td></td>
-        </tr>
-        </tbody>
-        <tfoot>
-        <tr>
-            <td></td>
-        </tr>
-        </tfoot>
-    </table>
+
     <div id="table_scroll">
         <table cellpadding="0" border="0" cellspacing="0" class="profile_list_table" id="real_table">
             <colgroup>
                 <col/>
                 <col width=9%/>
                 <col width=9%/>
-                <col width=12%/>
-                <col width=12%/>
-                <col width=10%/>
-                <col width=12%/>
-                <col width=12%/>
+                <col width=9%/>
+                <col width=9%/>
+                <col width=9%/>
+                <col width=9%/>
+                <col width=9%/>
             </colgroup>
             <thead>
             <tr>
                 <th align="left" class="caption">
-                    <span class="search_icon"></span><span class="profile_header trans" data-transid="textDisplayProfile">Profile</span><span class="search_input"><input type="text"></span>
+                    <span class="search_icon"></span><span class="profile_header trans"
+                                                           data-transid="textDisplayProfile">Profile</span><span
+                        class="search_input"><input type="text"></span>
                 </th>
                 <th align="right" class="caption trans" data-transid="textDisplayVisitsSmSummary">Visits</th>
                 <th align="right" class="caption trans" data-transid="textDisplayVisitorsSmSummary">Unique
@@ -161,7 +158,8 @@
                 </th>
                 <th align="right" class="caption trans" data-transid="textDisplayTimeOnSiteSmSummary">Time on Site
                 </th>
-                <th align="right" class="caption trans" data-transid="textDisplayBounceRateSmSummary">Bounce Rate</th>
+                <th align="right" class="caption trans" data-transid="textDisplayBounceRateSmSummary">Bounce Rate
+                </th>
                 <th align="right" class="caption trans" data-transid="textDisplayNewVisitsSummary">New Visits</th>
             </tr>
             </thead>
@@ -171,6 +169,7 @@
                 <td></td>
             </tr>
             </tbody>
+
 
             <tfoot>
             <tr id="loading_table_profiles">
@@ -208,7 +207,6 @@
             </tfoot>
         </table>
     </div>
-    <table cellpadding="0" border="0" cellspacing="0" class="profile_list_table" id="clone_footer"></table>
 </div>
 <br>
 
