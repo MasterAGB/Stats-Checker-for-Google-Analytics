@@ -438,18 +438,22 @@ function getGoogleToken(onCompleteFunction) {
             return false;
         },
         success: function (data) {
-            //$('#texta').val(data);
+
+
             if ((data.split('window.preload').length - 1) > 0) {
 
 
                 var account_options = $(data);
+
+
                 account_options.each(function () {
                     var script_contents = $(this).html();
-
+                    // logg(script_contents);
                     if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
                         googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
+                        console.log("Token fetched: " + googleToken);
                         //console.log(googleToken);
-                        onCompleteFunction();
+                        onCompleteFunction(data);
                     }
 
                 });
@@ -552,133 +556,205 @@ function getAccountProfiles(onCompleteFunction) {
 
     load_storage_variables();
     refreshdates();
-    getGoogleToken(function () {
+    getGoogleToken(function (data2) {
 
 
+        var split = data2.split("<script type='text/javascript'>window.preload=")[1];
+        var jsonString = split.split("]}};")[0] + "]}}";
+        var message = JSON.parse(jsonString);
 
 
+        profile_name_array = new Object();
+        profile_search_array = new Object();
+        account_name_array = new Object();
+        property_name_array = new Object();
+        property_url_array = new Object();
+        profile_url_array = new Object();
 
-        //if(profile_id!=''){
-        $.ajax({
-            //url: "https://www.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
-            //url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            data: {token: googleToken},
-            type: "POST",
-            dataType: "json",
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                logg('Error getting page!');
-                //goOffline();
-                PleaseLogin();
-                return false;
-            },
-            success: function (data) {
+        //console.log();
+        //Updating google Token
+        googleToken = message.token.value;
 
+        var row = message.accounts;
+        var rowData = message.home_page_data.components[1].viewData;
 
-                profile_name_array = new Object();
-                profile_search_array = new Object();
-                account_name_array = new Object();
-                property_name_array = new Object();
-                property_url_array = new Object();
-                profile_url_array = new Object();
-                for (var entityId in data.components[0].row) {
-                    var entity = data.components[0].row[entityId]
+        //var row = data.components[0].accountColumn.picker.pickerSettings.options;
+        for (var accountEntityId in  row) {
+            var accountEntity = row[accountEntityId]
 
 
-                    if (entity.entityName == "account") {
-                        account_name_array[entity.id] = entity.label;
-                        profile_count_array[entity.id] = 0;
-                        property_count_array[entity.id] = 0;
-                    }
-                    if (entity.entityName == "property") {
-                        property_url_array[entity.id] = entity.value[1].toolTip;
-                        entity.label = entity.label.replace('http://', '');
-                        entity.label = entity.label.replace('https://', '');
-                        property_name_array[entity.id] = entity.label;
-                        property_count_array[entity.parentId]++;
-                        property_parents[entity.id] = entity.parentId;
-                        property_tracking_code[entity.id] = entity.value[1].jsonData.json.subTitle.text;
-                    }
-                    if (entity.entityName == "profile") {
-
-                        profile_search_array[entity.id] = entity.label + " " + property_name_array[entity.parentId] + " " + property_url_array[entity.parentId] + " " + entity.value[1].jsonData.json.subTitle.text;
-
-                        entity.label = entity.label.replace('http://', '');
-                        entity.label = entity.label.replace('https://', '');
+            account_name_array[accountEntity.id] = accountEntity.name;
+            profile_count_array[accountEntity.id] = 0;
+            property_count_array[accountEntity.id] = 0;
 
 
-                        if (show_properynames && entity.label != property_name_array[entity.parentId]) {
-                            if (
-                                entity.label == "All Web Site Data" ||
-                                    entity.label == "Все данные по веб-сайту"
-                                ) {
-                                profile_name_array[entity.id] = property_name_array[entity.parentId];
-                            } else {
-                                profile_name_array[entity.id] = entity.label + " (" + property_name_array[entity.parentId] + ")";
-                            }
+            for (var propertyEntityId in  accountEntity.wprops) {
+                var propertyEntity = accountEntity.wprops[propertyEntityId]
+
+                property_url_array[propertyEntity.id] = propertyEntity.url;
+                propertyEntity.label = propertyEntity.name.replace('http://', '');
+                propertyEntity.label = propertyEntity.name.replace('https://', '');
+                property_name_array[propertyEntity.id] = propertyEntity.name;
+                property_count_array[accountEntity.id]++;
+                property_parents[propertyEntity.id] = accountEntity.id;
+                //todo: lazha!
+                property_tracking_code[propertyEntity.id] = propertyEntity.datasetId;
+
+
+                for (var profileEntityId in  propertyEntity.profiles) {
+                    var profileEntity = propertyEntity.profiles[profileEntityId]
+
+
+                    profile_search_array[profileEntity.id] = profileEntity.name + " " + profileEntity.searchName + " " + property_name_array[propertyEntity.id] + " " + property_url_array[accountEntity.id] + " " + property_tracking_code[accountEntity.id];
+
+                    profileEntity.name = profileEntity.name.replace('http://', '');
+                    profileEntity.name = profileEntity.name.replace('https://', '');
+
+
+                    if (show_properynames && profileEntity.name != property_name_array[propertyEntity.id]) {
+                        if (
+                            profileEntity.name == "All Web Site Data" ||
+                                profileEntity.name == "Все данные по веб-сайту"
+                            ) {
+                            profile_name_array[profileEntity.id] = property_name_array[propertyEntity.id];
                         } else {
-                            profile_name_array[entity.id] = entity.label;
+                            profile_name_array[profileEntity.id] = profileEntity.name + " (" + property_name_array[propertyEntity.id] + ")";
                         }
-
-
-                        profile_count_array[property_parents[entity.parentId]]++;
-                        profile_parents[entity.id] = property_parents[entity.parentId];
-                        profile_tracking_code[entity.id] = property_tracking_code[entity.parentId];
-                        profile_url_array[entity.id] = property_url_array[entity.parentId];
-
-                        profile_data[entity.id] = new Array();
-                        profile_data[entity.id]["visits"] = 0;
-                        profile_data[entity.id]["timeonsite"] = 0;
-                        profile_data[entity.id]["bounce"] = 0;
-                        profile_data[entity.id]["conversion"] = 0;
-
-                        if (entity.starred == true) {
-                            addfavourite('', entity.id, false);
-                        } else {
-                            removefavourite('', entity.id, false);
-                        }
-
-
-                        if (entity.value.length > 2) {
-                            profile_data[entity.id]["visits"] = removecrap(entity.value[2].jsonData.json.data.formattedValue);
-                            profile_data[entity.id]["timeonsite"] = removecrap(entity.value[3].jsonData.json.data.formattedValue);
-                            profile_data[entity.id]["bounce"] = removecrap(entity.value[4].jsonData.json.data.formattedValue);
-                            profile_data[entity.id]["conversion"] = removecrap(entity.value[5].jsonData.json.data.formattedValue);
-                        }
-                        //}
-                        //break;
-
+                    } else {
+                        profile_name_array[profileEntity.id] = profileEntity.name;
                     }
 
-                }
-                if (profile_id == "" || typeof profile_name_array[profile_id] == 'undefined') {
-                    for (var k in profile_name_array) {
-                        profile_id = k;
-                        break
-                    }
-                }
-                /*
-                 logg("Found accounts:");
-                 logg(account_name_array);
-                 logg("Found properties:");
-                 logg(property_name_array);
-                 logg("Found profiles:");
-                 logg(profile_name_array);
-                 logg("My profile id:");
-                 logg(profile_id);
-                 logg("Property count in accounts:");
-                 logg(property_count_array);
-                 logg("Profile count in accounts:");
-                 logg(profile_count_array);
-                 */
 
-                if (typeof(onCompleteFunction) != "undefined") {
-                    onCompleteFunction();
+                    profile_count_array[property_parents[propertyEntity.id]]++;
+                    profile_parents[profileEntity.id] = property_parents[propertyEntity.id];
+                    profile_tracking_code[profileEntity.id] = property_tracking_code[propertyEntity.id];
+                    profile_url_array[profileEntity.id] = property_url_array[propertyEntity.id];
+
+                    profile_data[profileEntity.id] = new Array();
+                    profile_data[profileEntity.id]["visits"] = 0;
+                    profile_data[profileEntity.id]["timeonsite"] = 0;
+                    profile_data[profileEntity.id]["bounce"] = 0;
+                    profile_data[profileEntity.id]["conversion"] = 0;
+
+                    if (profileEntity.starred == true) {
+                        addfavourite('', profileEntity.id, false);
+                    } else {
+                        removefavourite('', profileEntity.id, false);
+                    }
+
+                    /*
+                     if (profileEntity.value.length > 2) {
+                     //tashim dannije!!
+                     profile_data[profileEntity.id]["visits"] = removecrap(accountEntity.value[2].jsonData.json.data.formattedValue);
+                     profile_data[profileEntity.id]["timeonsite"] = removecrap(accountEntity.value[3].jsonData.json.data.formattedValue);
+                     profile_data[profileEntity.id]["bounce"] = removecrap(accountEntity.value[4].jsonData.json.data.formattedValue);
+                     profile_data[profileEntity.id]["conversion"] = removecrap(accountEntity.value[5].jsonData.json.data.formattedValue);
+                     }*/
+                    //}
+                    //break;
+
                 }
+
 
             }
-        });
+
+
+        }
+
+
+        if (profile_id == "" || typeof profile_name_array[profile_id] == 'undefined') {
+            for (var k in profile_name_array) {
+                profile_id = k;
+                break
+            }
+        }
+
+        if (selected_period == "realtime" || selected_period == "day" || selected_period == "yesterday") {
+            console.log("Not using pre-data");
+            if (typeof(onCompleteFunction) != "undefined") {
+                onCompleteFunction();
+            }
+
+        } else if (selected_period == "month") {
+            console.log("Using month pre-data");
+            //console.log(rowData);
+            /*
+             0: "Посещения"
+             1: "Ср. продолж. посещ."
+             2: "Показатель отказов"
+             3: "Коэффициент конверсии цели"
+             */
+            //dannije za mesjac:
+            for (var profileDataNumb in  rowData) {
+                var profileData = rowData[profileDataNumb];
+                profile_data[profileData.datasetId]["visits"] = removecrap(profileData.data[0].value);
+                profile_data[profileData.datasetId]["timeonsite"] = removecrap(profileData.data[1].value);
+                profile_data[profileData.datasetId]["bounce"] = removecrap(profileData.data[2].value);
+                profile_data[profileData.datasetId]["conversion"] = removecrap(profileData.data[3].value);
+            }
+
+
+            /*
+             logg("Found accounts:");
+             logg(account_name_array);
+             logg("Found properties:");
+             logg(property_name_array);
+             logg("Found profiles:");
+             logg(profile_name_array);
+             logg("My profile id:");
+             logg(profile_id);
+             logg("Property count in accounts:");
+             logg(property_count_array);
+             logg("Profile count in accounts:");
+             logg(profile_count_array);
+             */
+
+            if (typeof(onCompleteFunction) != "undefined") {
+                onCompleteFunction();
+            }
+
+        } else {
+            console.log("Getting misc days pre-data");
+            $.ajax({
+                //url: "https://www.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
+                //url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+                //url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+                //url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+                //url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable.viewType=FLAT&id=home-page&hl=ru&authuser=0",
+                url: "https://www.google.com/analytics/web/getBaseData?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable.viewType=FLAT&hl=ru&authuser=0",
+                //url: "https://www.google.com/analytics/web/management/getPage?id=Settings&ds=a38120388w66682935p68582681&hl=ru&authuser=0",
+                data: {token: googleToken},
+                type: "POST",
+                dataType: "json",
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    logg('Error getting page!');
+                    //goOffline();
+                    PleaseLogin();
+                    return false;
+                },
+                success: function (data) {
+
+
+                    var rowData = data.home_page_data.components[1].viewData;
+                    console.log(rowData);
+
+                    for (var profileDataNumb in  rowData) {
+                        var profileData = rowData[profileDataNumb];
+                        profile_data[profileData.datasetId]["visits"] = removecrap(profileData.data[0].value);
+                        profile_data[profileData.datasetId]["timeonsite"] = removecrap(profileData.data[1].value);
+                        profile_data[profileData.datasetId]["bounce"] = removecrap(profileData.data[2].value);
+                        profile_data[profileData.datasetId]["conversion"] = removecrap(profileData.data[3].value);
+                    }
+
+                    if (typeof(onCompleteFunction) != "undefined") {
+                        onCompleteFunction();
+                    }
+
+                }
+            });
+        }
     });
+
 
 }
 
@@ -941,13 +1017,6 @@ function hmsToSeconds(secstring) {
     var arr = secstring.match(R);
     return (arr[1] * 60 * 60 - (-arr[2] * 60) - (-arr[3]))
 }
-
-
-
-
-
-
-
 
 
 jQuery.fn.fadeToggle = function (speed, easing, callback) {
@@ -1356,14 +1425,6 @@ function init_popup(picked_account_id) {
         $('#total_row').show();
         $('#avg_row').show();
     }
-
-
-
-
-
-
-
-
 
 
     adjustTableVars();
