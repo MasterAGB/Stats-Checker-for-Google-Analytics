@@ -63,9 +63,9 @@ var profile_data = new Array();
 var profile_search_array = new Object();
 var profile_name_array = new Object();
 var property_name_array = new Object();
-var property_url_array = new Object();
-var profile_url_array = new Object();
-var account_name_array = new Object();
+var property_url_array = {};
+var profile_url_array = {};
+var account_name_array = [];
 
 var property_tracking_code = new Object();
 var profile_tracking_code = new Object();
@@ -395,6 +395,13 @@ function getGoogleToken(onCompleteFunction) {
 
                 });
 
+            } else {
+
+                        console.log(data);
+                        logg('Error getting token');
+                        //goOffline();
+                        PleaseLogin();
+                        return false;
             }
         }
     });
@@ -505,7 +512,7 @@ function getAccountProfiles(onCompleteFunction) {
 
         profile_name_array = new Object();
         profile_search_array = new Object();
-        account_name_array = new Object();
+        account_name_array = new Array();
         property_name_array = new Object();
         property_url_array = new Object();
         profile_url_array = new Object();
@@ -517,12 +524,17 @@ function getAccountProfiles(onCompleteFunction) {
         var row = message.accounts;
         var rowData = message.home_page_data.components[1].viewData;
 
+
+
         //var row = data.components[0].accountColumn.picker.pickerSettings.options;
         for (var accountEntityId in  row) {
             var accountEntity = row[accountEntityId]
 
 
-            account_name_array[accountEntity.id] = accountEntity.name;
+
+
+            account_name_array.push([accountEntity.id,accountEntity.name]);
+
             profile_count_array[accountEntity.id] = 0;
             property_count_array[accountEntity.id] = 0;
 
@@ -531,8 +543,8 @@ function getAccountProfiles(onCompleteFunction) {
                 var propertyEntity = accountEntity.wprops[propertyEntityId]
 
                 property_url_array[propertyEntity.id] = propertyEntity.url;
-                propertyEntity.label = propertyEntity.name.replace('http://', '');
-                propertyEntity.label = propertyEntity.name.replace('https://', '');
+                propertyEntity.name = propertyEntity.name.replace('http://', '');
+                propertyEntity.name = propertyEntity.name.replace('https://', '');
                 property_name_array[propertyEntity.id] = propertyEntity.name;
                 property_count_array[accountEntity.id]++;
                 property_parents[propertyEntity.id] = accountEntity.id;
@@ -550,7 +562,7 @@ function getAccountProfiles(onCompleteFunction) {
                     profileEntity.name = profileEntity.name.replace('https://', '');
 
 
-                    if (show_properynames && profileEntity.name != property_name_array[propertyEntity.id]) {
+                    if (show_properynames && profileEntity.name.toLowerCase() != property_name_array[propertyEntity.id].toLowerCase()) {
                         if (
                             profileEntity.name == "All Web Site Data" ||
                                 profileEntity.name == "Все данные по веб-сайту" ||
@@ -655,7 +667,8 @@ function getAccountProfiles(onCompleteFunction) {
             }
 
         } else {
-            console.log("Getting misc days pre-data");
+            console.log("Getting misc days pre-data from "+oldtoday+" to "+today);
+            //alert(oldtoday);
             $.ajax({
                 //url: "https://www.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
                 //url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
@@ -1471,6 +1484,13 @@ function checkAds(){
 function init_popup(picked_account_id) {
 
 
+    if($("#profiles_table_list").length==0){
+        if($("#edit_profile").length>0){
+            init_options();
+        }
+        return;
+    }
+
     //account_id = SaveStorage("account_id", picked_account_id);
 
 
@@ -1498,8 +1518,6 @@ function init_popup(picked_account_id) {
     _gaq.push(['_trackEvent', 'init_popup', 'clicked']);
 
 
-    $('#clone_header').html('');
-    $('#clone_footer').html('');
 
     $('.headerSortDown').removeClass('headerSortDown');
     $('.headerSortUp').removeClass('headerSortUp');
@@ -1588,8 +1606,10 @@ function init_popup(picked_account_id) {
 
                 $("#account_id").html('');
 
-                for (var i_account_id in account_name_array) {
-                    var i_account_name = account_name_array[i_account_id];
+
+                for (var i in account_name_array) {
+                    var i_account_id = account_name_array[i][0];
+                    var i_account_name = account_name_array[i][1];
 
 
                     var i_selected_option = '';
@@ -1940,6 +1960,8 @@ function init_options(picked_account_id) {
     checkAds();
     getAccountProfiles(function (data) {
         _gaq.push(['_trackEvent', 'init_options', 'clicked']);
+       // console.log("data"+data);
+
 
         //alert(picked_account_id);
         if (picked_account_id == undefined) {
@@ -2027,6 +2049,8 @@ function init_options(picked_account_id) {
 
 
         }
+
+        closeErrorPopup();
 
     });
 

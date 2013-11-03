@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#googleAccChange').html(chrome.i18n.getMessage("googleAccChange", 'https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'));
 
 
-    $('.trans').each(function(){
+    $('[data-transid]').each(function(){
         var trans_id=$(this).data('transid');
         var trans=get_trans($(this).data('transid'), false);
         if(trans==''){

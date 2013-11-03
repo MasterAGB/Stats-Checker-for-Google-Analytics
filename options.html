@@ -3,14 +3,28 @@
 <head>
     <title>Stats Checker for Google Analytics™</title>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" type="text/css" href="style.css?1.6.2.0">
+    <link rel="stylesheet" type="text/css" href="style.css?1.6.2.1">
     <script type="text/javascript" src="js/analytics.js"></script>
     <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="js/script.js?1.6.2.0"></script>
-    <script type="text/javascript" src="js/options.js?1.6.2.0"></script>
+    <script type="text/javascript" src="js/script.js?1.6.2.1"></script>
+    <script type="text/javascript" src="js/options.js?1.6.2.1"></script>
+    <meta name="twitter:widgets:csp" content="on">
 </head>
 <body>
 
+<div class="error_popup_fade"></div>
+<div class="error_popup" tabindex="0">
+    <div class="error_popup_icon">
+        <div class="error_popup_header_block"><h1 data-transid="loginToTheSystemTitle">Failed to access Google Analytics</h1></div>
+        <div class="error_popup_text_block">
+            <div class="error_popup_text_paddings" data-transid="loginToTheSystemDescr">Unable to process your request. Please relogin to Google Analytics.</div>
+        </div>
+        <div class="error_popup_button_block">
+            <a target="_blank" href="https://www.google.com/analytics/web/" class="error_popup_button" data-transid="loginToTheSystemButton1">Relogin</a>
+            <div id="error_popup_button_close" class="error_popup_button" data-transid="loginToTheSystemButton2">Close</div>
+        </div>
+    </div>
+</div>
 
 <div class="white_block">
 <h2><img src="img/logo.32.png">
@@ -24,7 +38,7 @@
     <span class="trans" data-transid="steamDefenseTry">Try out my new game:</span>
     <div class="slide slideFull" style="">
         <a class="main"
-           href="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=ext_options"
+           href="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=app_options"
            title="Steam Defense" target="_blank">
             <div style="padding:10px;">
                 <div class="g-plusone" data-href="http://steamdefense.com" data-annotation="inline"
@@ -37,11 +51,11 @@
             <div class="caption_head_icon"><img height="32" src="/img/SteamDefense.com/SteamDefenseIcon.png">
             </div>
             <div class="caption_name"><a
-                    href="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=ext_options"
+                    href="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=app_options"
                     title="Steam Defense" target="_blank" class="trans" data-transid="steamDefenseName">Steam Defense</a></div>
             <div class="caption-stars-block">
                 <div class="rsw-stars" g:type="AverageStarRating"
-                     g:url="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=ext_options"
+                     g:url="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=app_options"
                      g:groups="mystatschecker.com" g:rating_override="5" title="Average rating: 5 stars">
                     <div class="rsw-starred"></div>
                     <div class="rsw-starred"></div>
@@ -55,7 +69,7 @@
                 mysterious and formidable Dryans - an intelligent race of Gloria-6 aborigines guarding their secrets
                 from strangers jealously!
             </div>
-            <a href="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=ext_options"
+            <a href="http://steamdefense.com/?utm_source=redirect-from-mystatschecker.com&utm_medium=affiliate&utm_content=app_options"
                target="_blank" class="caption_play_btn btn btn-info"><i class="icon-joystick icon-white"></i> Play</a>
         </div>
     </div>
