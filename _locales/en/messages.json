@@ -1,8 +1,16 @@
 {
 
-    "installExtension": {
-        "message": "Install Chrome Toolbar Button for displaying visitors count in Real-time"
-    },
+    "steamDefenseTry": {"message": "Try out my new game:"},
+    "steamDefenseName": {"message": "Steam Defense"},
+    "steamDefenseDescr": {"message": "The game submerges you into a vivid tropical world of wild planet Gloria-6, covered with shady woods, where colonists from Earth, torn from home, are forced to confront the mysterious and formidable Dryans - an intelligent race of Gloria-6 aborigines guarding their secrets from strangers jealously!"},
+
+
+
+
+    "installExtension": {"message": "Install Chrome Toolbar Button for displaying visitors count in Real-time"},
+
+
+
     "extShortName": {        "message": "StatsChecker"    },
     "extName": {
         "message": "Stats Checker for Google Analytics™ - Today visit count",

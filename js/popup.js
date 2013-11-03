@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function () {
     $(".search_input input").change(function (e) {
         console.log("Real:" + this.value);
         searchValue = this.value;
-        if(searchValue!=""){
-        $(".search_icon").addClass("active");
+        if (searchValue != "") {
+            $(".search_icon").addClass("active");
         } else {
             $(".search_icon").removeClass("active");
         }
@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         $('.favToggle li').removeClass("favToggleActive");
         $('#favToggleAll').addClass("favToggleActive");
-        onlyFav=SaveStorage('onlyFav',false,true);
+        onlyFav = SaveStorage('onlyFav', false, true);
 
         $('#account_id').val("all").change();
     });
@@ -69,11 +69,11 @@ document.addEventListener('DOMContentLoaded', function () {
         //graph_open
     });
 
-    $("#real_table").bind("sortStart",function(e) {
-      // console.log(e);
-    }).bind("sortEnd",function(e) {
+    $("#real_table").bind("sortStart",function (e) {
+        // console.log(e);
+    }).bind("sortEnd", function (e) {
             adjustTable('sortEnd');
-    });
+        });
 
 
     init_popup();
@@ -160,25 +160,18 @@ document.addEventListener('DOMContentLoaded', function () {
     })
 
 
-
-
-
-
     $('#favToggleAll').live('click', function () {
         $('.favToggle li').removeClass("favToggleActive");
         $(this).addClass("favToggleActive");
-        onlyFav=SaveStorage('onlyFav',false,true);
+        onlyFav = SaveStorage('onlyFav', false, true);
         $('#account_id').change();
     })
     $('#favToggleFav').live('click', function () {
         $('.favToggle li').removeClass("favToggleActive");
         $(this).addClass("favToggleActive");
-        onlyFav=SaveStorage('onlyFav',true,true);
+        onlyFav = SaveStorage('onlyFav', true, true);
         $('#account_id').change();
     })
-
-
-
 
 
     $(document).ready(function () {
@@ -186,17 +179,21 @@ document.addEventListener('DOMContentLoaded', function () {
         if (keepAspectTimer !== false) {
             clearTimeout(keepAspectTimer);
         }
-        keepAspectTimer = setTimeout(function(){keepAspectTimer=false;adjustTable("readyTimeout");}, 200); //200 is time in milliseconds
+        keepAspectTimer = setTimeout(function () {
+            keepAspectTimer = false;
+            adjustTable("readyTimeout");
+        }, 200); //200 is time in milliseconds
     });
     $(window).resize(function () {
         adjustTable("resize");
         if (keepAspectTimer !== false) {
             clearTimeout(keepAspectTimer);
         }
-        keepAspectTimer = setTimeout(function(){keepAspectTimer=false;adjustTable("resizeTimeout");}, 200); //200 is time in milliseconds
+        keepAspectTimer = setTimeout(function () {
+            keepAspectTimer = false;
+            adjustTable("resizeTimeout");
+        }, 200); //200 is time in milliseconds
     });
-
-
 
 
 });

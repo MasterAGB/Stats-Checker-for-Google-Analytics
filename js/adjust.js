@@ -38,36 +38,35 @@ function updateAdjustHeaders() {
 
     //windowScrollYOffset
 
-    $thead[0].style.cssText = "width:" + realWidth + "px; left:" + (realTableOffsetLeft-windowScrollXOffset)+ "px; top:" + (realTableOffsetTop - windowScrollYOffset) + "px; opacity:1;";
-    $tfoot[0].style.cssText = "width:" + realWidth + "px; left:" + (realTableOffsetLeft-windowScrollXOffset)+ "px; top:" + (maxHeight - tfootHeight + realTableOffsetTop - windowScrollYOffset) + "px;opacity:1;";
+    $thead[0].style.cssText = "width:" + realWidth + "px; left:" + (realTableOffsetLeft - windowScrollXOffset) + "px; top:" + (realTableOffsetTop - windowScrollYOffset) + "px; opacity:1;";
+    $tfoot[0].style.cssText = "width:" + realWidth + "px; left:" + (realTableOffsetLeft - windowScrollXOffset) + "px; top:" + (maxHeight - tfootHeight + realTableOffsetTop - windowScrollYOffset) + "px;opacity:1;";
     $tbody[0].style.cssText = "width:" + realWidth + "px; margin-top:" + (theadHeight) + "px;margin-bottom:" + (tfootHeight) + "px;";
     //$tfoot[0].style.opacity=1;
 }
 
 function scrollFunction() {
-    console.log("scroll");
     updateAdjustHeaders();
 }
 
 window.onscroll = scrollFunction;
 
-console.log(window.onscroll);
+
 
 function removeTableFixed() {
-    if(fixedAdded){
-    fixedAdded=false;
+    if (fixedAdded) {
+        fixedAdded = false;
 
-    $realtable[0].className = "profile_list_table";
+        $realtable[0].className = "profile_list_table";
 
-    $ths.each(function () {
-        $(this)[0].style = "";
-    });
-    $tds.each(function () {
-        $(this)[0].style = "";
-    });
-    $tdsFoot.each(function () {
-        $(this)[0].style = "";
-    });
+        $ths.each(function () {
+            $(this)[0].style = "";
+        });
+        $tds.each(function () {
+            $(this)[0].style = "";
+        });
+        $tdsFoot.each(function () {
+            $(this)[0].style = "";
+        });
     }
 
 }
@@ -75,7 +74,7 @@ function removeTableFixed() {
 function adjustTable(txt) {
     //logg(txt);
 
-    console.log(txt);
+    //console.log(txt);
 
     if ($('#loading_table_profiles').is(":visible")) {
         //alert(txt+" "+$('#loading_table_profiles').is(":visible"));
@@ -94,7 +93,6 @@ function adjustTable(txt) {
     }
 
 
-
     if (txt != "checkFullyFilled" && txt != "resizeTimeout" && txt != "resize" && txt != "sortEnd" && txt != "graph_open" && txt != "graph_close") {
         return;
     }
@@ -108,7 +106,7 @@ function adjustTable(txt) {
 
     //console.log("adjustTable!!:"+txt);
 
-    if (txt == "graph_open" || txt == "graph_close" || txt == "sortEnd"|| txt == "resizeTimeout") {
+    if (txt == "graph_open" || txt == "graph_close" || txt == "sortEnd" || txt == "resizeTimeout") {
         updateAdjustRows();
     }
 
@@ -121,34 +119,34 @@ function adjustTable(txt) {
 
 }
 
-function addTableFixed(){
-    if(!fixedAdded){
+function addTableFixed() {
+    if (!fixedAdded) {
 
-    $ths.each(function () {
-        //$(this).width($(this).width() + "px");
-        $(this)[0].style.width = $(this).width() + "px";
-    });
-    $tds.each(function () {
-        //$(this).width($(this).width() + "px");
-        $(this)[0].style.width = $(this).width() + "px";
-        //console.log($(this)[0].style.width);
-    });
-    $tdsFoot.each(function () {
-        //$(this).width($(this).width() + "px");
-        $(this)[0].style.width = $(this).width() + "px";
-    });
+        $ths.each(function () {
+            //$(this).width($(this).width() + "px");
+            $(this)[0].style.width = $(this).width() + "px";
+        });
+        $tds.each(function () {
+            //$(this).width($(this).width() + "px");
+            $(this)[0].style.width = $(this).width() + "px";
+            //console.log($(this)[0].style.width);
+        });
+        $tdsFoot.each(function () {
+            //$(this).width($(this).width() + "px");
+            $(this)[0].style.width = $(this).width() + "px";
+        });
 
 
-    /* $tfoot.css({
-     top: maxHeight - tfootHeight + realTableOffsetTop + 'px',
-     opacity: 1
-     });*/
+        /* $tfoot.css({
+         top: maxHeight - tfootHeight + realTableOffsetTop + 'px',
+         opacity: 1
+         });*/
 
-    /* $tbody.css({
-     marginTop: theadHeight + "px",
-     marginBottom: tfootHeight + "px"
-     });*/
-    $realtable[0].className = "profile_list_table fixed";
-        fixedAdded=true;
+        /* $tbody.css({
+         marginTop: theadHeight + "px",
+         marginBottom: tfootHeight + "px"
+         });*/
+        $realtable[0].className = "profile_list_table fixed";
+        fixedAdded = true;
     }
 }

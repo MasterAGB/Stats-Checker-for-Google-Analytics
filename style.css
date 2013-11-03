@@ -1299,6 +1299,7 @@ a.help_resources {
     height: 280px;
     display: block;
     z-index: 220;
+    text-align: left;
 }
 
 .slideFull a.main {
