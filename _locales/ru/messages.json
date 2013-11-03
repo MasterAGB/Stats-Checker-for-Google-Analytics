@@ -5,8 +5,9 @@
 
     "installExtension": {"message": "Установить кнопку в панели инструментов броузера для отображения количества посетителей в режиме реального времени"},
 
+    "extShortName": {        "message": "StatsChecker"    },
     "extName": {
-        "message": "Stats Checker for Google Analytics™ - Посещения за сегодня",
+        "message": "Stats Checker for Google Analytics™",
         "description": "Extension Name"
     },
     "extDesc": {

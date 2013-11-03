@@ -10,6 +10,7 @@
 
     "default_locale":"en",
     "name":"__MSG_extName__",
+    "short_name":"__MSG_extShortName__",
     "description":"__MSG_extDesc__",
     "icons":{
         "16":"img/logo.16.png",
@@ -22,7 +23,7 @@
     "permissions":[
         "https://www.google.com/analytics/*"
     ],
-    "version":"1.6.1.2",
+    "version":"1.6.2.0",
     "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
     "manifest_version":2
 }

@@ -13,7 +13,7 @@
 
     "extShortName": {        "message": "StatsChecker"    },
     "extName": {
-        "message": "Stats Checker for Google Analytics™ - Today visit count",
+        "message": "Stats Checker for Google Analytics™",
         "description": "Extension Name"
     },
     "extDesc": {

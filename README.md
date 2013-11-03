@@ -10,6 +10,15 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6.2.0
+- Google Analytics updated version support
+- Added search function
+- Mobile app support (beta)
+- All profiles/Favourites toggle
+- Fancy select design
+- Improved profile loading speed
+- Instant pre-data for 7 and 30 days (For slow internet connection)
+
 Version 1.6.1.1
 - Added Google Analytics sign-in error notification
 
