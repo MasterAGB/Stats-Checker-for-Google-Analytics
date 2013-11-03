@@ -12,7 +12,10 @@ function toggleSearchBox(e) {
     $(".profile_header").toggle();
     adjustTable("toggleSearchBox");
     $(".search_input input").val("").focus();
+
     searchValue = "";
+    $(".search_icon").removeClass("active");
+
 
     setTimeout(function () {
         var $cloneinput = $(".search_input input");
@@ -25,7 +28,7 @@ function toggleSearchBox(e) {
 }
 
 window.addEventListener("keydown", function (e) {
-    if (e.keyCode == 114 || (e.ctrlKey && e.keyCode == 70)) {
+    if (e.keyCode == 114 || e.keyCode == 27 || (e.ctrlKey && e.keyCode == 70)) {
         //alert("a");
         //e.preventDefault();
         toggleSearchBox(e);
@@ -168,7 +171,7 @@ function findfavourite(profile_id_to_fav) {
 
 
 function load_storage_variables() {
-    console.log("load_storage_variables");
+    //console.log("load_storage_variables");
     google_id = LoadStorage("google_id");
     account_id = LoadStorage("account_id");
     account_name = LoadStorage("account_name");
@@ -351,6 +354,7 @@ function PleaseLogin(timerlength) {
 
 function logg(text) {
     console.log(text);
+    //$('body').append(text+"<br>");
 }
 
 
@@ -533,14 +537,14 @@ function getAccountProfiles(onCompleteFunction) {
                 property_count_array[accountEntity.id]++;
                 property_parents[propertyEntity.id] = accountEntity.id;
                 //todo: lazha!
-                property_tracking_code[propertyEntity.id] = propertyEntity.datasetId;
+                //console.log();
+                property_tracking_code[propertyEntity.id] = "UA-"+propertyEntity.searchName.split("ua-")[1];
 
 
                 for (var profileEntityId in  propertyEntity.profiles) {
                     var profileEntity = propertyEntity.profiles[profileEntityId]
 
-
-                    profile_search_array[profileEntity.id] = profileEntity.name + " " + profileEntity.searchName + " " + property_name_array[propertyEntity.id] + " " + property_url_array[accountEntity.id] + " " + property_tracking_code[accountEntity.id];
+                    profile_search_array[profileEntity.id] = profileEntity.name + " " + profileEntity.searchName + " " + property_name_array[propertyEntity.id] + " " + property_url_array[propertyEntity.id] + " " + property_tracking_code[propertyEntity.id];
 
                     profileEntity.name = profileEntity.name.replace('http://', '');
                     profileEntity.name = profileEntity.name.replace('https://', '');
@@ -549,7 +553,8 @@ function getAccountProfiles(onCompleteFunction) {
                     if (show_properynames && profileEntity.name != property_name_array[propertyEntity.id]) {
                         if (
                             profileEntity.name == "All Web Site Data" ||
-                                profileEntity.name == "Все данные по веб-сайту"
+                                profileEntity.name == "Все данные по веб-сайту" ||
+                                profileEntity.name == "Все данные по мобильному приложению"
                             ) {
                             profile_name_array[profileEntity.id] = property_name_array[propertyEntity.id];
                         } else {
@@ -566,6 +571,7 @@ function getAccountProfiles(onCompleteFunction) {
                     profile_url_array[profileEntity.id] = property_url_array[propertyEntity.id];
 
                     profile_data[profileEntity.id] = new Array();
+                    profile_data[profileEntity.id]["app"] = profileEntity.isAppProfile;
                     profile_data[profileEntity.id]["visits"] = 0;
                     profile_data[profileEntity.id]["timeonsite"] = 0;
                     profile_data[profileEntity.id]["bounce"] = 0;
@@ -607,7 +613,7 @@ function getAccountProfiles(onCompleteFunction) {
         if (selected_period == "realtime" || selected_period == "day" || selected_period == "yesterday") {
             console.log("Not using pre-data");
             if (typeof(onCompleteFunction) != "undefined") {
-                onCompleteFunction();
+                onCompleteFunction(data2);
             }
 
         } else if (selected_period == "month") {
@@ -645,7 +651,7 @@ function getAccountProfiles(onCompleteFunction) {
              */
 
             if (typeof(onCompleteFunction) != "undefined") {
-                onCompleteFunction();
+                onCompleteFunction(data2);
             }
 
         } else {
@@ -682,7 +688,7 @@ function getAccountProfiles(onCompleteFunction) {
                     }
 
                     if (typeof(onCompleteFunction) != "undefined") {
-                        onCompleteFunction();
+                        onCompleteFunction(data2);
                     }
 
                 }
@@ -738,7 +744,14 @@ function getRealtimeAdditionalData(key, completeFunction, errorFunction) {
 
 function getTodayData(key, completeFunction, errorFunction) {
 
-    var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
+
+    if(profile_data[key]["app"]){
+        var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=app-visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
+
+    }  else {
+        var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
+
+    }
     $.ajax({
         url: url,
         type: "POST",
@@ -781,6 +794,8 @@ function getTodayData(key, completeFunction, errorFunction) {
                         var info_newvisits = metric_value;
                         break;
                 }
+                        console.log(metric_val.metric.conceptName);
+                //if(profile_data[key]["app"]){
             }
 
             m_today = null;
@@ -1000,8 +1015,12 @@ function showGraph(cur_profile_id, jrow, token) {
     var GraphSeries = new Array();
 
 
-    var url = "https://www.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
 
+    if(profile_data[cur_profile_id]["app"]){
+        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=app-visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+    } else {
+        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+    }
     $.ajax({
         url: url,
         type: "POST",
@@ -1163,18 +1182,29 @@ function showGraph(cur_profile_id, jrow, token) {
                 series: GraphSeries
             });
 
-            adjustTable('graph_open');
+
 
         }
     });
-
+    adjustTable('graph_open');
 
 }
 
 
 function fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, info_pageviews, info_averagepageviews, info_timeonsite, info_bounce, info_newvisits) {
 
-    $('.info_name', jrow).html(profile_name_array[cur_profile_id] + " <span>" + profile_tracking_code[cur_profile_id] + "</span>");
+    if(typeof(info_bounce)=="undefined")info_bounce="0.00%";
+
+
+
+    var appicon="";
+           if(profile_data[cur_profile_id]["app"]==true){
+               appicon="<span class='app'></span>";
+           }
+
+
+        $('.info_name', jrow).html(appicon + profile_name_array[cur_profile_id] + " <span>" + profile_tracking_code[cur_profile_id] + "</span>");
+
     $('.info_visits', jrow).html(info_visits);
     $('.info_uniqvisitors', jrow).html(info_uniqvisitors);
     $('.info_pageviews', jrow).html(info_pageviews);
@@ -1233,9 +1263,12 @@ function fill_info(cur_profile_id, jrow, token) {
 
     } else {
 
+        if(profile_data[cur_profile_id]["app"]){
+        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=app-visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+        } else {
+            var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
 
-        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
-
+        }
         $.ajax({
             url: url,
             type: "POST",
@@ -1243,6 +1276,12 @@ function fill_info(cur_profile_id, jrow, token) {
             cache: false,
             beforeSend: function (xhr) {
                 xhr.overrideMimeType('text/plain; charset=x-user-defined');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                logg('Error getting page!');
+                //goOffline();
+                PleaseLogin();
+                return false;
             },
             success: function (data, textStatus, jqXHR) {
                 var jsonArray = JSON.parse(data);
@@ -1257,6 +1296,14 @@ function fill_info(cur_profile_id, jrow, token) {
                             break;
                         case 'analytics.totalVisitors':
                             var info_uniqvisitors = metric_value;
+                            break;
+                        case 'analytics.appviews':
+                            //APP
+                            var info_pageviews = metric_value;
+                            break;
+                        case 'analytics.avgAppviews':
+                            //APP
+                            var info_averagepageviews = metric_value;
                             break;
                         case 'analytics.pageviews':
                             var info_pageviews = metric_value;
@@ -1273,7 +1320,13 @@ function fill_info(cur_profile_id, jrow, token) {
                         case 'analytics.percentNewVisits':
                             var info_newvisits = metric_value;
                             break;
+                        default:
+                            console.log("New metric!"+metric_val.metric.conceptName+": "+metric_value);
+                            break;
                     }
+
+
+
                 }
 
                 fill_row(jrow, cur_profile_id, info_visits, info_uniqvisitors, info_pageviews, info_averagepageviews, info_timeonsite, info_bounce, info_newvisits);
@@ -1326,14 +1379,14 @@ function SaveStorage(key, storageVal, log) {
                 break;
             case "boolean":
                 var storageValString = storageVal;
-                console.log(storageValString);
+               // console.log(storageValString);
                 localStorage[key] = storageValString;
                 return storageVal;
 
                 break;
             default:
                 localStorage[key] = storageVal;
-                console.log(storageVal);
+                //console.log(storageVal);
                 return localStorage[key];
 
                 break;
@@ -1372,7 +1425,7 @@ function LoadStorage(key, type, def) {
                 storageVal = true;
             }
 
-            console.log("Getting :" + key + " = " + storageVal);
+            //console.log("Getting :" + key + " = " + storageVal);
             break;
         case "string":
 
@@ -1465,11 +1518,15 @@ function init_popup(picked_account_id) {
         $('.not_ads').hide();
         $('.angryfarmer_small').show();
         $('.angryfarmer').show();
+        $('.steamdefense_small').show();
+        $('.steamdefense').show();
     } else {
         $('.ads').hide();
         $('.not_ads').show();
         $('.angryfarmer_small').hide();
         $('.angryfarmer').hide();
+        $('.steamdefense_small').hide();
+        $('.steamdefense').hide();
     }
 
     if (!show_footer) {
@@ -1501,8 +1558,8 @@ function init_popup(picked_account_id) {
             },
             success: function (data) {
 
+                console.log("getAccountProfiles - success!");
 
-                var window_preload = undefined;
                 var window_header = undefined;
                 //$('#texta').val(data);
                 var account_options = $(data);
@@ -1596,8 +1653,7 @@ function init_popup(picked_account_id) {
                                 tr_array.push(i_profile_id);
                             }
                         }
-                        console.log(picked_account_id);
-                        console.log(profile_name_array);
+
                         insert_rows_to_popup(tr_array, picked_account_id);
                     } else {
                         var tr_array = new Array();
@@ -1608,8 +1664,6 @@ function init_popup(picked_account_id) {
                             }
                         }
 
-                        console.log(picked_account_id);
-                        console.log(tr_array);
                         insert_rows_to_popup(tr_array, picked_account_id);
                     }
                 } else {
@@ -1623,6 +1677,7 @@ function init_popup(picked_account_id) {
                                 tr_array.push(i_profile_id);
                             }
                         }
+                        console.log(tr_array);
                         insert_rows_to_popup(tr_array, picked_account_id);
                     } else {
 
@@ -1660,6 +1715,9 @@ function substrFound(string, word) {
 }
 
 function insert_rows_to_popup(tr_array, picked_account_id) {
+
+
+
     var favorited_tr = '';
     var nonfavorited_tr = '';
 
@@ -1689,8 +1747,25 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
             }
             radiobox += '/>';
 
+            if(profile_data[key]["app"]){
+                switch (date_range) {
+                              case '7days':
+                                  var reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
+                                  break;
+                              case 'today':
+                                  var reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
+                                  break;
+                              case 'realtime':
+                                  var reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-app-overview/' + key + '/';
+                                  break;
+                              case '30days':
+                              default:
+                                  var reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
+                                  break;
+                          }
 
-            switch (date_range) {
+            } else {
+                switch (date_range) {
                 case '7days':
                     var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
                     break;
@@ -1704,9 +1779,11 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
                 default:
                     var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
                     break;
-
+            }
 
             }
+
+
 
 
             var profileurl = 'https://www.google.com/analytics/web/#management/Profile/' + key + '/%3FpropertyComposite-profilesTab-profilesComposite.tabId%3DeditProfile%26profile.tabId%3DeditProfile/';
@@ -1714,12 +1791,18 @@ function insert_rows_to_popup(tr_array, picked_account_id) {
             var accounturl = 'https://www.google.com/analytics/web/#management/Account/' + key + '/%3FaccountComposite.tabId%3DeditAccountSettings/';
 
 
+            var appicon="";
+          if(profile_data[key]["app"]==true){
+              appicon="<span class='app'></span>";
+          }
+
+
             var another_tr = '<tr class="' + trclass + '" rel_profile="' + key + '">' +
                 '<td class="value profile_name" align="left"><div>' +
                 '<a title="Edit" class="edit_icon" target="_blank" href="' + profileurl + '"><img src="../img/pencil_icon.gif"></a>' +
                 ((profile_url_array[key] == '-') ? '' : '<a target="_blank" title="Go to: ' + profile_url_array[key] + '" class="url_icon" target="_blank" href="' + profile_url_array[key] + '"><img src="../img/web_profile.png"></a>') +
                 '<a title="Show graph" class="graph_icon" target="_blank" hhref="' + reportingurl + '" data-profileid="' + key + '" data-token="' + googleToken + '"><img src="../img/line_graph.png"></a>' +
-                '<div class="profile_name_div">' + favico + '' + radiobox + '<a class="info_name" title="' + val + '" target="_blank" href="' + reportingurl + '">' + profile_name_array[key] + " <span>" + profile_tracking_code[key] + "</span>" + '</a></div>' +
+                '<div class="profile_name_div">' + favico + '' + radiobox + '<a class="info_name" title="' + val + '" target="_blank" href="' + reportingurl + '">' + appicon + '' + profile_name_array[key] + " <span>" + profile_tracking_code[key] + "</span>" + '</a></div>' +
                 '</div></td>' +
 
                 '<td class="value info_visits td-radio" align="left"><div class="loading_cell">' + getProfileData(key, "visits") + '</div></td>' +
@@ -1860,7 +1943,7 @@ function init_options(picked_account_id) {
         $('#row_display_id').hide();
     }
 
-    getAccountProfiles(function () {
+    getAccountProfiles(function (data) {
         _gaq.push(['_trackEvent', 'init_options', 'clicked']);
 
         //alert(picked_account_id);
@@ -1872,7 +1955,28 @@ function init_options(picked_account_id) {
         $('#loading_profile_id').show();
 
 
-        googleEmail="aa@aa.aa";
+
+        var window_header = undefined;
+                        //$('#texta').val(data);
+                        var account_options = $(data);
+                        account_options.each(function () {
+                            var script_contents = $(this).html();
+
+                            if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
+                                googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
+                            }
+
+
+                            if ((script_contents.split('ga.webanalytics.header.setHeaderInfo').length - 1) > 0) {
+                                script_contents = script_contents.split('ga.webanalytics.header.main();').join('');
+                                script_contents = script_contents.split('ga.webanalytics.header.setHeaderInfo').join('window_header = ');
+                                script_contents = script_contents.split(');')[0];
+                                script_contents = script_contents.split('window_header = (')[1];
+                                window_header = JSON.parse(script_contents);
+                            }
+
+                        });
+
 
 
                 if (typeof googleToken == 'undefined') {
@@ -1883,7 +1987,7 @@ function init_options(picked_account_id) {
                     return false;
                 }
 
-
+        googleEmail = window_header.email;
                 if (googleEmail != '') {
                     $('#googleAcc').html(googleEmail);
                 }

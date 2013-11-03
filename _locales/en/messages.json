@@ -3,6 +3,7 @@
     "installExtension": {
         "message": "Install Chrome Toolbar Button for displaying visitors count in Real-time"
     },
+    "extShortName": {        "message": "StatsChecker"    },
     "extName": {
         "message": "Stats Checker for Google Analytics™ - Today visit count",
         "description": "Extension Name"

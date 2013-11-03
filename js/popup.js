@@ -2,8 +2,8 @@
  'img/banners/1100AD_1_468x60.jpg',
  'img/banners/1100AD_2_468x60.jpg',
  'img/banners/1100AD_3_468x60.jpg'];*/
-var bannnerImages = [
-    'img/AngryFarmer.MadSword.com/angryfarmer468x60.png'];
+//var bannnerImages = ['img/AngryFarmer.MadSword.com/angryfarmer468x60.png'];
+var bannnerImages = ['img/SteamDefense.com/steamdefense.com-468.png'];
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -25,9 +25,19 @@ document.addEventListener('DOMContentLoaded', function () {
         _gaq.push(['_trackEvent', 'banner_click', 'angryfarmer_small']);
     });
 
+    $('.steamdefense').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'steamdefense']);
+    });
+    $('.steamdefense_small').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'steamdefense_small']);
+    });
+    $('.steamdefense_icon').bind("click", function () {
+        _gaq.push(['_trackEvent', 'banner_click', 'steamdefense_small']);
+    });
 
-    $("#real_table th .search_icon").bind('click', toggleSearchBox);
-    $("#real_table th .search_input").bind('click', function (e) {
+
+    $(".search_icon").bind('click', toggleSearchBox);
+    $(".search_input").bind('click', function (e) {
         //e.preventDefault();
         if ($(this).find("input:focus").length == 0) {
             $(this).find("input").focus();
@@ -35,9 +45,19 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     });
 
-    $("#real_table th .search_input input").change(function (e) {
+    $(".search_input input").change(function (e) {
         console.log("Real:" + this.value);
         searchValue = this.value;
+        if(searchValue!=""){
+        $(".search_icon").addClass("active");
+        } else {
+            $(".search_icon").removeClass("active");
+        }
+
+
+        $('.favToggle li').removeClass("favToggleActive");
+        $('#favToggleAll').addClass("favToggleActive");
+        onlyFav=SaveStorage('onlyFav',false,true);
 
         $('#account_id').val("all").change();
     });
@@ -46,6 +66,13 @@ document.addEventListener('DOMContentLoaded', function () {
     $("#real_table").tablesorter({
         // define a custom text extraction function
         textExtraction: "complex"
+        //graph_open
+    });
+
+    $("#real_table").bind("sortStart",function(e) {
+      // console.log(e);
+    }).bind("sortEnd",function(e) {
+            adjustTable('sortEnd');
     });
 
 

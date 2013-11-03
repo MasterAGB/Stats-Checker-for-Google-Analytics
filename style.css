@@ -1,3 +1,4 @@
+
 select {
 
     background: #FFF;
@@ -84,7 +85,7 @@ body {
     color: #111;
     font: normal 12px arial, serif;
     background: #EDF0F4 url(img/header_background.png) repeat-x;
-    font-family: arial, verdana, sans-serif;
+    font-family: "open sans", "Open Sans", sans-serif, arial, verdana;
     min-height: 100px;
     min-width: 620px;
     margin-bottom: 4px;
@@ -242,7 +243,7 @@ a {
     background: #FFF;
 }
 
-.profile_list_table tbody  tr:nth-child(2n) {
+.profile_list_table tbody tr:nth-child(2n) {
     background: #F8F8F8; /* Цвет фона */
 }
 
@@ -286,12 +287,12 @@ a {
     float: right;
 }
 
-.profile_list_table .headerSortUp {
+.profile_list_table th.headerSortUp {
     padding-right: 16px;
     background: #EDF0F4 url("img/sort_desc.gif") no-repeat right center
 }
 
-.profile_list_table .headerSortDown {
+.profile_list_table th.headerSortDown {
     padding-right: 16px;
     background: #EDF0F4 url("img/sort_asc.gif") no-repeat right center
 }
@@ -302,10 +303,10 @@ a {
 
 .profile_list_table tbody tr:first-child td:first-child,
 .profile_list_table thead tr:first-child th:first-child,
-.profile_list_table tfoot tr:last-child td:first-child
-{
+.profile_list_table tfoot tr:last-child td:first-child {
 
 }
+
 .profile_list_table tfoot td {
     background: #FFF;
     border-color: #dedede;
@@ -332,28 +333,21 @@ a {
     border-right: 1px solid #CCCCCC !important;
 }
 
-
-
-
-
-#real_table.fixed thead, #real_table.fixed tfoot{
-    position:fixed;
-    z-index:1200;
+#real_table.fixed thead, #real_table.fixed tfoot {
+    position: fixed;
+    z-index: 1200;
 
 }
+
 #real_table.fixed tfoot {
     -webkit-transition: opacity 350ms ease;
     -moz-transition: opacity 350ms ease;
-    opacity:0;
+    opacity: 0;
 }
 
-#real_table.fixed tbody{
-    display:block;
+#real_table.fixed tbody {
+    display: block;
 }
-
-
-
-
 
 #loading_table_profiles td {
     height: 19px;
@@ -379,6 +373,8 @@ a {
     font-weight: 700;
     width: 100%;
     border-collapse: collapse !important;
+    position: relative;
+
 }
 
 .account_table_top_row td {
@@ -561,7 +557,6 @@ tr:hover .edit_icon, tr:hover .graph_icon, tr:hover .url_icon {
     left: 0
 }
 
-
 .graph_date_options .view_by_hour a {
     background: no-repeat url(img/sprites.gif) -350px -256px;
     height: 21px;
@@ -586,9 +581,6 @@ tr:hover .edit_icon, tr:hover .graph_icon, tr:hover .url_icon {
     width: 25px
 }
 
-
-
-
 .graph_date_options .view_by_realtime a {
     background: no-repeat url(img/sprites.gif) -350px -256px;
     height: 21px;
@@ -612,10 +604,6 @@ tr:hover .edit_icon, tr:hover .graph_icon, tr:hover .url_icon {
     height: 21px;
     width: 25px
 }
-
-
-
-
 
 .graph_date_options .view_by_nth_hour a {
     background: no-repeat url(img/sprites.gif) -325px -256px;
@@ -899,6 +887,16 @@ a.help_resources {
     background: url(img/angryfarmer_button-16.png) no-repeat 0 0;
 }
 
+.steamdefense_icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    position: absolute;
+    right: 32px;
+    background: url(img/SteamDefense.com/steamdefense.com-icon16.png) no-repeat 0 0;
+}
+
 .external {
     display: inline-block;
     width: 16px;
@@ -936,7 +934,7 @@ a.help_resources {
     amargin-bottom: 10px;
 }
 
-.value.profile_name>div {
+.value.profile_name > div {
     overflow: hidden;
     width: 100%;
 }
@@ -978,6 +976,19 @@ a.help_resources {
     margin-bottom: -20px;
 }
 
+.steamdefense {
+    background: url(img/SteamDefense.com/steamdefense.com-with-button.png) no-repeat 50% 100%;
+    height: 140px;
+    width: 636px;
+    position: relative;
+    z-index: 0;
+    display: block;
+    margin: -8px;
+    margin-top: -40px;
+    margin-bottom: -20px;
+
+}
+
 .ads {
     text-align: center;
     position: relative;
@@ -1006,7 +1017,28 @@ a.help_resources {
     margin-left: 5px;
 }
 
+.steamdefense_small {
+    background: url(img/SteamDefense.com/steamdefense.com.png) no-repeat;
+    height: 41px;
+    width: 51px;
+    display: block;
+    float: right;
+    margin-top: 2px;
+    margin-left: 5px;
+}
+
 /* popup */
+
+.app {
+    background: url(img/phone-icon.png);
+    width: 8px;
+    height: 13px;
+    padding: 0px !important;
+    display: block;
+    float: left;
+    margin-top: 2px;
+    margin-right: 2px;
+}
 
 .error_popup_fade {
     display: none;
@@ -1115,29 +1147,25 @@ a.help_resources {
     display: none;
 }
 
-.search_icon {
-    display: inline-block;
-    width: 13px;
-    height: 13px;
-    vertical-align: middle;
-    margin-right: 3px;
-    margin-left: -2px;
-    vertical-align: top;
-    background: url(img/sprites.png) no-repeat -266px -36px;
+.search_input input{
+    width: 98%;
 }
 
+.search_icon {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    vertical-align: middle;
+    margin-right: 3px;
+    margin-top: 9px;
+    vertical-align: top;
+    background: url(img/search.png) no-repeat;
+    cursor: pointer;
+}
 
-
-
-
-
-
-
-
-
-
-
-
+.search_icon.active {
+    background: url(img/search-active.png) no-repeat;
+}
 
 .favToggle li:first-of-type {
     border-left: 0;
@@ -1148,12 +1176,14 @@ a.help_resources {
     -webkit-box-shadow: inset 1px 0 #fff;
     -moz-box-shadow: inset 1px 0 #fff;
 }
+
 .favToggle li:last-of-type {
     border-right: 0;
     border-radius: 0 3px 3px 0;
     -webkit-border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
 }
+
 .favToggle li {
     border-top: 1px solid transparent;
     border-right: 1px solid #bbb;
@@ -1178,8 +1208,8 @@ a.help_resources {
     zoom: 1;
     list-style: none;
     background-color: #eee;
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#fafafa),to(#dadada));
-    background-image: -moz-linear-gradient(top,#fafafa,#dadada);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fafafa), to(#dadada));
+    background-image: -moz-linear-gradient(top, #fafafa, #dadada);
     border: 1px solid #888;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -1193,7 +1223,6 @@ a.help_resources {
     zoom: 1;
 }
 
-
 .favToggle li.favToggleActive:last-of-type, .favToggle li.favToggleActive:hover:last-of-type {
     border-color: #666;
     border-right: 1px solid #666;
@@ -1201,6 +1230,7 @@ a.help_resources {
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
 }
+
 .favToggle li.favToggleActive:first-of-type, .favToggle li.favToggleActive:hover:first-of-type {
     border-color: #666;
     border-left: 1px solid #666;
@@ -1211,17 +1241,18 @@ a.help_resources {
 
 .favToggle li.favToggleActive, .favToggle li.favToggleActive:hover {
     background-color: #787878;
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#989898),to(#696969));
-    background-image: -moz-linear-gradient(top,#989898,#696969);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#989898), to(#696969));
+    background-image: -moz-linear-gradient(top, #989898, #696969);
     border-color: #666;
     box-shadow: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     color: #fff;
     margin: 0px 0px 0px -1px;
-   /* padding: 1px 8px 1px 9px;*/
+    /* padding: 1px 8px 1px 9px;*/
     text-shadow: 0 1px 0px #4c4c4c;
 }
+
 .favToggle li .star {
     margin: 3px 5px;
     height: 19px;
@@ -1229,33 +1260,235 @@ a.help_resources {
     float: left;
     background: no-repeat url(img/sprites_new.png) -829px -500px;
 }
+
 .favToggle li:hover .star {
     background-position: -1113px -288px;
 }
+
 .favToggle li:active .star {
     background-position: -135px -314px;;
 }
 
-
-
-
-
-
-
-
-
 .favToggle li:hover {
 
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#f6f6f6),to(#d4d4d4));
-    background-image: -moz-linear-gradient(top,#f6f6f6,#d4d4d4);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f6f6f6), to(#d4d4d4));
+    background-image: -moz-linear-gradient(top, #f6f6f6, #d4d4d4);
     border-color: #CCC;
 }
 
 .favToggle li:active {
 
-    background-image: -webkit-gradient(linear,0 0,0 100%,from(#d4d4d4),to(#f6f6f6));
-    background-image: -moz-linear-gradient(top,#d4d4d4,#f6f6f6);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#d4d4d4), to(#f6f6f6));
+    background-image: -moz-linear-gradient(top, #d4d4d4, #f6f6f6);
     border-color: #CCC;
 }
 
+.rsw-starred {
+    background: url(/img/star.png);
+    float: left;
+    width: 11px;
+    height: 10px;
+}
 
+.slideFull {
+    position: relative;
+    width: 100%;
+    max-width: 960px;
+    margin: 0px auto;
+    background: url(/img/steamdefense.com/SteamDefenseCoverFull.jpg) 50% 0;
+    height: 280px;
+    display: block;
+    z-index: 220;
+}
+
+.slideFull a.main {
+    -webkit-transition: all 350ms ease;
+    -moz-transition: all 350ms ease;
+    -ms-transition: all 350ms ease;
+    transition: all 350ms ease;
+}
+
+.slideFull a.main img {
+    display: block;
+    opacity: 0;
+    -webkit-transition: all 350ms ease;
+    -moz-transition: all 350ms ease;
+    -ms-transition: all 350ms ease;
+    transition: all 350ms ease;
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    margin-left: -353px;
+
+    transform: scale(0.7, 0.7);
+    -ms-transform: scale(0.7, 0.7); /* IE 9 */
+    -webkit-transform: scale(0.7, 0.7); /* Safari and Chrome */
+    -moz-transform: scale(0.7, 0.7); /* Safari and Chrome */
+}
+
+.slideFull a.main:hover img, .slideFull:hover a.main img {
+    opacity: 1;
+    top: 30px;
+    transform: scale(1, 1);
+    -ms-transform: scale(1, 1); /* IE 9 */
+    -webkit-transform: scale(1, 1); /* Safari and Chrome */
+    -moz-transform: scale(1, 1); /* Safari and Chrome */
+}
+
+.slideFull a.main {
+    display: block;
+    height: 280px;
+}
+
+/*
+Caption
+*/
+
+.slide .caption {
+    z-index: 500;
+    position: absolute;
+    bottom: -100px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    padding: 10px 20px;
+    background: #000;
+    background: rgba(0, 0, 0, 0.6);
+
+    font-size: 1.3em;
+    line-height: 1.33;
+    color: #fff;
+    text-shadow: none;
+
+    -webkit-transition: all 350ms ease;
+    -moz-transition: all 350ms ease;
+    bottom: 0px;
+    text-align: left;
+}
+
+#container:hover .caption {
+    bottom: 0px;
+}
+
+#frame {
+    position: absolute;
+    z-index: 0;
+    width: 739px;
+    height: 341px;
+    top: -3px;
+    left: -80px;
+}
+
+.caption_head_icon {
+    position: relative;
+    height: 64px;
+    width: 64px;
+}
+
+.caption_head_icon img {
+    position: absolute;
+    top: 0px;
+    left: 6px;
+    height: 50px;
+    width: 50px;
+    border-radius: 2px;
+}
+
+.caption_name {
+    position: absolute;
+    top: 14px;
+    left: 90px;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    width: 590px;
+    height: 26px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.caption_name a {
+    color: white;
+}
+
+.caption_desc {
+    position: absolute;
+    top: 65px;
+    left: 20px;
+    font-size: 11px;
+    height: 26px;
+    line-height: 12px;
+    right: 110px;
+    overflow: hidden;
+    color: #EBEBEB;
+}
+
+.caption_play_btn {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+
+    display: inline-block;
+    background: #5d9aff;
+    border: 1px solid #2f6acb;
+    padding: 5px 13px;
+    font-size: 15px;
+    font-weight: bold;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    -moz-box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+    color: #fff;
+    text-decoration: none;
+    text-shadow: 0 1px 0 #538cea;
+}
+
+.caption_play_btn:hover {
+    background: #659EFD;
+}
+
+.caption_play_btn:active {
+    background: #457BD5;
+}
+
+.caption-stars-block {
+    position: absolute;
+    top: 41px;
+    left: 90px;
+    color: white;
+}
+
+.icon-joystick {
+    background: url(img/icons-interests.png) no-repeat;
+    background-position: -497px 0px;
+    width: 16px;
+    display: inline-block;
+    height: 16px;
+}
+
+
+
+
+.socialTop {
+    position: absolute;
+    margin-top: 5px;
+    margin-left: 8px;
+    overflow: hidden;
+    left: 260px;
+    right: 190px;
+}
+
+.socialTop iframe {
+    height: 27px;
+}
+
+#loading_new_account_table {
+    position: absolute;
+    left: 6px;
+    top: 13px;
+    background: #7C7C7C;
+}
