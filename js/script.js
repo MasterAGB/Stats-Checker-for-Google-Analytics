@@ -36,7 +36,7 @@ window.addEventListener("keydown", function (e) {
 })
 
 
-e = chrome.browserAction;
+
 var current_version = "0";
 
 
@@ -178,7 +178,7 @@ function load_storage_variables() {
     profile_id = LoadStorage("profile_id");
     profile_name = LoadStorage("profile_name");
     display_id = LoadStorage("display_id");
-    selected_period = LoadStorage("selected_period");
+    selected_period = LoadStorage("selected_period", "string", "day");
     update_interval = LoadStorage("update_interval", "string", 300000);
     date_range = LoadStorage("date_range", "string", "30days");
     showAds = LoadStorage("showAds", 'bool', true);
@@ -224,6 +224,7 @@ refreshdates();
 
 function refreshdates() {
     var checkperiodStart = 0;
+
     switch (selected_period) {
         case 'realtime':
             var checkperiod = 0;
@@ -263,7 +264,9 @@ function refreshdates() {
     //alert(oldday);
     if (oldday < 10) oldday = "0" + oldday;
     oldyear = oldcurrentTime.getFullYear();
+
     oldtoday = oldyear + '' + oldmonth + '' + oldday;
+    //oldtoday="NaNNaNNaN";
 
     monthagocurrentTime = new Date(currentTimeReal - 1000 * 60 * 60 * 24 * 30);
     monthagomonth = monthagocurrentTime.getMonth() + 1;
@@ -318,10 +321,10 @@ function removecrap(value) {
 
 function goOffline() {
     if (isExtension()) {
-        e.setBadgeBackgroundColor({"color": [128, 128, 128, 128]});
-        e.setIcon({path: "img/logo.offline.png"});
-        e.setBadgeText({"text": "?"});
-        e.setTitle({title: chrome.i18n.getMessage("loginToTheSystem")});
+        chrome.browserAction.setBadgeBackgroundColor({"color": [128, 128, 128, 128]});
+        chrome.browserAction.setIcon({path: "img/logo.offline.png"});
+        chrome.browserAction.setBadgeText({"text": "?"});
+        chrome.browserAction.setTitle({title: chrome.i18n.getMessage("loginToTheSystem")});
     }
 }
 
@@ -360,7 +363,7 @@ function logg(text) {
 
 function getGoogleToken(onCompleteFunction) {
 
-
+//logg("Getting google token");
     $.ajax({
         url: "https://www.google.com/analytics/web/",
         data: '',
@@ -690,7 +693,6 @@ function getAccountProfiles(onCompleteFunction) {
 
 
                     var rowData = data.home_page_data.components[1].viewData;
-                    console.log(rowData);
 
                     for (var profileDataNumb in  rowData) {
                         var profileData = rowData[profileDataNumb];
@@ -856,7 +858,7 @@ function checkRatio() {
 
 
     if (isExtension()) {
-        e.setIcon({path: "img/spinner16.gif"});
+        chrome.browserAction.setIcon({path: "img/spinner16.gif"});
     }
 
     getAccountProfiles(function () {
@@ -870,10 +872,10 @@ function checkRatio() {
                 profile_name = SaveStorage("profile_name", profile_name_array[profile_id]);
 
                 if (isExtension()) {
-                    e.setBadgeText({"text": badge_number});
-                    e.setBadgeBackgroundColor({"color": [255, 127, 0, 255]});
-                    e.setIcon({path: "img/logo.32.png"});
-                    e.setTitle({title: chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
+                    chrome.browserAction.setBadgeText({"text": badge_number});
+                    chrome.browserAction.setBadgeBackgroundColor({"color": [255, 127, 0, 255]});
+                    chrome.browserAction.setIcon({path: "img/logo.32.png"});
+                    chrome.browserAction.setTitle({title: chrome.i18n.getMessage("visitsToday", [badge_number, profile_name, get_trans('text' + display_id, false)])});
                 }
             }, function (data) {
 
@@ -905,10 +907,10 @@ function checkRatio() {
                     }
 
                     if (isExtension()) {
-                        e.setBadgeText({"text": badge_number});
-                        e.setBadgeBackgroundColor({"color": [255, 127, 0, 255]});
-                        e.setIcon({path: "img/logo.32.png"});
-                        e.setTitle({title: chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
+                        chrome.browserAction.setBadgeText({"text": badge_number});
+                        chrome.browserAction.setBadgeBackgroundColor({"color": [255, 127, 0, 255]});
+                        chrome.browserAction.setIcon({path: "img/logo.32.png"});
+                        chrome.browserAction.setTitle({title: chrome.i18n.getMessage("visitsToday", [m_today, profile_name, get_trans('text' + display_id, false)])});
                     }
 
                 }
@@ -1562,18 +1564,11 @@ function init_popup(picked_account_id) {
     adjustTable('init_popup_start');
 
 
-    getAccountProfiles(function () {
+    getAccountProfiles(function (data) {
+
+        //logg("Filling info");
 
 
-        $.ajax({
-            url: "https://www.google.com/analytics/web/",
-            data: '',
-            method: 'get',
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                PleaseLogin();
-                return false;
-            },
-            success: function (data) {
 
                 //console.log("getAccountProfiles - success!");
 
@@ -1723,8 +1718,8 @@ function init_popup(picked_account_id) {
                 closeErrorPopup();
 
 
-            }
-        });
+
+
 
     });
 }
