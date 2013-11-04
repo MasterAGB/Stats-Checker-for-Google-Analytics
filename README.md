@@ -23,8 +23,8 @@ Version 1.6.1.1
 - Added Google Analytics sign-in error notification
 
 Version 1.6.1
-- Added "Go To Propery Default URL" button
-- Showing propery names with profile names, if differs. (Useful, when profile names are "All Web Site Data")
+- Added "Go To Property Default URL" button
+- Showing property names with profile names, if differs. (Useful, when profile names are "All Web Site Data")
 - Options page fix
 
 Version 1.6.0.3

@@ -115,14 +115,14 @@
         "message": "Show ads :)"
     },
 
-    "selectShowProperyNames": {
-        "message": "Propery names:"
+    "selectShowPropertyNames": {
+        "message": "Property names:"
     },
-    "selectShowProperyNamesLabel": {
-        "message": "Show propery names"
+    "selectShowPropertyNamesLabel": {
+        "message": "Show property names"
     },
-    "selectShowProperyNamesDesc": {
-        "message": "Show propery names with profile names, if differs. (Useful, when profile names are \"All Web Site Data\")"
+    "selectShowPropertyNamesDesc": {
+        "message": "Show property names with profile names, if differs. (Useful, when profile names are \"All Web Site Data\")"
     },
 
 

@@ -53,7 +53,7 @@ var selected_period = "";
 var update_interval = "";
 var date_range = "";
 var showAds = true;
-var show_properynames = true;
+var show_propertynames = true;
 var favouriteProfiles = new Array();
 var show_footer = true;
 var onlyFav = false;
@@ -182,7 +182,7 @@ function load_storage_variables() {
     update_interval = LoadStorage("update_interval", "string", 300000);
     date_range = LoadStorage("date_range", "string", "30days");
     showAds = LoadStorage("showAds", 'bool', true);
-    show_properynames = LoadStorage("show_properynames", 'bool');
+    show_propertynames = LoadStorage("show_propertynames", 'bool');
     favouriteProfiles = LoadStorage('favouriteProfiles', 'json');
     show_footer = LoadStorage("show_footer", 'bool');
     onlyFav = LoadStorage("onlyFav", 'bool', false);
@@ -562,7 +562,7 @@ function getAccountProfiles(onCompleteFunction) {
                     profileEntity.name = profileEntity.name.replace('https://', '');
 
 
-                    if (show_properynames && profileEntity.name.toLowerCase() != property_name_array[propertyEntity.id].toLowerCase()) {
+                    if (show_propertynames && profileEntity.name.toLowerCase() != property_name_array[propertyEntity.id].toLowerCase()) {
                         if (
                             profileEntity.name == "All Web Site Data" ||
                                 profileEntity.name == "Все данные по веб-сайту" ||
@@ -1919,7 +1919,7 @@ function save_options() {
     update_interval = SaveStorage("update_interval", $('#update_interval').val());
     date_range = SaveStorage("date_range", $('#date_range').val());
     showAds = SaveStorage("showAds", $('#show_ads').attr('checked') == 'checked', true);
-    show_properynames = SaveStorage("show_properynames", $('#show_properynames').attr('checked') == 'checked', true);
+    show_propertynames = SaveStorage("show_propertynames", $('#show_propertynames').attr('checked') == 'checked', true);
     show_footer = SaveStorage("show_footer", $('#show_footer').attr('checked') == 'checked', true);
 
 
@@ -2018,7 +2018,7 @@ function init_options(picked_account_id) {
         $("#update_interval").val(update_interval);
         $("#date_range").val(date_range);
         $("#show_ads").attr('checked', showAds);
-        $("#show_properynames").attr('checked', show_properynames);
+        $("#show_propertynames").attr('checked', show_propertynames);
         $("#show_footer").attr('checked', show_footer);
         $("#onlyFav").attr('checked', onlyFav);
 

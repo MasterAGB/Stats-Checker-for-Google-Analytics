@@ -94,13 +94,13 @@
 	"selectShowAdDesc": {"message": "Показывать рекламу :)"},
 
 
-    "selectShowProperyNames": {
+    "selectShowPropertyNames": {
         "message": "Название ресурса:"
     },
-    "selectShowProperyNamesLabel": {
+    "selectShowPropertyNamesLabel": {
         "message": "Показывать название ресурса"
     },
-    "selectShowProperyNamesDesc": {
+    "selectShowPropertyNamesDesc": {
         "message": "Показывать название ресурса вместе с названием профиля, если они разные. (Полезно, если названия профилей - \"Все данные по веб-сайту\")"
     },
 
