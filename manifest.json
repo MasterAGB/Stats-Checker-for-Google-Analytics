@@ -1,9 +1,10 @@
 {
+
     "app":{
-            "launch":{
-                "local_path":"app.html"
-            }
-        },
+        "launch":{
+            "local_path":"app.html"
+        }
+    },
 
     "default_locale":"en",
     "name":"__MSG_extName__",
@@ -20,7 +21,7 @@
     "permissions":[
         "https://www.google.com/analytics/*"
     ],
-    "version":"1.6.2.1",
+    "version":"1.6.2.3",
     "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
     "manifest_version":2
 }

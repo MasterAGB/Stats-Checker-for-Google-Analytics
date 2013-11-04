@@ -177,7 +177,7 @@ function load_storage_variables() {
     account_name = LoadStorage("account_name");
     profile_id = LoadStorage("profile_id");
     profile_name = LoadStorage("profile_name");
-    display_id = LoadStorage("display_id");
+    display_id = LoadStorage("display_id","string","DisplayVisitsSummary");
     selected_period = LoadStorage("selected_period", "string", "day");
     update_interval = LoadStorage("update_interval", "string", 300000);
     date_range = LoadStorage("date_range", "string", "30days");
@@ -856,7 +856,7 @@ function getTodayData(key, completeFunction, errorFunction) {
 
 function checkRatio() {
 
-
+     //console.log("checkRatio");
     if (isExtension()) {
         chrome.browserAction.setIcon({path: "img/spinner16.gif"});
     }
@@ -937,7 +937,7 @@ function checkRatio() {
 var intervalID;
 function init_background() {
     goOffline();
-
+    //console.log("init_background");
     checkRatio();
 
 
@@ -945,9 +945,12 @@ function init_background() {
     if (update_interval < 30000) {
         update_interval = 30000;
     }
-    logg('init interval:' + update_interval);
+
+    //logg('init interval:' + update_interval);
     intervalID = setInterval(
         function () {
+
+           //console.log("update_interval"+update_interval);
             checkRatio()
         },
         update_interval);
@@ -1443,8 +1446,9 @@ function LoadStorage(key, type, def) {
                 def = "";
             }
 
-            if (!profile_id) {
-                profile_id = def;
+
+            if (!storageVal) {
+                storageVal = def;
             }
             break;
         case "json":
