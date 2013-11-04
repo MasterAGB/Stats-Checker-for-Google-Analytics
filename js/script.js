@@ -1968,7 +1968,6 @@ function init_options(picked_account_id) {
         }
 
 
-        $('#loading_profile_id').show();
 
 
         var window_header = undefined;
@@ -2022,32 +2021,9 @@ function init_options(picked_account_id) {
         $("#onlyFav").attr('checked', onlyFav);
 
 
-        for (var i_profile_id in profile_name_array) {
-            if (profile_parents[i_profile_id] == picked_account_id || picked_account_id == 'all') {
+        $('#loading_profile').hide();
 
-
-                var selected_option = '';
-                if (i_profile_id == profile_id) selected_option = 'selected="selected"';
-
-                $("#profile_id").append(
-                    '<option ' +
-                        selected_option +
-                        ' value="' +
-                        i_profile_id +
-                        '">' +
-                        profile_name_array[i_profile_id] +
-                        "</option>"
-                );
-                $('#loading_profile').hide();
-                $('#loading_profile_id').hide();
-
-                $('#edit_profile').show();
-
-
-            }
-
-
-        }
+        $('#edit_profile').show();
 
         closeErrorPopup();
 
