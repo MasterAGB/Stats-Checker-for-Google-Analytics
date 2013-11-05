@@ -938,7 +938,7 @@ function init_background() {
 
 
     clearInterval(intervalID);
-    if (update_interval < 30000) {
+    if (typeof(update_interval)=="undefined" || update_interval < 30000 || isNaN(update_interval)) {
         update_interval = 30000;
     }
 
