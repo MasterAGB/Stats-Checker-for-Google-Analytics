@@ -1,5 +1,10 @@
 {
+    "NoFavSearchAllProfilesFound": {"message": "Nothing found in all profiles, showing favourites for this account..."},
+    "NoFavSearchProfilesFound": {"message": "Nothing found in favorites, searching all profiles..."},
+    "NoAllSearchProfilesFound": {"message": "Nothing found, displaying all profiles..."},
 
+    "NoFavProfilesFound": {"message": "No favorite profiles found. Pick some:"},
+    "NoProfilesFound": {"message": "No profiles found"},
     "steamDefenseTry": {"message": "Try out my new game:"},
 "steamDefenseName": {"message": "Steam Defense"},
 "steamDefenseDescr": {"message": "The game submerges you into a vivid tropical world of wild planet Gloria-6, covered with shady woods, where colonists from Earth, torn from home, are forced to confront the mysterious and formidable Dryans - an intelligent race of Gloria-6 aborigines guarding their secrets from strangers jealously!"},

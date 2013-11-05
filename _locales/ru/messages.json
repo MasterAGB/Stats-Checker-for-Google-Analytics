@@ -1,4 +1,11 @@
 {
+    "NoFavSearchAllProfilesFound": {"message": "Nothing found in all profiles, showing favourites for this account..."},
+    "NoFavSearchProfilesFound": {"message": "Nothing found in favorites, searching all profiles..."},
+    "NoAllSearchProfilesFound": {"message": "Nothing found, displaying all profiles..."},
+
+    "NoFavProfilesFound": {"message": "Избранных профилей не найдено. Добавьте парочку:"},
+    "NoProfilesFound": {"message": "Профилей не найдено"},
+
     "steamDefenseTry": {"message": "Попробуйте мою новую игру:"},
     "steamDefenseName": {"message": "Туман Войны: Оборона и штурм"},
     "steamDefenseDescr": {"message": "Игра погружает вас в яркий, тропический мир дикой планеты Глория-6, в тенистых лесах которой колонисты с Земли, оторванные от родного дома, вынуждены противостоять загадочным и грозным дрианам - разумной расе аборигенов, ревностно охраняющих свои секреты от чужаков!"},
