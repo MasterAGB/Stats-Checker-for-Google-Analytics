@@ -1,17 +1,13 @@
 {
 
-    "background":{
-        "page":"background.html"
-    },
-    "browser_action":{
-        "default_icon":"img/logo.32.png",
-        "default_title":"__MSG_extName__",
-        "default_popup":"popup.html"
+    "app":{
+        "launch":{
+            "local_path":"app.html"
+        }
     },
 
     "default_locale":"en",
     "name":"__MSG_extName__",
-    "short_name":"__MSG_extShortName__",
     "description":"__MSG_extDesc__",
     "icons":{
         "16":"img/logo.16.png",
@@ -24,7 +20,7 @@
     "permissions":[
         "https://www.google.com/analytics/*"
     ],
-    "version":"1.6.2.4",
+    "version":"1.6.2.5",
     "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
     "manifest_version":2
 }

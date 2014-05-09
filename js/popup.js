@@ -140,38 +140,39 @@ document.addEventListener('DOMContentLoaded', function () {
     pickDateFormatButton();
 
 
-    $('.unstarred_icon').live('click', function () {
+    $(document).on("click", ".unstarred_icon", function (a) {
         togglefavourite(this, $(this).data('profileid'));
         return false;
     })
 
-
-    $('.graph_icon').live('click', function () {
+    $(document).on("click", ".graph_icon", function (a) {
         showGraph($(this).data('profileid'), this, $(this).data('token'));
         return false;
     })
 
-    $('.starred_icon').live('click', function () {
+        $(document).on("click", ".starred_icon", function (a) {
         togglefavourite(this, $(this).data('profileid'));
         return false;
     })
-    $('.save_options_radio').live('click', function () {
+
+            $(document).on("click", ".starred_icon", function (a) {
         save_options_radio($(this).data('key'), $(this).data('picked_account_id'));
     })
 
 
-    $('.td-radio').live('click', function () {
+                $(document).on("click", ".td-radio", function (a) {
         $(this).parent().find('.save_options_radio').click();
     })
 
 
-    $('#favToggleAll').live('click', function () {
+
+    $('#favToggleAll').bind('click', function () {
         $('.favToggle li').removeClass("favToggleActive");
         $(this).addClass("favToggleActive");
         onlyFav = SaveStorage('onlyFav', false, true);
         $('#account_id').change();
     })
-    $('#favToggleFav').live('click', function () {
+    $('#favToggleFav').bind('click', function () {
         $('.favToggle li').removeClass("favToggleActive");
         $(this).addClass("favToggleActive");
         onlyFav = SaveStorage('onlyFav', true, true);

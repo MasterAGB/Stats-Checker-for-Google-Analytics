@@ -7,7 +7,7 @@
 
 
     <script type="text/javascript" src="js/analytics.js"></script>
-    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" src="js/json2.js"></script>
 
 
@@ -16,8 +16,12 @@
 
     <script type="text/javascript" src="js/tablesorter/jquery.tablesorter.js"></script>
     <script type="text/javascript" src="js/adjust.js?1.6.2.4"></script>
+    <!--<script type="text/javascript" src="js/api.js?1.6.2.4"></script>-->
+    <script type="text/javascript" src="js/google_backup.js?1.6.2.4"></script>
     <script type="text/javascript" src="js/script.js?1.6.2.4"></script>
     <script type="text/javascript" src="js/popup.js?1.6.2.4"></script>
+
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
 </head>
 <body>
 <div id="placeholder"></div>
@@ -51,6 +55,8 @@
         }
     },
 
+    /*"short_name":"__MSG_extShortName__",*/??
+
 -->
 
 <div class="error_popup_fade"></div>
@@ -74,10 +80,6 @@
 </div>
 
 <div class="white_block">
-<h2><img src="img/logo.32.png">
-    <span class="trans" data-transid="extName">Stats Checker for Google Analytics™ - Today visit count</span>
-</h2>
-
 
 
 <span class="right_buttons">
@@ -95,6 +97,12 @@
      <a id="open_full" href="#" class="trans" data-transid="fullscreen">Full screen</a>
      -->
 </span>
+
+
+<h2><img src="img/logo.32.png">
+    <span class="trans" data-transid="extName">Stats Checker for Google Analytics™ - Today visit count</span>
+</h2>
+
 
 
 <b>
@@ -125,12 +133,9 @@
                 </select>
 
 
-				<span class="socialTop">
-                   <iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fstats-checker-for-google%2Fkfphhfdokdamioolhjfdohhkodbieida&amp;width=150&amp;height=35&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=226851594013099"
-                           scrolling="no" frameborder="0"
-                           allowTransparency="true"></iframe>
-                    <div class="g-plusone" data-annotation="bubble"
-                         data-href="http://mystatschecker.com"></div>
+				 <span class="socialTop">
+                   <iframe class="facebook-social" src="" data-src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fchrome.google.com%2Fwebstore%2Fdetail%2Fstats-checker-for-google%2Fkfphhfdokdamioolhjfdohhkodbieida&amp;width=150&amp;height=35&amp;colorscheme=light&amp;layout=standard&amp;action=like&amp;show_faces=false&amp;send=false&amp;appId=226851594013099" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                   <div class="plusone-social" data-annotation="bubble" data-href="http://mystatschecker.com"></div>
 				</span>
             </div>
         </td>
@@ -261,6 +266,13 @@
 
 
 </a>
+
+<!--
+<button id="authorize-button" style="visibility: hidden">Authorize</button>
+<button id="run-demo-button" style="visibility: hidden">Run Demo</button>
+<br>
+<hr>
+<div id="output">Loading, one sec....</div>-->
 
 
 

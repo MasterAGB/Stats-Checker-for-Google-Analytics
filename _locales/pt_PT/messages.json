@@ -122,6 +122,12 @@
    "selectShowAdDesc": {
       "message": "Mostrar anúncios :)"
    },
+    "selectShowSocial": {
+        "message": "Social:"
+    },
+    "selectShowSocialDesc": {
+        "message": "Show social buttons"
+    },
    "selectShowFooter": {
       "message": "Mostrar rodapé:"
    },

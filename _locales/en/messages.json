@@ -120,6 +120,12 @@
     "selectShowAdDesc": {
         "message": "Show ads :)"
     },
+    "selectShowSocial": {
+        "message": "Social:"
+    },
+    "selectShowSocialDesc": {
+        "message": "Show social buttons"
+    },
 
     "selectShowPropertyNames": {
         "message": "Property names:"

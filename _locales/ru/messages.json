@@ -101,6 +101,14 @@
 	"selectShowAdDesc": {"message": "Показывать рекламу :)"},
 
 
+
+    "selectShowSocial": {
+        "message": "Кнопки:"
+    },
+    "selectShowSocialDesc": {
+        "message": "Показывать социальные кнопки"
+    },
+
     "selectShowPropertyNames": {
         "message": "Название ресурса:"
     },
