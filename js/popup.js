@@ -9,10 +9,10 @@ var bannnerImages = ['img/SteamDefense.com/steamdefense.com-468.png'];
 document.addEventListener('DOMContentLoaded', function () {
 
 
-    $('#bannerImg').attr('src', bannnerImages[getRandomInt(0, 2)]);
+    var $bannerImg = $('#bannerImg');
 
-
-    $('#bannerImg').bind("click", function () {
+    $bannerImg.attr('src', bannnerImages[getRandomInt(0, 2)]);
+    $bannerImg.bind("click", function () {
         _gaq.push(['_trackEvent', 'banner_click', 'bannerImg']);
     });
     $('.angryfarmer').bind("click", function () {
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $(".search_icon").bind('click', toggleSearchBox);
-    $(".search_input").bind('click', function (e) {
+    $(".search_input").bind('click', function () {
         //e.preventDefault();
         if ($(this).find("input:focus").length == 0) {
             $(this).find("input").focus();
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return false;
     });
 
-    $(".search_input input").change(function (e) {
+    $(".search_input input").change(function () {
         console.log("Real:" + this.value);
         searchValue = this.value;
         if (searchValue != "") {
@@ -63,17 +63,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    $("#real_table").tablesorter({
+    var $realtable = $("#real_table");
+
+    $realtable.tablesorter({
         // define a custom text extraction function
         textExtraction: "complex"
         //graph_open
     });
 
-    $("#real_table").bind("sortStart",function (e) {
+    $realtable.bind("sortStart",function (e) {
         // console.log(e);
-    }).bind("sortEnd", function (e) {
-            adjustTable('sortEnd');
-        });
+    }).bind("sortEnd", function () {
+        adjustTable('sortEnd');
+    });
 
 
     init_popup();
@@ -94,18 +96,19 @@ document.addEventListener('DOMContentLoaded', function () {
     $('#googleAccChange').html(chrome.i18n.getMessage("googleAccChange", 'https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'));
 
 
-    $('[data-transid]').each(function(){
-            var trans_id=$(this).data('transid');
-            var trans=get_trans($(this).data('transid'), false);
-            if(trans==''){
-                trans='<s>Missing translation: '+trans_id+'</s>';
-            }
-            $(this).html(trans);
-        });
+    $('[data-transid]').each(function () {
+        var trans_id = $(this).data('transid');
+        var trans = get_trans($(this).data('transid'), false);
+        if (trans == '') {
+            trans = '<s>Missing translation: ' + trans_id + '</s>';
+        }
+        $(this).html(trans);
+    });
 
 
     $('#account_id').bind('change', function () {
-        init_popup(this.value);
+        SetPickedAccountId(this.value);
+        init_popup();
     });
 
     $('#gdf_nth_realtime').bind('click', function () {
@@ -140,30 +143,29 @@ document.addEventListener('DOMContentLoaded', function () {
     pickDateFormatButton();
 
 
-    $(document).on("click", ".unstarred_icon", function (a) {
+    $(document).on("click", ".unstarred_icon", function () {
         togglefavourite(this, $(this).data('profileid'));
         return false;
-    })
+    });
 
-    $(document).on("click", ".graph_icon", function (a) {
+    $(document).on("click", ".graph_icon", function () {
         showGraph($(this).data('profileid'), this, $(this).data('token'));
         return false;
-    })
+    });
 
-        $(document).on("click", ".starred_icon", function (a) {
+    $(document).on("click", ".starred_icon", function () {
         togglefavourite(this, $(this).data('profileid'));
         return false;
-    })
+    });
 
-            $(document).on("click", ".starred_icon", function (a) {
+    $(document).on("click", ".save_options_radio", function () {
         save_options_radio($(this).data('key'), $(this).data('picked_account_id'));
-    })
+    });
 
 
-                $(document).on("click", ".td-radio", function (a) {
+    $(document).on("click", ".td-radio", function () {
         $(this).parent().find('.save_options_radio').click();
-    })
-
+    });
 
 
     $('#favToggleAll').bind('click', function () {
@@ -171,13 +173,13 @@ document.addEventListener('DOMContentLoaded', function () {
         $(this).addClass("favToggleActive");
         onlyFav = SaveStorage('onlyFav', false, true);
         $('#account_id').change();
-    })
+    });
     $('#favToggleFav').bind('click', function () {
         $('.favToggle li').removeClass("favToggleActive");
         $(this).addClass("favToggleActive");
         onlyFav = SaveStorage('onlyFav', true, true);
         $('#account_id').change();
-    })
+    });
 
 
     $(document).ready(function () {

@@ -10,7 +10,13 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
-Version 1.6.2.5
+Version 1.6.5.0
+- Lots of small bugfixes
+- Favourite profile selection fix
+- Selecting accounts fix
+
+
+Version 1.6.3.0
 - Improved rendering speed
 - Latest Google Analytics update fix (Thanks for solutions!)
 - Remove social buttons from options

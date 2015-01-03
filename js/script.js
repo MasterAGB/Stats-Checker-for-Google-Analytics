@@ -753,14 +753,14 @@ function getAllFavProfiles() {
     }
     return tr_all_fav_array;
 }
-function getAllFavSearchProfiles(searchValue) {
+function getAllFavSearchProfiles(searchValueText) {
     var tr_array = new Array();
     for (var favKey in favouriteProfiles) {
         var i_profile_id = favouriteProfiles[favKey];
 
         if (profile_name_array[i_profile_id] != undefined) {
             console.log(profile_search_array[i_profile_id]);
-            if (substrFound(profile_search_array[i_profile_id], searchValue)) {
+            if (substrFound(profile_search_array[i_profile_id], searchValueText)) {
                 tr_array.push(i_profile_id);
             }
         }
@@ -791,7 +791,8 @@ function getAllSearchProfiles(searchValue) {
 function init_popup() {
 
 
-    if ($("#profiles_table_list").length == 0) {
+    var $profilestablelist = $("#profiles_table_list");
+    if ($profilestablelist.length == 0) {
         if ($("#edit_profile").length > 0) {
             init_options();
         }
@@ -819,7 +820,7 @@ function init_popup() {
 
     $('#loading_table_profiles').show();
     $('#loading_new_account_table').show();
-    $("#profiles_table_list").html('');
+    $profilestablelist.html('');
 
 
     $('#total_visits').html('0');
@@ -885,12 +886,14 @@ function insert_rows_to_popup(tr_array) {
             if (profile_name_array[key] != undefined) {
                 val = profile_name_array[key] + " " + profile_tracking_code[key];
             }
+            var favico = '';
+                            var trclass = '';
             if (findfavourite(key)) {
-                var favico = '<a href="#" data-profileid="' + key + '" class="starred_icon"></a>';
-                var trclass = 'favorited';
+                 favico = '<a href="#" data-profileid="' + key + '" class="starred_icon"></a>';
+                 trclass = 'favorited';
             } else {
-                var favico = '<a href="#" data-profileid="' + key + '" class="unstarred_icon"></a>';
-                var trclass = '';
+                 favico = '<a href="#" data-profileid="' + key + '" class="unstarred_icon"></a>';
+                 trclass = '';
             }
             var radiobox = '<input id="profile_id_radio_' + key + '" class="save_options_radio" data-key="' + key + '" data-picked_account_id="' + account_id + '" type="radio" name="profile_id_radio" value="' + key + '"';
             if (key == profile_id) {
@@ -898,37 +901,38 @@ function insert_rows_to_popup(tr_array) {
             }
             radiobox += '/>';
 
+            var reportingurl='';
             if (profile_data[key]["app"]) {
                 switch (date_range) {
                     case '7days':
-                        var reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
                         break;
                     case 'today':
-                        var reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
+                         reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
                         break;
                     case 'realtime':
-                        var reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-app-overview/' + key + '/';
+                         reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-app-overview/' + key + '/';
                         break;
                     case '30days':
                     default:
-                        var reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
                         break;
                 }
 
             } else {
                 switch (date_range) {
                     case '7days':
-                        var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
                         break;
                     case 'today':
-                        var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
+                         reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
                         break;
                     case 'realtime':
-                        var reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-overview/' + key + '/';
+                         reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-overview/' + key + '/';
                         break;
                     case '30days':
                     default:
-                        var reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
                         break;
                 }
 
@@ -974,13 +978,15 @@ function insert_rows_to_popup(tr_array) {
         }
 
         $("#loading_table_profiles").hide();
-        $("#profiles_table_list").append(favorited_tr);
-        $("#profiles_table_list").append(nonfavorited_tr);
+        var $profilestablelist = $("#profiles_table_list");
+        $profilestablelist.append(favorited_tr);
+        $profilestablelist.append(nonfavorited_tr);
         adjustTable('insert_rows_to_popup');
 
 
-        SetFullyFilled($("#profiles_table_list").find('tr').length);
-        $("#profiles_table_list").find('tr').each(function () {
+        var $trs = $profilestablelist.find('tr');
+        SetFullyFilled($trs.length);
+        $trs.each(function () {
             //alert($(this).attr('rel_profile'));
             if (typeof($(this).attr('rel_profile')) != "undefined") {
                 fill_info($(this).attr('rel_profile'), this);
@@ -1062,8 +1068,7 @@ function save_options() {
     show_footer = SaveStorage("show_footer", $('#show_footer').is(':checked'), true);
 
 
-    $('#status').show();
-    $('#status').html(chrome.i18n.getMessage("saved"));
+    $('#status').show().html(chrome.i18n.getMessage("saved"));
     setTimeout(function () {
         $('#status').hide('slow');
     }, 150);
@@ -1081,6 +1086,7 @@ function get_trans(translation_id, document_write) {
     } else {
         return chrome.i18n.getMessage(translation_id);
     }
+    return "";
 }
 
 function edit_account() {
