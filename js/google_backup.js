@@ -137,20 +137,58 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
                 profileEntity.name = profileEntity.name.replace('http://', '');
                 profileEntity.name = profileEntity.name.replace('https://', '');
 
+                profileEntity.name=removeLastSlash(profileEntity.name);
+                property_name_array[propertyEntity.id]=removeLastSlash(property_name_array[propertyEntity.id]);
 
-                if (show_propertynames && profileEntity.name.toLowerCase() != property_name_array[propertyEntity.id].toLowerCase()) {
+
+
+
+                var propertyLower = property_name_array[propertyEntity.id].toLowerCase();
+                var profileLower = profileEntity.name.toLowerCase();
+
+
+
+
+                //please, show domain name without WWW, if there is one with and one without...
+                if (profileLower.replace('www.', '') == propertyLower.replace('www.', '')) {
+
+                    if (profileEntity.name.indexOf("www.") > -1 || profileEntity.name.indexOf("WWW.") > -1) {
+                        profileEntity.name=property_name_array[propertyEntity.id];
+                    } else {
+                        property_name_array[propertyEntity.id]=profileEntity.name;
+                    }
+
+                    propertyLower = property_name_array[propertyEntity.id].toLowerCase();
+                    profileLower = profileEntity.name.toLowerCase();
+                }
+
+
+
+                if (profileEntity.name == "") {
+                    profileEntity.name = property_name_array[propertyEntity.id];
+                }
+
+
+                if (show_propertynames && profileLower != propertyLower) {
+
+
                     if (
+                        profileEntity.name == "Default view" ||
                         profileEntity.name == "All Web Site Data" ||
-                            profileEntity.name == "Все данные по веб-сайту" ||
-                            profileEntity.name == "Все данные по мобильному приложению"
-                        ) {
+                        profileEntity.name == "All Mobile App Data" ||
+                        profileEntity.name == "Все данные по веб-сайту" ||
+                        profileEntity.name == "Все данные по мобильному приложению"
+                    ) {
                         profile_name_array[profileEntity.id] = property_name_array[propertyEntity.id];
                     } else {
                         profile_name_array[profileEntity.id] = profileEntity.name + " (" + property_name_array[propertyEntity.id] + ")";
                     }
+
+
                 } else {
                     profile_name_array[profileEntity.id] = profileEntity.name;
                 }
+
 
 
                 profile_count_array[property_parents[propertyEntity.id]]++;

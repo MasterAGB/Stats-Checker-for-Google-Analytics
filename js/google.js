@@ -248,7 +248,7 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
 
 
                                                                 for (var profileEntityId in  response.items) {
-                                                                    var profileEntity = response.items[profileEntityId]
+                                                                    var profileEntity = response.items[profileEntityId];
 
                                                                     //console.log(profileEntity.name);
 
@@ -257,17 +257,38 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
                                                                     profileEntity.name = profileEntity.name.replace('http://', '');
                                                                     profileEntity.name = profileEntity.name.replace('https://', '');
 
+                                                                    profileEntity.name=removeLastSlash(profileEntity.name);
+                                                                    property_name_array[propertyEntity.id]=removeLastSlash(property_name_array[propertyEntity.id]);
+
+
+                                                                    if (profileEntity.name.toLowerCase().replace('www.', '') == property_name_array[propertyEntity.id].toLowerCase().replace('www.', '')) {
+                                                                        if (profileEntity.name.indexOf("www.") > -1 || profileEntity.name.indexOf("WWW.") > -1) {
+                                                                            profileEntity.name = property_name_array[propertyEntity.id].replace('www.', '').replace('WWW.', '');
+                                                                        }
+                                                                    }
+
+
+                                                                    if (profileEntity.name == "") {
+                                                                        profileEntity.name = property_name_array[propertyEntity.id];
+                                                                    }
+
 
                                                                     if (show_propertynames && profileEntity.name.toLowerCase() != property_name_array[propertyEntity.id].toLowerCase()) {
+
+
                                                                         if (
+                                                                            profileEntity.name == "Default view" ||
                                                                             profileEntity.name == "All Web Site Data" ||
-                                                                                profileEntity.name == "Все данные по веб-сайту" ||
-                                                                                profileEntity.name == "Все данные по мобильному приложению"
-                                                                            ) {
+                                                                            profileEntity.name == "All Mobile App Data" ||
+                                                                            profileEntity.name == "Все данные по веб-сайту" ||
+                                                                            profileEntity.name == "Все данные по мобильному приложению"
+                                                                        ) {
                                                                             profile_name_array[profileEntity.id] = property_name_array[propertyEntity.id];
                                                                         } else {
                                                                             profile_name_array[profileEntity.id] = profileEntity.name + " (" + property_name_array[propertyEntity.id] + ")";
                                                                         }
+
+
                                                                     } else {
                                                                         profile_name_array[profileEntity.id] = profileEntity.name;
                                                                     }

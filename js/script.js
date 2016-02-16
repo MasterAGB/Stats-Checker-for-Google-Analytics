@@ -600,6 +600,14 @@ function fill_info(cur_profile_id, jrow, token) {
 }
 
 
+function removeLastSlash(str){
+
+    if(str.charAt(str.length-1)=="/") {
+        str = str.substring(0, str.length - 1);
+    }
+    return str;
+}
+
 function eliminateDuplicates(arr) {
     var i,
         len = arr.length,
