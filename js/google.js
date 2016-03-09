@@ -4,7 +4,7 @@ var googleEmail = "";
 
 function SendAddToFavourites(profile_id_to_fav) {
     $.ajax({
-        url: "https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
+        url: "https://analytics.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
         data: {token: googleToken},
         type: "POST",
         dataType: "json",
@@ -18,7 +18,7 @@ function SendAddToFavourites(profile_id_to_fav) {
 function SendRemoveFromFavourites(profile_id_to_fav) {
 
     $.ajax({
-        url: "https://www.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
+        url: "https://analytics.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
         data: {token: googleToken},
         type: "POST",
         dataType: "json",
@@ -38,7 +38,7 @@ function getGoogleToken(afterOnCompleteFunction) {
 
 //logg("Getting google token");
     $.ajax({
-        url: "https://www.google.com/analytics/web/",
+        url: "https://analytics.google.com/analytics/web/",
         data: '',
         method: 'get',
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -436,13 +436,13 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
         console.log("Getting misc days pre-data from " + oldtoday + " to " + today);
         //alert(oldtoday);
         $.ajax({
-            //url: "https://www.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
-            //url:"https://www.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            //url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            //url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
-            //url: "https://www.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable.viewType=FLAT&id=home-page&hl=ru&authuser=0",
-            url: "https://www.google.com/analytics/web/getBaseData?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable.viewType=FLAT&hl=ru&authuser=0",
-            //url: "https://www.google.com/analytics/web/management/getPage?id=Settings&ds=a38120388w66682935p68582681&hl=ru&authuser=0",
+            //url: "https://analytics.google.com/analytics/web/getAccountHeaders?accountIds=3109102%2C18564272%2C32556808%2C27199950%2C22089342%2C19234060%2C2040881%2C346332%2C1568495&_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&hl=en_US&authuser=0",
+            //url:"https://analytics.google.com/analytics/web/getPage?homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=HIERARCHICAL&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+            //url: "https://analytics.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+            //url: "https://analytics.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable-tableControl.searchTerm=&homeAccountsTable.viewType=FLAT&id=home-page&cid=homeAccountsTable%2CtimestampMessage&hl=en_US&authuser=0",
+            //url: "https://analytics.google.com/analytics/web/getPage?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable.viewType=FLAT&id=home-page&hl=ru&authuser=0",
+            url: "https://analytics.google.com/analytics/web/getBaseData?_u.date00=" + oldtoday + "&_u.date01=" + today + "&homeAccountsTable.viewType=FLAT&hl=ru&authuser=0",
+            //url: "https://analytics.google.com/analytics/web/management/getPage?id=Settings&ds=a38120388w66682935p68582681&hl=ru&authuser=0",
             data: {token: googleToken},
             type: "POST",
             dataType: "json",
@@ -523,10 +523,10 @@ function getTodayData(key, completeFunction, errorFunction) {
 
 
     if (profile_data[key]["app"]) {
-        var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=app-visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
+        var url = "https://analytics.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=app-visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
 
     } else {
-        var url = "https://www.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
+        var url = "https://analytics.google.com/analytics/web/getPage?_u.date00=" + today + "&_u.date01=" + today + "&id=visitors-overview&ds=" + key + "&cid=overview%2CprofileExperiments%2CreportHeader%2CtimestampMessage&hl=en_US&authuser=0";
 
     }
     $.ajax({
@@ -678,7 +678,7 @@ function GetDataAndSetRatio() {
         });
 
 
-        //var url = "https://www.google.com/analytics/web/getPage?_.date00=" + today + "&_.date01=" + today + "&id=visitors-overview&ds=" + profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+        //var url = "https://analytics.google.com/analytics/web/getPage?_.date00=" + today + "&_.date01=" + today + "&id=visitors-overview&ds=" + profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
 
 
     }
@@ -709,9 +709,9 @@ function showGraph(cur_profile_id, jrow, token) {
 
 
     if (profile_data[cur_profile_id]["app"]) {
-        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=app-visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+        var url = "https://analytics.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=app-visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
     } else {
-        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+        var url = "https://analytics.google.com/analytics/web/getPage?_.date00=" + weekagotoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
     }
     $.ajax({
         url: url,
@@ -887,9 +887,9 @@ function FillAllRows(jrow, cur_profile_id) {
 
 
     if (profile_data[cur_profile_id]["app"]) {
-        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=app-visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+        var url = "https://analytics.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=app-visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
     } else {
-        var url = "https://www.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
+        var url = "https://analytics.google.com/analytics/web/getPage?_.date00=" + oldtoday + "&_.date01=" + today + "&id=visitors-overview&ds=" + cur_profile_id + "&cid=reportHeader%2Coverview&hl=en_US";
 
     }
     $.ajax({

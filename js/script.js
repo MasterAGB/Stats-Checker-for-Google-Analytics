@@ -313,14 +313,14 @@ function closeErrorPopup() {
 
 
 function PleaseLogin(timerlength) {
-    //chrome.tabs.create({url: 'https://www.google.com/analytics/web/'});
+    //chrome.tabs.create({url: 'https://analytics.google.com/analytics/web/'});
 
     openErrorPopup();
     goOffline();
     $("#loading_new_account_table").hide();
-    $('#googleAcc').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
-    $('#loading_profile').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
-    $('#loading_table_profiles td').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
+    $('#googleAcc').html('<a href="https://analytics.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
+    $('#loading_profile').html('<a href="https://analytics.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
+    $('#loading_table_profiles td').html('<a href="https://analytics.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
     setTimeout(function () {
         //checkRatio();
         init_popup();
@@ -913,43 +913,43 @@ function insert_rows_to_popup(tr_array) {
             if (profile_data[key]["app"]) {
                 switch (date_range) {
                     case '7days':
-                         reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://analytics.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
                         break;
                     case 'today':
-                         reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
+                         reportingurl = 'https://analytics.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
                         break;
                     case 'realtime':
-                         reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-app-overview/' + key + '/';
+                         reportingurl = 'https://analytics.google.com/analytics/web/#realtime/rt-app-overview/' + key + '/';
                         break;
                     case '30days':
                     default:
-                         reportingurl = 'https://www.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://analytics.google.com/analytics/web/#report/app-visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
                         break;
                 }
 
             } else {
                 switch (date_range) {
                     case '7days':
-                         reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://analytics.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + weekagotoday + '&_.date01=' + today + '/');
                         break;
                     case 'today':
-                         reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
+                         reportingurl = 'https://analytics.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + today + '&_.date01=' + today + '/');
                         break;
                     case 'realtime':
-                         reportingurl = 'https://www.google.com/analytics/web/#realtime/rt-overview/' + key + '/';
+                         reportingurl = 'https://analytics.google.com/analytics/web/#realtime/rt-overview/' + key + '/';
                         break;
                     case '30days':
                     default:
-                         reportingurl = 'https://www.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
+                         reportingurl = 'https://analytics.google.com/analytics/web/#report/visitors-overview/' + key + '/' + escape('?_.date00=' + monthagotoday + '&_.date01=' + today + '/');
                         break;
                 }
 
             }
 
 
-            var profileurl = 'https://www.google.com/analytics/web/#management/Profile/' + key + '/%3FpropertyComposite-profilesTab-profilesComposite.tabId%3DeditProfile%26profile.tabId%3DeditProfile/';
-            var propertyurl = 'https://www.google.com/analytics/web/#management/Property/' + key + '/%3FpropertyComposite.tabId%3DpropertySettingsTab/';
-            var accounturl = 'https://www.google.com/analytics/web/#management/Account/' + key + '/%3FaccountComposite.tabId%3DeditAccountSettings/';
+            var profileurl = 'https://analytics.google.com/analytics/web/#management/Profile/' + key + '/%3FpropertyComposite-profilesTab-profilesComposite.tabId%3DeditProfile%26profile.tabId%3DeditProfile/';
+            var propertyurl = 'https://analytics.google.com/analytics/web/#management/Property/' + key + '/%3FpropertyComposite.tabId%3DpropertySettingsTab/';
+            var accounturl = 'https://analytics.google.com/analytics/web/#management/Account/' + key + '/%3FaccountComposite.tabId%3DeditAccountSettings/';
 
 
             var appicon = "";
@@ -1151,7 +1151,7 @@ function prepareOptions(data) {
 
 
     if (typeof googleToken == 'undefined') {
-        $('#loading_profile').html('<a href="https://www.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
+        $('#loading_profile').html('<a href="https://analytics.google.com/analytics/web/" target="_blank">' + chrome.i18n.getMessage("loginToTheSystem") + '</a>');
         setTimeout(function () {
             init_options();
         }, 5000);

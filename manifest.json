@@ -1,13 +1,11 @@
 {
-
-
     "background":{
-        "page":"background.html"
+      "page":"background.html"
     },
     "browser_action":{
-        "default_icon":"img/logo.32.png",
-        "default_title":"__MSG_extName__",
-        "default_popup":"popup.html"
+      "default_icon":"img/logo.32.png",
+      "default_title":"__MSG_extName__",
+      "default_popup":"popup.html"
     },
 
     "default_locale":"en",
@@ -23,7 +21,7 @@
     },
     "options_page":"options.html",
     "permissions":[
-        "https://www.google.com/analytics/*"
+        "https://analytics.google.com/*"
     ],
     "version":"1.6.5.0",
     "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
