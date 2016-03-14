@@ -10,6 +10,10 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6.7.0
+- New Google Analytics url support - analytics.google.com
+- Lots of small bugfixes
+
 Version 1.6.5.0
 - Lots of small bugfixes
 - Favourite profile selection fix

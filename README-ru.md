@@ -8,6 +8,10 @@ Stats Checker for Google Analytics™ - Today visit count
 
 P.S. Спасибо за ваши советы!
 
+Version 1.6.7.0
+- Переход на новую версию ссылок Google Analytics - analytics.google.com
+- Много мелочных поправок
+
 Version 1.6.5.0
 - Много мелочных поправок
 - Исправлена ошибка с выбором фаворитов
