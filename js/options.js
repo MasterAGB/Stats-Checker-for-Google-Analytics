@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     $('#googleAcc').html(google_id);
-    $('#googleAccChange').html(chrome.i18n.getMessage("googleAccChange", 'https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'));
+    $('#googleAccChange').html(chrome.i18n.getMessage("googleAccChange", 'https://www.google.com/accounts/Logout?continue=https://analytics.google.com/analytics/settings/'));
 
 
     $('[data-transid]').each(function () {

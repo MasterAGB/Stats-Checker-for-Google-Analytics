@@ -20,7 +20,7 @@
     "permissions":[
         "https://analytics.google.com/*"
     ],
-    "version":"1.6.8.0",
-    "content_security_policy":"script-src 'self' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
+    "version":"1.6.8.1",
+    "content_security_policy":"script-src 'self' 'unsafe-eval' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
     "manifest_version":2
 }

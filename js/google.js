@@ -477,7 +477,7 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
 
 function getRealtimeData(key, completeFunction, errorFunction) {
     $.ajax({
-        url: "https://www.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=t:0|:1|:0:&hl=en_US",
+        url: "https://analytics.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=t:0|:1|:0:&hl=en_US",
         type: "GET",
         dataType: "json",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -500,7 +500,7 @@ function getRealtimeAdditionalData(key, completeFunction, errorFunction) {
     //ot:0:0:4: - pominutnij otchot
 
     $.ajax({
-        url: "https://www.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=" + q + "&hl=en_US",
+        url: "https://analytics.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=" + q + "&hl=en_US",
         type: "GET",
         dataType: "json",
         error: function (XMLHttpRequest, textStatus, errorThrown) {

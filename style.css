@@ -419,7 +419,7 @@ a {
 .profile_name div.profile_name_div .info_name {
     position: absolute;
 }
-#profiles_table_list .info_td {
+.profile_list_table .info_td {
     padding: 5px  !important;
     margin: 5px  !important;
     border: 1px solid rgb(255,204,51) !important;

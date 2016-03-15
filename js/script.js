@@ -1098,10 +1098,10 @@ function get_trans(translation_id, document_write) {
 }
 
 function edit_account() {
-    document.location.href = "https://www.google.com/analytics/settings/edit_account?scid=" + $("#account_id").val();
+    document.location.href = "https://analytics.google.com/analytics/settings/edit_account?scid=" + $("#account_id").val();
 }
 function edit_profile() {
-    document.location.href = "https://www.google.com/analytics/settings/edit_profile?id=" + $("#profile_id").val();
+    document.location.href = "https://analytics.google.com/analytics/settings/edit_profile?id=" + $("#profile_id").val();
 }
 
 function SetPickedAccountId(new_picked_account_id) {
