@@ -152,7 +152,7 @@
         "placeholders": {
             "logoutUrl": {
                 "content": "$1",
-                "example": "https://www.google.com/accounts/Logout?continue=https://www.google.com/analytics/settings/'"
+                "example": "https://www.google.com/accounts/Logout?continue=https://analytics.google.com/analytics/settings/'"
             }
         }
     },
