@@ -1,4 +1,6 @@
+fart.exe --ignore-case --recursive "*.html" "utm_content=ext" "utm_content=app"
 copy manifest_app.json manifest.json
+SET version=
 SET WINRAR="C:\Program Files\WinRAR"
 CD "C:\Users\AGB\Dropbox\Google chrome extensions\APPS\Google Analytics\"
 @echo off
@@ -6,7 +8,7 @@ for /F "usebackq tokens=1,2 delims==" %%i in (`wmic os get LocalDateTime /VALUE 
 set ldt=%ldt:~0,4%-%ldt:~4,2%-%ldt:~6,2%-%ldt:~8,2%-%ldt:~10,2%-%ldt:~12,6%
 echo Local date is [%ldt%]
 @echo on
-%WINRAR%\WinRAR.exe a "app %ldt%.zip" *.html *.ico *.css *.json img js _locales
+%WINRAR%\WinRAR.exe a "app %version%%ldt%.zip" *.html *.ico *.css *.json img js _locales
 pause;
 
 

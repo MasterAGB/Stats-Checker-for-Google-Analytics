@@ -17,7 +17,7 @@
         "32":"img/logo.32.png",
         "48":"img/logo.48.png",
         "64":"img/logo.64.png",
-        "128":"img/logo.128.png"
+        "128":"img/logo.128.ext.png"
     },
     "options_page":"options.html",
     "permissions":[
