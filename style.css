@@ -419,12 +419,17 @@ a {
 .profile_name div.profile_name_div .info_name {
     position: absolute;
 }
-.profile_list_table .info_td {
+.info_td {
     padding: 5px  !important;
-    margin: 5px  !important;
     border: 1px solid rgb(255,204,51) !important;
     background-color: rgb(255,244,194);
+}
+td.info_td {
     border-top: 0px none !important ;
+    margin: 5px  !important;
+}
+div.info_td {
+    margin-top: 8px;
 }
 
 .profile_name div.profile_name_div span {

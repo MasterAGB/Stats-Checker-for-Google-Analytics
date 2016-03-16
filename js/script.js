@@ -861,6 +861,8 @@ function init_popup() {
     }
 
 
+    $("#customInfo").hide();
+
     adjustTableVars();
     // return false;
     adjustTable('init_popup_start');
@@ -1014,9 +1016,19 @@ function insert_rows_to_popup(tr_array) {
 function AddCustomRowToTable(TransKey, TdClass) {
     //"NoProfilesFound"
     //info_uniqvisitors
-    var another_tr = '<tr><td class="value ' + TdClass + '" colspan=20 align="left">' + get_trans(TransKey, false) + '</td>' +
-        "</tr>";
-    $("#profiles_table_list").append(another_tr);
+    //var another_tr = '<tr><td class="value ' + TdClass + '" colspan=20 align="left">' + get_trans(TransKey, false) + '</td></tr>';
+    var innerHtml='<span class="starred_icon"></span>' + get_trans(TransKey, false) + '';
+    var another_tr = '<div id="customInfo" class="' + TdClass + '">'+innerHtml+'</div>';
+
+    if($("#customInfo").length==0) {
+        $("#googleAccChange").after(another_tr);
+    } else {
+        $("#customInfo").html(innerHtml);
+    }
+    $("#customInfo").show();
+    adjustTableVars();
+    adjustTable("addedInfoRow");
+    //$("#profiles_table_list").append(another_tr);
 }
 
 

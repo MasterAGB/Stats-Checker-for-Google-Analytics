@@ -1,4 +1,4 @@
-Stats Checker for Google Analytics™ - Today visit count
+Stats Checker for Google Analytics™
 =======================================================
 
 Показывает количество посещений Вашего сайта за сегодня.
