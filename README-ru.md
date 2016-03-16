@@ -8,6 +8,9 @@ Stats Checker for Google Analytics™
 
 P.S. Спасибо за ваши советы!
 
+Version 1.6.9.0
+- Поправки в отчётах реального времени
+
 Version 1.6.8.0
 - Переход на новую версию ссылок Google Analytics - analytics.google.com
 - Много мелочных поправок

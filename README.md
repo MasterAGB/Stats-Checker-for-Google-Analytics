@@ -10,6 +10,9 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6.9.0
+- Fixed Real-Time reports
+
 Version 1.6.8.0
 - New Google Analytics url support - analytics.google.com
 - Lots of small bugfixes
