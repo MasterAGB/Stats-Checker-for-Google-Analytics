@@ -893,7 +893,9 @@ function PrepareTable(data) {
     );
 
 
-    googleEmail = window_header.email;
+    if(typeof(window_header)!='undefined') {
+        googleEmail = window_header.email;
+    }
     if (googleEmail != '') {
         $('#googleAcc').html(googleEmail);
     }

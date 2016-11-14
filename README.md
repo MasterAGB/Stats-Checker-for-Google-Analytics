@@ -10,6 +10,9 @@ Allows you to choose one of your sites registered in Google Analytics.
 
 P.S. Thanks for all your suggestions!
 
+Version 1.6.10.0
+- Fixed account display problem
+
 Version 1.6.9.0
 - Fixed Real-Time reports
 
