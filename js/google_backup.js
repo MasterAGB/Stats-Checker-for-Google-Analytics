@@ -7,7 +7,7 @@ function SendAddToFavourites(profile_id_to_fav) {
         url: "https://analytics.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=false&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
         data: {token: googleToken},
         type: "POST",
-        dataType: "json",
+        dataType: "html",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
         },
         success: function (data) {
@@ -21,7 +21,7 @@ function SendRemoveFromFavourites(profile_id_to_fav) {
         url: "https://analytics.google.com/analytics/web/submitForm?key=" + profile_id_to_fav + "&entityName=profile&currentState=true&ds=a0w0p0&sid=starForm&hl=en_US&authuser=0",
         data: {token: googleToken},
         type: "POST",
-        dataType: "json",
+        dataType: "html",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
         },
         success: function (data) {
@@ -37,6 +37,7 @@ function getGoogleToken(afterOnCompleteFunction) {
         url: "https://analytics.google.com/analytics/web/",
         data: '',
         method: 'get',
+        dataType: "html",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log(XMLHttpRequest);
             console.log(textStatus);
@@ -69,7 +70,7 @@ function getGoogleToken(afterOnCompleteFunction) {
 
             } else {
 
-                console.log(data);
+                //console.log(data);
                 logg('Error getting token');
                 //goOffline();
                 PleaseLogin();
@@ -137,31 +138,26 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
                 profileEntity.name = profileEntity.name.replace('http://', '');
                 profileEntity.name = profileEntity.name.replace('https://', '');
 
-                profileEntity.name=removeLastSlash(profileEntity.name);
-                property_name_array[propertyEntity.id]=removeLastSlash(property_name_array[propertyEntity.id]);
-
-
+                profileEntity.name = removeLastSlash(profileEntity.name);
+                property_name_array[propertyEntity.id] = removeLastSlash(property_name_array[propertyEntity.id]);
 
 
                 var propertyLower = property_name_array[propertyEntity.id].toLowerCase();
                 var profileLower = profileEntity.name.toLowerCase();
 
 
-
-
                 //please, show domain name without WWW, if there is one with and one without...
                 if (profileLower.replace('www.', '') == propertyLower.replace('www.', '')) {
 
                     if (profileEntity.name.indexOf("www.") > -1 || profileEntity.name.indexOf("WWW.") > -1) {
-                        profileEntity.name=property_name_array[propertyEntity.id];
+                        profileEntity.name = property_name_array[propertyEntity.id];
                     } else {
-                        property_name_array[propertyEntity.id]=profileEntity.name;
+                        property_name_array[propertyEntity.id] = profileEntity.name;
                     }
 
                     propertyLower = property_name_array[propertyEntity.id].toLowerCase();
                     profileLower = profileEntity.name.toLowerCase();
                 }
-
 
 
                 if (profileEntity.name == "") {
@@ -188,7 +184,6 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
                 } else {
                     profile_name_array[profileEntity.id] = profileEntity.name;
                 }
-
 
 
                 profile_count_array[property_parents[propertyEntity.id]]++;
@@ -293,7 +288,7 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
             //url: "https://analytics.google.com/analytics/web/management/getPage?id=Settings&ds=a38120388w66682935p68582681&hl=ru&authuser=0",
             data: {token: googleToken},
             type: "POST",
-            dataType: "json",
+            dataType: "html",
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 logg('Error getting page!');
                 //goOffline();
@@ -302,6 +297,9 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
             },
             success: function (data) {
 
+
+                data = fixData(data);
+                data = JSON.parse(data);
 
                 var rowData = data.home_page_data.components[1].viewData;
 
@@ -324,17 +322,22 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
 
 
 function getRealtimeData(key, completeFunction, errorFunction) {
+    var url = "https://analytics.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=t:0|:1|:0:&hl=en_US";
+
     $.ajax({
-        url: "https://analytics.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=t:0|:1|:0:&hl=en_US",
+        url: url,
         type: "GET",
-        dataType: "json",
+        dataType: "html",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             errorFunction(textStatus);
         },
         success: function (data) {
+            data = fixData(data);
+            data = JSON.parse(data);
             //console.log(data["t:0|:1|:0:"].metricTotals[0]);
             completeFunction(data["t:0|:1|:0:"].metricTotals[0] + "", data);
-        }});
+        }
+    });
 }
 
 
@@ -350,11 +353,13 @@ function getRealtimeAdditionalData(key, completeFunction, errorFunction) {
     $.ajax({
         url: "https://analytics.google.com/analytics/realtime/realtime/getData?key=" + key + "&ds=" + key + "&pageId=RealtimeReport/rt-overview&q=" + q + "&hl=en_US",
         type: "GET",
-        dataType: "json",
+        dataType: "html",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             errorFunction(textStatus);
         },
         success: function (data) {
+            data = fixData(data);
+            data = JSON.parse(data);
 
 
             //skoka sej4as:
@@ -363,7 +368,8 @@ function getRealtimeAdditionalData(key, completeFunction, errorFunction) {
             var info_pageviews = data["ot:0:0:4:"].overTimeData[0]['values'][0];
             //console.log(data["t:0|:1|:0:"].metricTotals[0]);
             completeFunction(info_visits, info_pageviews, data);
-        }});
+        }
+    });
 }
 
 
@@ -382,12 +388,20 @@ function getTodayData(key, completeFunction, errorFunction) {
         type: "POST",
         data: "token=" + googleToken,
         cache: false,
-        dataType: "json",
+        dataType: "html",
         error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log(url);
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
             errorFunction(textStatus);
         },
         success: function (data) {
-            var jsonArray = data;
+
+            data = fixData(data);
+
+
+            var jsonArray = JSON.parse(data);
             var comp_nr = 1;
             if (jsonArray.components[0].id == 'overview')comp_nr = 0;
 
@@ -419,7 +433,7 @@ function getTodayData(key, completeFunction, errorFunction) {
                         var info_newvisits = metric_value;
                         break;
                 }
-                console.log(metric_val.metric.conceptName);
+                //console.log(metric_val.metric.conceptName);
                 //if(profile_data[key]["app"]){
             }
 
@@ -460,7 +474,8 @@ function getTodayData(key, completeFunction, errorFunction) {
             }
 
             completeFunction(m_today);
-        }});
+        }
+    });
 }
 
 
@@ -566,10 +581,14 @@ function showGraph(cur_profile_id, jrow, token) {
         type: "POST",
         data: "token=" + googleToken,
         cache: false,
+        dataType: "html",
         beforeSend: function (xhr) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         },
         success: function (data, textStatus, jqXHR) {
+
+
+            data = fixData(data);
             var jsonArray = JSON.parse(data);
 
 
@@ -730,8 +749,22 @@ function showGraph(cur_profile_id, jrow, token) {
 
 }
 
+function fixData(data) {
+    var bugString = ")]}'";
+    if (data.lastIndexOf(bugString, 0) === 0) {
+        data = data.substr(bugString.length);
+        //var jsonArray = JSON.parse(data);
+        //console.log("Error found!:");
+        //console.log(url);
+        //console.log(jsonArray);
+    } else {
+        //console.log("Error not found!:");
+    }
+    return data;
+}
 
-function FillAllRows(jrow,cur_profile_id) {
+
+function FillAllRows(jrow, cur_profile_id) {
 
 
     if (profile_data[cur_profile_id]["app"]) {
@@ -745,6 +778,7 @@ function FillAllRows(jrow,cur_profile_id) {
         type: "POST",
         data: "token=" + googleToken,
         cache: false,
+        dataType: "html",
         beforeSend: function (xhr) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         },
@@ -755,6 +789,10 @@ function FillAllRows(jrow,cur_profile_id) {
             return false;
         },
         success: function (data, textStatus, jqXHR) {
+
+
+            data = fixData(data);
+
             var jsonArray = JSON.parse(data);
             var comp_nr = 1;
             if (jsonArray.components[0].id == 'overview')comp_nr = 0;
@@ -856,10 +894,10 @@ function PrepareTable(data) {
 
         $("#account_id").append(
             '<option ' + i_selected_option +
-                ' value="' + i_account_id +
-                '">' +
-                i_account_name +
-                "</option>"
+            ' value="' + i_account_id +
+            '">' +
+            i_account_name +
+            "</option>"
         );
         if (account_id == '')account_id = i_account_id;
     }
@@ -888,12 +926,12 @@ function PrepareTable(data) {
     }
     $("#account_id").append(
         '<option class="option_fav" ' +
-            selected_option +
-            ' value="all">&lowast; ' + get_trans('allProfiles', false) + '</option>'
+        selected_option +
+        ' value="all">&lowast; ' + get_trans('allProfiles', false) + '</option>'
     );
 
 
-    if(typeof(window_header)!='undefined') {
+    if (typeof(window_header) != 'undefined') {
         googleEmail = window_header.email;
     }
     if (googleEmail != '') {
