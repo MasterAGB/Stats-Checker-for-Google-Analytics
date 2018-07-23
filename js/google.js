@@ -60,7 +60,7 @@ function getGoogleToken(afterOnCompleteFunction) {
 
 
                 account_options.each(function () {
-                    var script_contents = $(this).html();
+                    var script_contents = getHtml(this);
                     // logg(script_contents);
                     if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
                         googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
@@ -970,7 +970,7 @@ function PrepareTable(data) {
     //$('#texta').val(data);
     var account_options = $(data);
     account_options.each(function () {
-        var script_contents = $(this).html();
+        var script_contents = getHtml(this);
 
         if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
             googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];

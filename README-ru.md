@@ -8,6 +8,9 @@ Stats Checker for Google Analytics™
 
 P.S. Спасибо за ваши советы!
 
+Version 1.6.12.0
+- Исправлена ошибка вечной загрузки
+
 Version 1.6.11.0
 - Исправлены проблемы с совместимостью с новым интерфейсом Google Analytics
 

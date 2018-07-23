@@ -23,7 +23,7 @@
     "permissions":[
         "https://analytics.google.com/*"
     ],
-    "version":"1.6.11.0",
+    "version":"1.6.12.0",
     "content_security_policy":"script-src 'self' 'unsafe-eval' https://connect.facebook.net https://ssl.google-analytics.com https://apis.google.com https://platform.twitter.com; object-src 'self'",
     "manifest_version":2
 }

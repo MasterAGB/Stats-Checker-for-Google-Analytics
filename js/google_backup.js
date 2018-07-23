@@ -32,7 +32,7 @@ function SendRemoveFromFavourites(profile_id_to_fav) {
 
 function getGoogleToken(afterOnCompleteFunction) {
 
-//logg("Getting google token");
+    //logg("Getting google token");
     $.ajax({
         url: "https://analytics.google.com/analytics/web/",
         data: '',
@@ -57,7 +57,7 @@ function getGoogleToken(afterOnCompleteFunction) {
 
 
                 account_options.each(function () {
-                    var script_contents = $(this).html();
+                    var script_contents = getHtml(this);
                     // logg(script_contents);
                     if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
                         googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
@@ -290,7 +290,10 @@ function fillProfilesAndAccountsData(onCompleteFunction, data2) {
             type: "POST",
             dataType: "html",
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-                logg('Error getting page!');
+                logg('Error getting page for fill Profiles and AccountsData from: '+oldtoday+' to '+today);
+                console.log(XMLHttpRequest);
+                console.log(textStatus);
+                console.log(errorThrown);
                 //goOffline();
                 PleaseLogin();
                 return false;
@@ -783,7 +786,10 @@ function FillAllRows(jrow, cur_profile_id) {
             xhr.overrideMimeType('text/plain; charset=x-user-defined');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            logg('Error getting page!');
+            logg('Error getting page for filling all rows for profile_id: '+cur_profile_id+'!');
+            console.log(XMLHttpRequest);
+            console.log(textStatus);
+            console.log(errorThrown);
             //goOffline();
             PleaseLogin();
             return false;
@@ -856,7 +862,7 @@ function PrepareTable(data) {
     //$('#texta').val(data);
     var account_options = $(data);
     account_options.each(function () {
-        var script_contents = $(this).html();
+        var script_contents = getHtml(this);
 
         if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
             googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];

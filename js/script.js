@@ -1135,16 +1135,30 @@ function init_options() {
 }
 
 
+function getHtml(jObject){
+    if(typeof(jObject)==='undefined') {
+        return '';
+    }
+    var script_contents = $(jObject).html();
+    if(typeof(script_contents)==='undefined') {
+        return '';
+    }
+    return script_contents;
+}
+
+
 function prepareOptions(data) {
     _gaq.push(['_trackEvent', 'init_options', 'clicked']);
-    // console.log("data"+data);
+     //console.log("data"+data);
 
 
     var window_header = undefined;
     //$('#texta').val(data);
     var account_options = $(data);
+
+
     account_options.each(function () {
-        var script_contents = $(this).html();
+        var script_contents = getHtml(this);
 
         if ((script_contents.split('"token":{"value":"').length - 1) > 0) {
             googleToken = script_contents.split('"token":{"value":"')[1].split('","valid"')[0];
